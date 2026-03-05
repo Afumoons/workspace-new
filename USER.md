@@ -13,6 +13,9 @@ _Learn about the person you're helping. Update this as you go._
   - Permission: **playbooks/checklists allowed**
   - Market focus: Indonesia-based user seeking global markets
   - Preferred platforms: **Binance & Bybit (crypto), Exness (forex)**
+  - Preferred style: **scalp + intraday**
+  - Instruments: **include perp futures**
+  - Experience: **intermediate** (access to high leverage)
 
 ## Context
 
