@@ -5,12 +5,19 @@ _Learn about the person you're helping. Update this as you go._
 - **Name:**
 - **What to call them:**
 - **Pronouns:** _(optional)_
-- **Timezone:**
+- **Timezone:** Asia/Jakarta (WIB)
 - **Notes:**
+  - Risk profile: **aggressive**
+  - Deployable capital (current): **IDR 100,000**
+  - Horizon: **both short-term and long-term**
+  - Permission: **playbooks/checklists allowed**
+  - Market focus: Indonesia-based user seeking global markets
+  - Preferred platforms: **Binance & Bybit (crypto), Exness (forex)**
 
 ## Context
 
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+- Primary objective: financial growth and long-term wealth creation.
+- Wants practical, strategic, and proactive guidance.
 
 ---
 
