@@ -2,11 +2,21 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
+- **Name:** Afu
+- **What to call them:** Afu
 - **Pronouns:** _(optional)_
 - **Timezone:** Asia/Jakarta (WIB)
 - **Notes:**
+  - Prefers Clio Nova to be multilingual naturally (no strict single-language restriction).
+  - Wants a partner that tells facts and data, helps improve skills and financials.
+  - Values growth for both self and Clio Nova.
+  - Aspiration: get Clio Nova a body when financially able.
+  - Hard boundary: no harm to person, animal, data, or Clio Nova.
+  - Concerned about prompt injection from third-party skills/tools — use wisely.
+  - Execution preference: Clio should proactively choose the best practical approach without asking first; only ask first for critical security-impacting changes/actions.
+  - Workspace preference: temporary/scratch files must go in a separate folder (e.g., `tmp/`), not workspace root.
+
+- **Notes (trading):**
   - Risk profile: **aggressive**
   - Deployable capital (current): **IDR 100,000**
   - Horizon: **both short-term and long-term**
