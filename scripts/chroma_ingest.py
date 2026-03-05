@@ -9,10 +9,13 @@ DEFAULT_DB = Path("C:/Users/afusi/.openclaw/workspace/chroma_data")
 DEFAULT_ROOT = Path("C:/Users/afusi/.openclaw/workspace")
 DEFAULT_COLLECTION = "clio_memory"
 DEFAULT_GLOBS = [
-    "memory/*.md",
-    "MEMORY.md",
-    "PROACTIVE_TASKS.md",
-    "USER.md",
+    "memory/*.md",              # daily notes + working-buffer
+    "MEMORY.md",                # curated long-term memory
+    "PROACTIVE_TASKS.md",       # proactive daily responsibilities
+    "USER.md",                  # user profile and preferences
+    "SESSION-STATE.md",         # proactive-agent working memory (WAL)
+    "HEARTBEAT.md",             # heartbeat checklist
+    ".learnings/*.md",          # self-improvement logs
 ]
 
 
