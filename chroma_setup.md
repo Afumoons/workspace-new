@@ -16,6 +16,20 @@ cd C:\Users\afusi\.openclaw\workspace
 .\.venv-chroma\Scripts\python scripts\init_chroma.py
 ```
 
+## Ingest memory files into vector DB
+
+```powershell
+cd C:\Users\afusi\.openclaw\workspace
+.\.venv-chroma\Scripts\python scripts\chroma_ingest.py
+```
+
+Query examples:
+
+```powershell
+.\.venv-chroma\Scripts\python scripts\chroma_query.py "What are the user's risk preferences?"
+.\.venv-chroma\Scripts\python scripts\chroma_query.py "perps checklist"
+```
+
 Run local Chroma HTTP server:
 
 ```powershell
