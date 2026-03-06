@@ -1,5 +1,7 @@
 import os
 from datetime import datetime
+from enum import Enum
+from typing import Literal
 
 import MetaTrader5 as mt5
 from fastapi import FastAPI, HTTPException
@@ -9,12 +11,33 @@ import uvicorn
 
 
 # --- Simple risk/config guardrails ---
-# Whitelist of broker symbols we allow the bridge to trade.
+# Whitelist of broker symbols we allow the bridge to trade (for trading actions).
 # Adjust this list to match your broker's symbol names (e.g. "EURUSDm").
 ALLOWED_SYMBOLS = {"EURUSDm", "XAUUSDm", "BTCUSDm", "ETHUSDm"}
 MAX_VOLUME = 1.0        # max lots per trade
 MIN_VOLUME = 0.01       # min lots per trade
 MAX_OPEN_TRADES = 5     # per symbol (simple guardrail)
+
+
+class Timeframe(str, Enum):
+    M1 = "M1"
+    M5 = "M5"
+    M15 = "M15"
+    M30 = "M30"
+    H1 = "H1"
+    H4 = "H4"
+    D1 = "D1"
+
+
+TIMEFRAME_MAP = {
+    Timeframe.M1: mt5.TIMEFRAME_M1,
+    Timeframe.M5: mt5.TIMEFRAME_M5,
+    Timeframe.M15: mt5.TIMEFRAME_M15,
+    Timeframe.M30: mt5.TIMEFRAME_M30,
+    Timeframe.H1: mt5.TIMEFRAME_H1,
+    Timeframe.H4: mt5.TIMEFRAME_H4,
+    Timeframe.D1: mt5.TIMEFRAME_D1,
+}
 
 
 class OrderRequest(BaseModel):
@@ -72,6 +95,122 @@ def get_state():
         "account": account._asdict(),
         "positions": open_positions,
     }
+
+
+@app.get("/positions")
+def get_positions():
+    """Return all open positions as a list."""
+    positions = mt5.positions_get()
+    return [p._asdict() for p in positions] if positions else []
+
+
+@app.get("/positions/{ticket}")
+def get_position(ticket: int):
+    """Return a single position by ticket, or 404 if not found."""
+    positions = mt5.positions_get(ticket=ticket)
+    if not positions:
+        raise HTTPException(404, f"No position with ticket {ticket}")
+    return positions[0]._asdict()
+
+
+@app.get("/market/{symbol}")
+def get_market(symbol: str, timeframe: Timeframe = Timeframe.M15, bars: int = 100):
+    """Return current tick and recent OHLCV history for a symbol.
+
+    - symbol: broker symbol, e.g. "XAUUSDm"
+    - timeframe: one of M1, M5, M15, M30, H1, H4, D1
+    - bars: number of candles to return (max 1000)
+    """
+    if bars <= 0 or bars > 1000:
+        raise HTTPException(400, "bars must be between 1 and 1000")
+
+    tick = mt5.symbol_info_tick(symbol)
+    if tick is None:
+        raise HTTPException(400, f"No tick data for {symbol} (symbol disabled or not found)")
+
+    tf = TIMEFRAME_MAP.get(timeframe)
+    if tf is None:
+        raise HTTPException(400, f"Unsupported timeframe: {timeframe}")
+
+    rates = mt5.copy_rates_from(symbol, tf, datetime.utcnow(), bars)
+    candles = []
+    if rates is not None:
+        for r in rates:
+            candles.append(
+                {
+                    "time": datetime.fromtimestamp(r["time"]).isoformat() + "Z",
+                    "open": r["open"],
+                    "high": r["high"],
+                    "low": r["low"],
+                    "close": r["close"],
+                    "tick_volume": r["tick_volume"],
+                }
+            )
+
+    return {
+        "tick": tick._asdict(),
+        "candles": candles,
+    }
+
+
+class CloseRequest(BaseModel):
+    ticket: int
+
+
+@app.post("/close")
+def close_position(req: CloseRequest):
+    """Close an existing position by ticket using a market order."""
+    positions = mt5.positions_get(ticket=req.ticket)
+    if not positions:
+        raise HTTPException(404, f"No position with ticket {req.ticket}")
+
+    pos = positions[0]
+    symbol = pos.symbol
+    volume = pos.volume
+
+    tick = mt5.symbol_info_tick(symbol)
+    if tick is None:
+        raise HTTPException(400, f"No tick data for {symbol} (symbol disabled or not found)")
+
+    if pos.type == mt5.ORDER_TYPE_BUY:
+        price = tick.bid
+        order_type = mt5.ORDER_TYPE_SELL
+    elif pos.type == mt5.ORDER_TYPE_SELL:
+        price = tick.ask
+        order_type = mt5.ORDER_TYPE_BUY
+    else:
+        raise HTTPException(400, f"Unsupported position type: {pos.type}")
+
+    if price is None or price <= 0:
+        raise HTTPException(500, f"Invalid close price for {symbol}: {price}")
+
+    request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "symbol": symbol,
+        "volume": float(volume),
+        "type": order_type,
+        "position": int(pos.ticket),
+        "price": price,
+        "deviation": 10,
+        "magic": 987654,
+        "comment": "clio-bridge-close",
+    }
+
+    result = mt5.order_send(request)
+    if result is None:
+        raise HTTPException(status_code=500, detail="mt5.order_send() returned None")
+
+    result_dict = result._asdict()
+    if result.retcode != mt5.TRADE_RETCODE_DONE:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": f"Close failed: {result.retcode}",
+                "result": result_dict,
+            },
+        )
+
+    return {"success": True, "result": result_dict}
 
 
 @app.post("/orders")
