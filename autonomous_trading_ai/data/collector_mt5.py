@@ -44,6 +44,11 @@ def fetch_ohlc(
     timeframe: str | None = None,
     bars: int | None = None,
 ) -> pd.DataFrame:
+    """Fetch OHLC from MT5 with fallbacks and better error logging.
+
+    Tries copy_rates_from first; if that fails, falls back to copy_rates_from_pos
+    with a reduced bar count.
+    """
     tf = timeframe or data_config.mt5_timeframe_default
     n_bars = bars or data_config.history_bars_default
 
@@ -52,6 +57,7 @@ def fetch_ohlc(
 
     logger.info("Fetching %d bars for %s %s", n_bars, symbol, tf)
 
+    # Primary attempt: copy_rates_from anchored at now
     rates = mt5.copy_rates_from(
         symbol,
         TIMEFRAME_MAP[tf],
@@ -59,13 +65,39 @@ def fetch_ohlc(
         n_bars,
     )
     if rates is None:
-        raise RuntimeError(f"mt5.copy_rates_from returned None for {symbol} {tf}")
+        err = mt5.last_error()
+        logger.warning(
+            "copy_rates_from returned None for %s %s (bars=%d), last_error=%s",
+            symbol,
+            tf,
+            n_bars,
+            err,
+        )
+        # Fallback: try fewer bars from position 0
+        fallback_bars = min(500, n_bars)
+        logger.info(
+            "Fallback: copy_rates_from_pos for %s %s (bars=%d)",
+            symbol,
+            tf,
+            fallback_bars,
+        )
+        rates = mt5.copy_rates_from_pos(
+            symbol,
+            TIMEFRAME_MAP[tf],
+            0,
+            fallback_bars,
+        )
+        if rates is None:
+            err2 = mt5.last_error()
+            raise RuntimeError(
+                f"MT5 history fetch failed for {symbol} {tf}: "
+                f"copy_rates_from None (err={err}), copy_rates_from_pos None (err={err2})"
+            )
 
     df = pd.DataFrame(rates)
-    df.rename(
-        columns={"real_volume": "real_volume", "tick_volume": "tick_volume"},
-        inplace=True,
-    )
+    if df.empty:
+        raise RuntimeError(f"No OHLC data returned for {symbol} {tf}")
+
     df["time"] = pd.to_datetime(df["time"], unit="s")
     return df[["time", "open", "high", "low", "close", "tick_volume"]]
 

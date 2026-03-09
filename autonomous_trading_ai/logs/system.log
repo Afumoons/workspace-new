@@ -1,0 +1,297 @@
+2026-03-10 02:13:34,407 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 02:13:34,407 [INFO] autonomous_trading_ai.risk.manager: Risk accept: strategy=manual_test_xau symbol=XAUUSDm dir=long vol=0.01 risk=0.50%
+2026-03-10 02:13:34,549 [INFO] autonomous_trading_ai.execution.engine: Trade executed: strategy=manual_test_xau symbol=XAUUSDm dir=long vol=0.01 price=5123.98500 sl=5122.48500 tp=5125.48500 ticket=2735236296 reason=executed
+2026-03-10 02:13:34,549 [INFO] autonomous_trading_ai.data.collector_mt5: Shutdown MetaTrader5 connection
+2026-03-10 02:32:33,424 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 02:32:33,425 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:32:33,425 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for XAUUSDm: mt5.copy_rates_from returned None for XAUUSDm M15
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 62, in fetch_ohlc
+    raise RuntimeError(f"mt5.copy_rates_from returned None for {symbol} {tf}")
+RuntimeError: mt5.copy_rates_from returned None for XAUUSDm M15
+2026-03-10 02:32:33,426 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:32:33,426 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for BTCUSDm: mt5.copy_rates_from returned None for BTCUSDm M15
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 62, in fetch_ohlc
+    raise RuntimeError(f"mt5.copy_rates_from returned None for {symbol} {tf}")
+RuntimeError: mt5.copy_rates_from returned None for BTCUSDm M15
+2026-03-10 02:32:33,427 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 02:32:54,448 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_research_strategies start
+2026-03-10 02:32:54,449 [INFO] autonomous_trading_ai.strategies.pool: Pool: starting new empty pool
+2026-03-10 02:32:59,113 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory initialized: path=./chroma_data collection=strategy_research
+2026-03-10 02:32:59,113 [WARNING] autonomous_trading_ai.scheduler.main: No features found for XAUUSDm M15; skipping research
+2026-03-10 02:32:59,113 [WARNING] autonomous_trading_ai.scheduler.main: No features found for BTCUSDm M15; skipping research
+2026-03-10 02:32:59,114 [INFO] autonomous_trading_ai.strategies.pool: Pool saved: 0 strategies
+2026-03-10 02:32:59,114 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_research_strategies done
+2026-03-10 02:33:18,499 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:33:18,499 [INFO] __main__: No candidate strategies to promote
+2026-03-10 02:33:41,522 [INFO] __main__: Starting MT5 and scheduler...
+2026-03-10 02:33:41,535 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 02:33:41,543 [INFO] __main__: Scheduler started
+2026-03-10 02:38:41,550 [INFO] __main__: Scheduler: job_update_data start
+2026-03-10 02:38:41,551 [INFO] __main__: Scheduler: job_execute_signals start
+2026-03-10 02:38:41,551 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:38:41,556 [INFO] __main__: Scheduler: job_live_monitor start
+2026-03-10 02:38:41,565 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:38:41,574 [WARNING] __main__: No features for XAUUSDm M15; skipping signal execution
+2026-03-10 02:38:41,574 [WARNING] __main__: No features for BTCUSDm M15; skipping signal execution
+2026-03-10 02:38:41,575 [INFO] autonomous_trading_ai.execution.live_monitor: Live monitor: equity=1502.11 peak=1502.11
+2026-03-10 02:38:41,575 [INFO] __main__: Scheduler: job_execute_signals done
+2026-03-10 02:38:41,576 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:38:41,576 [INFO] __main__: Scheduler: job_live_monitor done
+2026-03-10 02:38:41,589 [ERROR] __main__: job_update_data error for XAUUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 77, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:38:41,669 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:38:41,674 [ERROR] __main__: job_update_data error for BTCUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 77, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:38:41,677 [INFO] __main__: Scheduler: job_update_data done
+2026-03-10 02:43:41,552 [INFO] __main__: Scheduler: job_update_data start
+2026-03-10 02:43:41,553 [INFO] __main__: Scheduler: job_execute_signals start
+2026-03-10 02:43:41,553 [INFO] __main__: Scheduler: job_live_monitor start
+2026-03-10 02:43:50,021 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:43:50,030 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:43:50,031 [WARNING] __main__: No features for XAUUSDm M15; skipping signal execution
+2026-03-10 02:43:50,031 [WARNING] __main__: No features for BTCUSDm M15; skipping signal execution
+2026-03-10 02:43:50,032 [INFO] autonomous_trading_ai.execution.live_monitor: Live monitor: equity=1523.69 peak=1523.69
+2026-03-10 02:43:50,032 [INFO] __main__: Scheduler: job_execute_signals done
+2026-03-10 02:43:50,033 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:43:50,035 [INFO] __main__: Scheduler: job_live_monitor done
+2026-03-10 02:43:50,036 [ERROR] __main__: job_update_data error for XAUUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 77, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:43:50,039 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:43:50,053 [ERROR] __main__: job_update_data error for BTCUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 77, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:43:50,059 [INFO] __main__: Scheduler: job_update_data done
+2026-03-10 02:45:06,254 [INFO] __main__: KeyboardInterrupt received; shutting down
+2026-03-10 02:45:06,254 [INFO] __main__: Shutting down scheduler and MT5...
+2026-03-10 02:45:06,255 [INFO] autonomous_trading_ai.data.collector_mt5: Shutdown MetaTrader5 connection
+2026-03-10 02:45:31,168 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 02:45:31,168 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:45:31,168 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for XAUUSDm: mt5.copy_rates_from returned None for XAUUSDm M15
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 62, in fetch_ohlc
+    raise RuntimeError(f"mt5.copy_rates_from returned None for {symbol} {tf}")
+RuntimeError: mt5.copy_rates_from returned None for XAUUSDm M15
+2026-03-10 02:45:31,170 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:45:31,170 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for BTCUSDm: mt5.copy_rates_from returned None for BTCUSDm M15
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 62, in fetch_ohlc
+    raise RuntimeError(f"mt5.copy_rates_from returned None for {symbol} {tf}")
+RuntimeError: mt5.copy_rates_from returned None for BTCUSDm M15
+2026-03-10 02:45:31,170 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 02:49:11,378 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 02:49:11,379 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:49:11,379 [WARNING] autonomous_trading_ai.data.collector_mt5: copy_rates_from returned None for XAUUSDm M15 (bars=2000), last_error=(-10004, 'No IPC connection')
+2026-03-10 02:49:11,379 [INFO] autonomous_trading_ai.data.collector_mt5: Fallback: copy_rates_from_pos for XAUUSDm M15 (bars=500)
+2026-03-10 02:49:11,379 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for XAUUSDm: MT5 history fetch failed for XAUUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 92, in fetch_ohlc
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: MT5 history fetch failed for XAUUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+2026-03-10 02:49:11,381 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:49:11,381 [WARNING] autonomous_trading_ai.data.collector_mt5: copy_rates_from returned None for BTCUSDm M15 (bars=2000), last_error=(-10004, 'No IPC connection')
+2026-03-10 02:49:11,381 [INFO] autonomous_trading_ai.data.collector_mt5: Fallback: copy_rates_from_pos for BTCUSDm M15 (bars=500)
+2026-03-10 02:49:11,381 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for BTCUSDm: MT5 history fetch failed for BTCUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 92, in fetch_ohlc
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: MT5 history fetch failed for BTCUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+2026-03-10 02:49:11,382 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 02:51:17,562 [INFO] __main__: Starting MT5 and scheduler...
+2026-03-10 02:51:17,574 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 02:51:17,578 [INFO] __main__: Scheduler started
+2026-03-10 02:56:17,583 [INFO] __main__: Scheduler: job_update_data start
+2026-03-10 02:56:17,585 [INFO] __main__: Scheduler: job_execute_signals start
+2026-03-10 02:56:17,585 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 02:56:17,591 [INFO] __main__: Scheduler: job_live_monitor start
+2026-03-10 02:56:17,600 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:56:17,600 [WARNING] __main__: No features for XAUUSDm M15; skipping signal execution
+2026-03-10 02:56:17,620 [WARNING] __main__: No features for BTCUSDm M15; skipping signal execution
+2026-03-10 02:56:17,620 [INFO] __main__: Scheduler: job_execute_signals done
+2026-03-10 02:56:17,622 [INFO] autonomous_trading_ai.execution.live_monitor: Live monitor: equity=1521.49 peak=1523.69
+2026-03-10 02:56:17,622 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 02:56:17,622 [INFO] __main__: Scheduler: job_live_monitor done
+2026-03-10 02:56:17,623 [ERROR] __main__: job_update_data error for XAUUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 109, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:56:17,630 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 02:56:17,634 [ERROR] __main__: job_update_data error for BTCUSDm: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 109, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 68, in get_engine
+    raise ImportError(
+    ...<7 lines>...
+    )
+ImportError: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
+ - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
+2026-03-10 02:56:17,635 [INFO] __main__: Scheduler: job_update_data done

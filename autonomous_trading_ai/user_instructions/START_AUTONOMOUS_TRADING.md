@@ -62,9 +62,12 @@ Leave this window running while you test.
 
 ## 3. Activate the autonomous_trading_ai Environment
 
+> **Important:** Run commands that import `autonomous_trading_ai.*` from the
+> **workspace root** so Python can see `autonomous_trading_ai` as a package.
+
 ```powershell
-cd C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai
-.\.venv\Scripts\activate
+cd C:\Users\afusi\.openclaw\workspace
+.autonomous_trading_ai\.venv\Scripts\activate
 ```
 
 You should see the venv name in your prompt.
@@ -179,8 +182,8 @@ If I disappear and you want to get things running again:
 4. **Autonomous Trading Agent:**
 
    ```powershell
-   cd C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai
-   .\.venv\Scripts\activate
+   cd C:\Users\afusi\.openclaw\workspace
+   .autonomous_trading_ai\.venv\Scripts\activate
 
    # Optional: one-shot research cycle
    python -c "from autonomous_trading_ai.scheduler.main import job_update_data; job_update_data()"

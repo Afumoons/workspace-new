@@ -1,0 +1,1 @@
+strategy=manual_test_xau symbol=XAUUSDm dir=long vol=0.01 price=5123.98500 sl=5122.48500 tp=5125.48500 ticket=2735236296 reason=executed
