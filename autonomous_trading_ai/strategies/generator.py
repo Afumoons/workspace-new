@@ -22,7 +22,7 @@ LONG_ENTRY_TEMPLATES = [
 
 SHORT_ENTRY_TEMPLATES = [
     "rsi > {rsi_high} and ma_short < ma_long",
-    "trend_strength < {-trend_min} and volatility < {vol_max}",
+    "trend_strength < -{trend_min} and volatility < {vol_max}",
 ]
 
 EXIT_TEMPLATES = [

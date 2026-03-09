@@ -1,0 +1,18 @@
+{
+  "name": "rb_BTCUSDm_M15_8237",
+  "symbol": "BTCUSDm",
+  "timeframe": "M15",
+  "long_entry_rule": "rsi < 19 and ma_short > ma_long",
+  "short_entry_rule": "trend_strength < -0.18 and volatility < 0.0093",
+  "exit_rule": "rsi > 46",
+  "stop_loss_pips": 50,
+  "take_profit_pips": 100,
+  "params": {
+    "rsi_low": 19,
+    "rsi_high": 90,
+    "trend_min": 0.18,
+    "vol_max": 0.0093,
+    "rsi_exit": 46,
+    "trend_exit": -0.04
+  }
+}

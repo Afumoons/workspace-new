@@ -295,3 +295,671 @@ Trying to import the above resulted in these errors:
  - `Import pyarrow` failed. pyarrow is required for parquet support. Use pip or conda to install the pyarrow package.
  - `Import fastparquet` failed. fastparquet is required for parquet support. Use pip or conda to install the fastparquet package.
 2026-03-10 02:56:17,635 [INFO] __main__: Scheduler: job_update_data done
+2026-03-10 03:00:56,568 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:00:56,568 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 03:00:56,569 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 03:00:59,080 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\XAUUSDm_M15_ohlc.parquet
+2026-03-10 03:00:59,081 [INFO] autonomous_trading_ai.research.features: Computing features for XAUUSDm M15 (len=2000)
+2026-03-10 03:00:59,112 [INFO] autonomous_trading_ai.research.features: Finished feature computation for XAUUSDm M15 (len=1950)
+2026-03-10 03:00:59,121 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_up': 674, 'high_vol': 585, 'trending_down': 375, 'ranging': 163, 'low_vol': 153}
+2026-03-10 03:00:59,131 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet
+2026-03-10 03:00:59,132 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 03:00:59,140 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\BTCUSDm_M15_ohlc.parquet
+2026-03-10 03:00:59,141 [INFO] autonomous_trading_ai.research.features: Computing features for BTCUSDm M15 (len=2000)
+2026-03-10 03:00:59,154 [INFO] autonomous_trading_ai.research.features: Finished feature computation for BTCUSDm M15 (len=1950)
+2026-03-10 03:00:59,159 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_down': 650, 'high_vol': 585, 'trending_up': 409, 'ranging': 194, 'low_vol': 112}
+2026-03-10 03:00:59,172 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\BTCUSDm_M15_features.parquet
+2026-03-10 03:00:59,172 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 03:00:59,173 [INFO] autonomous_trading_ai.data.collector_mt5: Shutdown MetaTrader5 connection
+2026-03-10 03:01:17,583 [INFO] __main__: Scheduler: job_update_data start
+2026-03-10 03:01:17,583 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 03:01:17,583 [INFO] __main__: Scheduler: job_execute_signals start
+2026-03-10 03:01:17,583 [INFO] __main__: Scheduler: job_live_monitor start
+2026-03-10 03:01:17,587 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:01:17,588 [INFO] autonomous_trading_ai.execution.live_monitor: Live monitor: equity=1531.07 peak=1531.07
+2026-03-10 03:01:17,589 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:01:17,589 [INFO] __main__: Scheduler: job_live_monitor done
+2026-03-10 03:01:17,626 [ERROR] __main__: job_update_data error for XAUUSDm: No type extension with name arrow.py_extension_type found
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 109, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 64, in get_engine
+    return engine_class()
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 170, in __init__
+    import pandas.core.arrays.arrow.extension_types  # pyright: ignore[reportUnusedImport] # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\arrays\arrow\extension_types.py", line 174, in <module>
+    patch_pyarrow()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\arrays\arrow\extension_types.py", line 166, in patch_pyarrow
+    pyarrow.unregister_extension_type("arrow.py_extension_type")
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pyarrow/types.pxi", line 2280, in pyarrow.lib.unregister_extension_type
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowKeyError: No type extension with name arrow.py_extension_type found
+2026-03-10 03:01:17,644 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 03:01:17,649 [ERROR] __main__: job_update_data error for BTCUSDm: A type extension with name pandas.period already defined
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 38, in job_update_data
+    save_ohlc(df, symbol, TIMEFRAME)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 109, in save_ohlc
+    df.to_parquet(path)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\frame.py", line 3135, in to_parquet
+    return to_parquet(
+        self,
+    ...<7 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 486, in to_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 64, in get_engine
+    return engine_class()
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 170, in __init__
+    import pandas.core.arrays.arrow.extension_types  # pyright: ignore[reportUnusedImport] # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\arrays\arrow\extension_types.py", line 59, in <module>
+    pyarrow.register_extension_type(_period_type)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "pyarrow/types.pxi", line 2226, in pyarrow.lib.register_extension_type
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowKeyError: A type extension with name pandas.period already defined
+2026-03-10 03:01:17,650 [INFO] __main__: Scheduler: job_update_data done
+2026-03-10 03:01:21,186 [INFO] autonomous_trading_ai.research.features: Loaded features from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet (len=1950)
+2026-03-10 03:01:21,191 [ERROR] __main__: Failed to load features for BTCUSDm: A type extension with name pandas.period already defined
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 123, in job_execute_signals
+    feat = load_features(symbol, TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\research\features.py", line 109, in load_features
+    df = pd.read_parquet(path)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 668, in read_parquet
+    impl = get_engine(engine)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 64, in get_engine
+    return engine_class()
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 170, in __init__
+    import pandas.core.arrays.arrow.extension_types  # pyright: ignore[reportUnusedImport] # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\core\arrays\arrow\extension_types.py", line 59, in <module>
+    pyarrow.register_extension_type(_period_type)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "pyarrow/types.pxi", line 2226, in pyarrow.lib.register_extension_type
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+pyarrow.lib.ArrowKeyError: A type extension with name pandas.period already defined
+2026-03-10 03:01:21,193 [INFO] __main__: Scheduler: job_execute_signals done
+2026-03-10 03:05:46,131 [INFO] __main__: Starting MT5 and scheduler...
+2026-03-10 03:05:46,144 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:05:46,152 [INFO] __main__: Scheduler started
+2026-03-10 03:07:21,523 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 03:07:21,523 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 03:07:21,523 [WARNING] autonomous_trading_ai.data.collector_mt5: copy_rates_from returned None for XAUUSDm M15 (bars=2000), last_error=(-10004, 'No IPC connection')
+2026-03-10 03:07:21,524 [INFO] autonomous_trading_ai.data.collector_mt5: Fallback: copy_rates_from_pos for XAUUSDm M15 (bars=500)
+2026-03-10 03:07:21,524 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for XAUUSDm: MT5 history fetch failed for XAUUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 92, in fetch_ohlc
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: MT5 history fetch failed for XAUUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+2026-03-10 03:07:21,525 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 03:07:21,525 [WARNING] autonomous_trading_ai.data.collector_mt5: copy_rates_from returned None for BTCUSDm M15 (bars=2000), last_error=(-10004, 'No IPC connection')
+2026-03-10 03:07:21,525 [INFO] autonomous_trading_ai.data.collector_mt5: Fallback: copy_rates_from_pos for BTCUSDm M15 (bars=500)
+2026-03-10 03:07:21,526 [ERROR] autonomous_trading_ai.scheduler.main: job_update_data error for BTCUSDm: MT5 history fetch failed for BTCUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 37, in job_update_data
+    df = fetch_ohlc(symbol, timeframe=TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\collector_mt5.py", line 92, in fetch_ohlc
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: MT5 history fetch failed for BTCUSDm M15: copy_rates_from None (err=(-10004, 'No IPC connection')), copy_rates_from_pos None (err=(-10004, 'No IPC connection'))
+2026-03-10 03:07:21,526 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 03:10:46,160 [INFO] __main__: Scheduler: job_update_data start
+2026-03-10 03:10:46,161 [INFO] __main__: Scheduler: job_execute_signals start
+2026-03-10 03:10:46,161 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 03:10:46,161 [INFO] __main__: Scheduler: job_live_monitor start
+2026-03-10 03:10:46,163 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:10:46,165 [INFO] autonomous_trading_ai.execution.live_monitor: Live monitor: equity=1531.91 peak=1531.91
+2026-03-10 03:10:46,166 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:10:46,166 [INFO] __main__: Scheduler: job_live_monitor done
+2026-03-10 03:10:46,199 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\XAUUSDm_M15_ohlc.parquet
+2026-03-10 03:10:46,200 [INFO] autonomous_trading_ai.research.features: Computing features for XAUUSDm M15 (len=2000)
+2026-03-10 03:10:46,220 [INFO] autonomous_trading_ai.research.features: Finished feature computation for XAUUSDm M15 (len=1950)
+2026-03-10 03:10:46,228 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_up': 674, 'high_vol': 585, 'trending_down': 375, 'ranging': 163, 'low_vol': 153}
+2026-03-10 03:10:46,242 [ERROR] __main__: Failed to load features for XAUUSDm: Couldn't deserialize thrift: TProtocolException: Invalid data
+Deserializing page header failed.
+Traceback (most recent call last):
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\scheduler\main.py", line 123, in job_execute_signals
+    feat = load_features(symbol, TIMEFRAME)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\research\features.py", line 109, in load_features
+    df = pd.read_parquet(path)
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 671, in read_parquet
+    return impl.read(
+           ~~~~~~~~~^
+        path,
+        ^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pandas\io\parquet.py", line 260, in read
+    pa_table = self.api.parquet.read_table(
+        path_or_handle,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pyarrow\parquet\core.py", line 1926, in read_table
+    return dataset.read(columns=columns, use_threads=use_threads,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        use_pandas_metadata=use_pandas_metadata)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\.venv\Lib\site-packages\pyarrow\parquet\core.py", line 1552, in read
+    table = self._dataset.to_table(
+        columns=columns, filter=self._filter_expression,
+        use_threads=use_threads
+    )
+  File "pyarrow/_dataset.pyx", line 589, in pyarrow._dataset.Dataset.to_table
+  File "pyarrow/_dataset.pyx", line 3969, in pyarrow._dataset.Scanner.to_table
+  File "pyarrow/error.pxi", line 155, in pyarrow.lib.pyarrow_internal_check_status
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+OSError: Couldn't deserialize thrift: TProtocolException: Invalid data
+Deserializing page header failed.
+
+2026-03-10 03:10:46,246 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet
+2026-03-10 03:10:46,246 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 03:10:46,256 [INFO] autonomous_trading_ai.research.features: Loaded features from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\BTCUSDm_M15_features.parquet (len=1950)
+2026-03-10 03:10:46,258 [INFO] __main__: Scheduler: job_execute_signals done
+2026-03-10 03:10:46,260 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\BTCUSDm_M15_ohlc.parquet
+2026-03-10 03:10:46,260 [INFO] autonomous_trading_ai.research.features: Computing features for BTCUSDm M15 (len=2000)
+2026-03-10 03:10:46,273 [INFO] autonomous_trading_ai.research.features: Finished feature computation for BTCUSDm M15 (len=1950)
+2026-03-10 03:10:46,277 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_down': 650, 'high_vol': 585, 'trending_up': 409, 'ranging': 194, 'low_vol': 112}
+2026-03-10 03:10:46,287 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\BTCUSDm_M15_features.parquet
+2026-03-10 03:10:46,287 [INFO] __main__: Scheduler: job_update_data done
+2026-03-10 03:12:52,893 [INFO] __main__: Starting MT5 and scheduler...
+2026-03-10 03:12:52,905 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:12:52,908 [INFO] __main__: Scheduler started
+2026-03-10 03:13:23,053 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:13:23,053 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data start
+2026-03-10 03:13:23,053 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for XAUUSDm M15
+2026-03-10 03:13:23,084 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\XAUUSDm_M15_ohlc.parquet
+2026-03-10 03:13:23,085 [INFO] autonomous_trading_ai.research.features: Computing features for XAUUSDm M15 (len=2000)
+2026-03-10 03:13:23,097 [INFO] autonomous_trading_ai.research.features: Finished feature computation for XAUUSDm M15 (len=1950)
+2026-03-10 03:13:23,100 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_up': 674, 'high_vol': 585, 'trending_down': 375, 'ranging': 163, 'low_vol': 153}
+2026-03-10 03:13:23,111 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet
+2026-03-10 03:13:23,111 [INFO] autonomous_trading_ai.data.collector_mt5: Fetching 2000 bars for BTCUSDm M15
+2026-03-10 03:13:23,119 [INFO] autonomous_trading_ai.data.collector_mt5: Saved OHLC to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\raw\BTCUSDm_M15_ohlc.parquet
+2026-03-10 03:13:23,119 [INFO] autonomous_trading_ai.research.features: Computing features for BTCUSDm M15 (len=2000)
+2026-03-10 03:13:23,128 [INFO] autonomous_trading_ai.research.features: Finished feature computation for BTCUSDm M15 (len=1950)
+2026-03-10 03:13:23,131 [INFO] autonomous_trading_ai.research.regime: Detected regimes: counts={'trending_down': 650, 'high_vol': 585, 'trending_up': 409, 'ranging': 194, 'low_vol': 112}
+2026-03-10 03:13:23,142 [INFO] autonomous_trading_ai.research.features: Saved features to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\BTCUSDm_M15_features.parquet
+2026-03-10 03:13:23,142 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_update_data done
+2026-03-10 03:13:23,142 [INFO] autonomous_trading_ai.data.collector_mt5: Shutdown MetaTrader5 connection
+2026-03-10 03:13:44,618 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:13:44,619 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_research_strategies start
+2026-03-10 03:13:44,619 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:13:44,814 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory initialized: path=./chroma_data collection=strategy_research
+2026-03-10 03:13:44,879 [INFO] autonomous_trading_ai.research.features: Loaded features from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet (len=1950)
+2026-03-10 03:15:05,864 [INFO] autonomous_trading_ai.data.collector_mt5: Initialized MetaTrader5 connection
+2026-03-10 03:15:05,864 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_research_strategies start
+2026-03-10 03:15:05,865 [INFO] autonomous_trading_ai.strategies.pool: Pool loaded: 0 strategies
+2026-03-10 03:15:05,960 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory initialized: path=./chroma_data collection=strategy_research
+2026-03-10 03:15:06,012 [INFO] autonomous_trading_ai.research.features: Loaded features from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\XAUUSDm_M15_features.parquet (len=1950)
+2026-03-10 03:15:06,013 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_3112', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 30 and ma_short > ma_long', 'short_entry_rule': 'trend_strength < -0.61 and volatility < 0.0426', 'exit_rule': 'rsi < 48', 'stop_loss_pips': 75, 'take_profit_pips': 200, 'params': {'rsi_low': 30, 'rsi_high': 83, 'trend_min': 0.61, 'vol_max': 0.0426, 'rsi_exit': 48, 'trend_exit': 0.09}}
+2026-03-10 03:15:06,014 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_3975', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 24 and ma_short > ma_long', 'short_entry_rule': 'trend_strength < -0.93 and volatility < 0.0369', 'exit_rule': 'rsi > 54', 'stop_loss_pips': 150, 'take_profit_pips': 150, 'params': {'rsi_low': 24, 'rsi_high': 89, 'trend_min': 0.93, 'vol_max': 0.0369, 'rsi_exit': 54, 'trend_exit': 0.06}}
+2026-03-10 03:15:06,014 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_9888', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 10 and ma_short > ma_long', 'short_entry_rule': 'rsi > 90 and ma_short < ma_long', 'exit_rule': 'rsi < 60', 'stop_loss_pips': 150, 'take_profit_pips': 150, 'params': {'rsi_low': 10, 'rsi_high': 90, 'trend_min': 0.26, 'vol_max': 0.0398, 'rsi_exit': 60, 'trend_exit': 0.01}}
+2026-03-10 03:15:06,014 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_9443', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 31 and ma_short > ma_long', 'short_entry_rule': 'rsi > 80 and ma_short < ma_long', 'exit_rule': 'rsi < 55', 'stop_loss_pips': 50, 'take_profit_pips': 100, 'params': {'rsi_low': 31, 'rsi_high': 80, 'trend_min': 0.67, 'vol_max': 0.0301, 'rsi_exit': 55, 'trend_exit': -0.09}}
+2026-03-10 03:15:06,014 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_1275', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.64 and volatility < 0.0437', 'short_entry_rule': 'rsi > 65 and ma_short < ma_long', 'exit_rule': 'trend_strength < -0.0', 'stop_loss_pips': 150, 'take_profit_pips': 200, 'params': {'rsi_low': 16, 'rsi_high': 65, 'trend_min': 0.64, 'vol_max': 0.0437, 'rsi_exit': 56, 'trend_exit': -0.0}}
+2026-03-10 03:15:06,015 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_2309', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.65 and volatility < 0.0469', 'short_entry_rule': 'trend_strength < -0.65 and volatility < 0.0469', 'exit_rule': 'trend_strength < -0.0', 'stop_loss_pips': 75, 'take_profit_pips': 150, 'params': {'rsi_low': 13, 'rsi_high': 68, 'trend_min': 0.65, 'vol_max': 0.0469, 'rsi_exit': 58, 'trend_exit': -0.0}}
+2026-03-10 03:15:06,015 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_1186', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 11 and ma_short > ma_long', 'short_entry_rule': 'trend_strength < -0.42 and volatility < 0.0293', 'exit_rule': 'rsi > 57', 'stop_loss_pips': 150, 'take_profit_pips': 200, 'params': {'rsi_low': 11, 'rsi_high': 66, 'trend_min': 0.42, 'vol_max': 0.0293, 'rsi_exit': 57, 'trend_exit': -0.0}}
+2026-03-10 03:15:06,015 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_8199', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.68 and volatility < 0.0276', 'short_entry_rule': 'rsi > 79 and ma_short < ma_long', 'exit_rule': 'rsi < 47', 'stop_loss_pips': 150, 'take_profit_pips': 100, 'params': {'rsi_low': 18, 'rsi_high': 79, 'trend_min': 0.68, 'vol_max': 0.0276, 'rsi_exit': 47, 'trend_exit': 0.05}}
+2026-03-10 03:15:06,016 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_3128', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.16 and volatility < 0.0365', 'short_entry_rule': 'trend_strength < -0.16 and volatility < 0.0365', 'exit_rule': 'rsi > 46', 'stop_loss_pips': 50, 'take_profit_pips': 50, 'params': {'rsi_low': 22, 'rsi_high': 75, 'trend_min': 0.16, 'vol_max': 0.0365, 'rsi_exit': 46, 'trend_exit': 0.04}}
+2026-03-10 03:15:06,016 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_4298', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 11 and ma_short > ma_long', 'short_entry_rule': 'rsi > 73 and ma_short < ma_long', 'exit_rule': 'rsi < 56', 'stop_loss_pips': 50, 'take_profit_pips': 50, 'params': {'rsi_low': 11, 'rsi_high': 73, 'trend_min': 0.8, 'vol_max': 0.0358, 'rsi_exit': 56, 'trend_exit': -0.1}}
+2026-03-10 03:15:06,017 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_3112 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3112.json
+2026-03-10 03:15:06,018 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_3975 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3975.json
+2026-03-10 03:15:06,020 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_9888 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_9888.json
+2026-03-10 03:15:06,021 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_9443 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_9443.json
+2026-03-10 03:15:06,023 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_1275 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1275.json
+2026-03-10 03:15:06,024 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_2309 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_2309.json
+2026-03-10 03:15:06,025 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_1186 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1186.json
+2026-03-10 03:15:06,026 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_8199 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_8199.json
+2026-03-10 03:15:06,027 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_3128 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3128.json
+2026-03-10 03:15:06,028 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_4298 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_4298.json
+2026-03-10 03:15:06,029 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3112 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:06,542 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3112: trades=10, final_eq=9511.10, max_dd=-4.89%
+2026-03-10 03:15:06,543 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (10 < 30)
+2026-03-10 03:15:06,543 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-1.976, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9511.101, 'net_profit': -488.899, 'return_pct': -4.889, 'sharpe_ratio': -5.811, 'max_drawdown_pct': -4.889, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 10.0}
+2026-03-10 03:15:06,544 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:06,544 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3112 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:06,582 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3112: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:06,582 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:06,583 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3112 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:06,622 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3112: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:06,623 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:06,623 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3112 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:06,663 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3112: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:06,663 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:06,663 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3112 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:06,702 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3112: trades=4, final_eq=9801.50, max_dd=-1.99%
+2026-03-10 03:15:06,705 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=-1.314, max_dd=-1.99%
+2026-03-10 03:15:06,711 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-488.90, p5=-488.90, p95=-488.90, max_dd_mean=-440.01
+2026-03-10 03:15:06,712 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_3112 status=disabled score=-1.976
+2026-03-10 03:15:08,518 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_3112:XAUUSDm:M15
+2026-03-10 03:15:08,518 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3975 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:09,113 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3975: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:09,113 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (1 < 30)
+2026-03-10 03:15:09,113 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.428, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9950.0, 'net_profit': -50.0, 'return_pct': -0.5, 'sharpe_ratio': -1.833, 'max_drawdown_pct': -0.5, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 1.0}
+2026-03-10 03:15:09,114 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:09,114 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3975 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:09,154 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3975: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:09,155 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:09,155 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3975 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:09,195 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3975: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:09,196 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:09,196 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3975 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:09,237 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3975: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:09,238 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:09,238 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3975 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:09,278 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3975: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:09,280 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=-0.655, max_dd=-0.50%
+2026-03-10 03:15:09,288 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-50.00, p5=-50.00, p95=-50.00, max_dd_mean=0.00
+2026-03-10 03:15:09,289 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_3975 status=disabled score=-0.428
+2026-03-10 03:15:09,564 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_3975:XAUUSDm:M15
+2026-03-10 03:15:09,565 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9888 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:10,046 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9888: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:10,047 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:10,047 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:10,048 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:10,048 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9888 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:10,088 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9888: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:10,088 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:10,089 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9888 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:10,128 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9888: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:10,129 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:10,129 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9888 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:10,181 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9888: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:10,181 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:10,181 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9888 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:10,230 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9888: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:10,231 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:10,232 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_9888 status=disabled score=0.300
+2026-03-10 03:15:10,502 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_9888:XAUUSDm:M15
+2026-03-10 03:15:10,503 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9443 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:11,015 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9443: trades=11, final_eq=9463.55, max_dd=-5.36%
+2026-03-10 03:15:11,015 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (11 < 30)
+2026-03-10 03:15:11,015 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-2.085, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9463.546, 'net_profit': -536.454, 'return_pct': -5.365, 'sharpe_ratio': -6.097, 'max_drawdown_pct': -5.365, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 11.0}
+2026-03-10 03:15:11,016 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:11,016 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9443 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:11,055 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9443: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:11,056 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:11,056 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9443 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:11,094 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9443: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:11,094 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:11,095 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9443 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:11,132 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9443: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:11,133 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:11,133 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9443 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:11,171 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9443: trades=4, final_eq=9801.50, max_dd=-1.99%
+2026-03-10 03:15:11,173 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=-1.069, max_dd=-1.99%
+2026-03-10 03:15:11,176 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-536.45, p5=-536.45, p95=-536.45, max_dd_mean=-487.69
+2026-03-10 03:15:11,177 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_9443 status=disabled score=-2.085
+2026-03-10 03:15:11,441 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_9443:XAUUSDm:M15
+2026-03-10 03:15:11,441 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1275 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:11,980 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1275: trades=17, final_eq=9509.99, max_dd=-4.90%
+2026-03-10 03:15:11,981 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (17 < 30)
+2026-03-10 03:15:11,981 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-1.236, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9509.993, 'net_profit': -490.007, 'return_pct': -4.9, 'sharpe_ratio': -4.174, 'max_drawdown_pct': -4.9, 'profit_factor': 0.283, 'win_rate': 0.176, 'num_trades': 17.0}
+2026-03-10 03:15:11,982 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:11,982 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1275 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:12,024 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1275: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:12,025 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:12,025 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1275 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:12,067 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1275: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:12,067 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:12,068 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1275 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:12,111 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1275: trades=3, final_eq=9966.25, max_dd=-0.50%
+2026-03-10 03:15:12,112 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:12,112 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1275 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:12,154 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1275: trades=2, final_eq=9900.25, max_dd=-1.00%
+2026-03-10 03:15:12,156 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=-0.522, max_dd=-1.16%
+2026-03-10 03:15:12,160 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-490.01, p5=-490.01, p95=-490.01, max_dd_mean=-499.45
+2026-03-10 03:15:12,160 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_1275 status=disabled score=-1.236
+2026-03-10 03:15:12,451 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_1275:XAUUSDm:M15
+2026-03-10 03:15:12,451 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:13,031 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,031 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:13,032 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:13,032 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:13,032 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:13,075 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,075 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:13,076 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:13,117 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,117 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:13,117 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:13,159 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,159 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:13,159 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:13,199 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,201 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:13,201 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_2309 status=disabled score=0.300
+2026-03-10 03:15:13,470 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_2309:XAUUSDm:M15
+2026-03-10 03:15:13,471 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:13,992 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:13,993 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:13,993 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:13,993 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:13,994 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:14,034 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:14,035 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:14,035 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:14,076 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:14,077 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:14,077 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:14,117 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:14,118 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:14,118 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:14,162 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:14,163 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:14,164 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_1186 status=disabled score=0.300
+2026-03-10 03:15:14,418 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_1186:XAUUSDm:M15
+2026-03-10 03:15:14,418 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:14,997 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=1, final_eq=10033.33, max_dd=0.00%
+2026-03-10 03:15:14,997 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (1 < 30)
+2026-03-10 03:15:14,998 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=1.033, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10033.333, 'net_profit': 33.333, 'return_pct': 0.333, 'sharpe_ratio': 1.833, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 1.0, 'num_trades': 1.0}
+2026-03-10 03:15:14,999 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:14,999 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:15,152 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:15,154 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:15,154 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:15,210 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:15,211 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:15,211 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:15,255 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=1, final_eq=10033.33, max_dd=0.00%
+2026-03-10 03:15:15,255 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:15,255 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:15,295 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:15,296 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.002, max_dd=-0.33%
+2026-03-10 03:15:15,299 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=33.33, p5=33.33, p95=33.33, max_dd_mean=0.00
+2026-03-10 03:15:15,299 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_8199 status=disabled score=1.033
+2026-03-10 03:15:15,583 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_8199:XAUUSDm:M15
+2026-03-10 03:15:15,584 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3128 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:16,117 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3128: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:16,117 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (1 < 30)
+2026-03-10 03:15:16,118 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.428, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9950.0, 'net_profit': -50.0, 'return_pct': -0.5, 'sharpe_ratio': -1.833, 'max_drawdown_pct': -0.5, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 1.0}
+2026-03-10 03:15:16,118 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:16,119 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3128 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:16,166 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3128: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:16,167 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:16,167 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3128 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:16,213 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3128: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:16,214 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:16,214 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3128 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:16,256 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3128: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:16,257 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:16,257 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_3128 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:16,299 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_3128: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:16,300 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:16,306 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-50.00, p5=-50.00, p95=-50.00, max_dd_mean=0.00
+2026-03-10 03:15:16,306 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_3128 status=disabled score=-0.428
+2026-03-10 03:15:16,636 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_3128:XAUUSDm:M15
+2026-03-10 03:15:16,636 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4298 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:17,165 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4298: trades=2, final_eq=9900.25, max_dd=-1.00%
+2026-03-10 03:15:17,166 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (2 < 30)
+2026-03-10 03:15:17,166 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.727, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9900.25, 'net_profit': -99.75, 'return_pct': -0.997, 'sharpe_ratio': -2.594, 'max_drawdown_pct': -0.997, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 2.0}
+2026-03-10 03:15:17,167 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:17,167 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4298 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:17,208 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4298: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:17,208 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:17,209 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4298 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:17,247 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4298: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:17,247 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:17,248 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4298 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:17,285 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4298: trades=2, final_eq=9900.25, max_dd=-1.00%
+2026-03-10 03:15:17,286 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:17,286 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4298 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:17,325 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4298: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:17,327 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.004, max_dd=-1.00%
+2026-03-10 03:15:17,330 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-99.75, p5=-99.75, p95=-99.75, max_dd_mean=-49.87
+2026-03-10 03:15:17,330 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_4298 status=disabled score=-0.727
+2026-03-10 03:15:17,581 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_4298:XAUUSDm:M15
+2026-03-10 03:15:17,596 [INFO] autonomous_trading_ai.research.features: Loaded features from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\data\features\BTCUSDm_M15_features.parquet (len=1950)
+2026-03-10 03:15:17,603 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_1186 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1186.json
+2026-03-10 03:15:17,612 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_1275 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1275.json
+2026-03-10 03:15:17,619 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_2309 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_2309.json
+2026-03-10 03:15:17,628 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_3112 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3112.json
+2026-03-10 03:15:17,634 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_3128 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3128.json
+2026-03-10 03:15:17,644 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_3975 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_3975.json
+2026-03-10 03:15:17,650 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_4298 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_4298.json
+2026-03-10 03:15:17,659 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_8199 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_8199.json
+2026-03-10 03:15:17,665 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_9443 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_9443.json
+2026-03-10 03:15:17,674 [INFO] autonomous_trading_ai.strategies.generator: Loaded strategy rb_XAUUSDm_M15_9888 from C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_9888.json
+2026-03-10 03:15:17,674 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_BTCUSDm_M15_1122', 'symbol': 'BTCUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 27 and ma_short > ma_long', 'short_entry_rule': 'rsi > 76 and ma_short < ma_long', 'exit_rule': 'rsi < 51', 'stop_loss_pips': 100, 'take_profit_pips': 200, 'params': {'rsi_low': 27, 'rsi_high': 76, 'trend_min': 0.78, 'vol_max': 0.0097, 'rsi_exit': 51, 'trend_exit': 0.07}}
+2026-03-10 03:15:17,675 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_9328', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 15 and ma_short > ma_long', 'short_entry_rule': 'rsi > 83 and ma_short < ma_long', 'exit_rule': 'rsi < 59', 'stop_loss_pips': 100, 'take_profit_pips': 200, 'params': {'rsi_low': 15, 'rsi_high': 83, 'trend_min': 0.12, 'vol_max': 0.0171, 'rsi_exit': 59, 'trend_exit': 0.01}}
+2026-03-10 03:15:17,675 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_BTCUSDm_M15_8237', 'symbol': 'BTCUSDm', 'timeframe': 'M15', 'long_entry_rule': 'rsi < 19 and ma_short > ma_long', 'short_entry_rule': 'trend_strength < -0.18 and volatility < 0.0093', 'exit_rule': 'rsi > 46', 'stop_loss_pips': 50, 'take_profit_pips': 100, 'params': {'rsi_low': 19, 'rsi_high': 90, 'trend_min': 0.18, 'vol_max': 0.0093, 'rsi_exit': 46, 'trend_exit': -0.04}}
+2026-03-10 03:15:17,675 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_BTCUSDm_M15_9787', 'symbol': 'BTCUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.15 and volatility < 0.0066', 'short_entry_rule': 'rsi > 82 and ma_short < ma_long', 'exit_rule': 'rsi < 42', 'stop_loss_pips': 100, 'take_profit_pips': 150, 'params': {'rsi_low': 13, 'rsi_high': 82, 'trend_min': 0.15, 'vol_max': 0.0066, 'rsi_exit': 42, 'trend_exit': -0.03}}
+2026-03-10 03:15:17,676 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_BTCUSDm_M15_6148', 'symbol': 'BTCUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.76 and volatility < 0.0173', 'short_entry_rule': 'rsi > 66 and ma_short < ma_long', 'exit_rule': 'rsi < 44', 'stop_loss_pips': 50, 'take_profit_pips': 50, 'params': {'rsi_low': 20, 'rsi_high': 66, 'trend_min': 0.76, 'vol_max': 0.0173, 'rsi_exit': 44, 'trend_exit': -0.09}}
+2026-03-10 03:15:17,676 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_1613', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.6 and volatility < 0.0253', 'short_entry_rule': 'rsi > 75 and ma_short < ma_long', 'exit_rule': 'rsi < 45', 'stop_loss_pips': 50, 'take_profit_pips': 200, 'params': {'rsi_low': 22, 'rsi_high': 75, 'trend_min': 0.6, 'vol_max': 0.0253, 'rsi_exit': 45, 'trend_exit': -0.03}}
+2026-03-10 03:15:17,676 [INFO] autonomous_trading_ai.strategies.generator: Generated strategy {'name': 'rb_XAUUSDm_M15_4148', 'symbol': 'XAUUSDm', 'timeframe': 'M15', 'long_entry_rule': 'trend_strength > 0.31 and volatility < 0.0468', 'short_entry_rule': 'rsi > 88 and ma_short < ma_long', 'exit_rule': 'rsi > 58', 'stop_loss_pips': 50, 'take_profit_pips': 200, 'params': {'rsi_low': 11, 'rsi_high': 88, 'trend_min': 0.31, 'vol_max': 0.0468, 'rsi_exit': 58, 'trend_exit': 0.06}}
+2026-03-10 03:15:17,676 [INFO] autonomous_trading_ai.strategies.evolution: Evolution: generated new population of 10 strategies (elites=3)
+2026-03-10 03:15:17,677 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_8199 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_8199.json
+2026-03-10 03:15:17,678 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_1186 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1186.json
+2026-03-10 03:15:17,679 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_2309 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_2309.json
+2026-03-10 03:15:17,679 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_BTCUSDm_M15_1122 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_BTCUSDm_M15_1122.json
+2026-03-10 03:15:17,680 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_9328 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_9328.json
+2026-03-10 03:15:17,681 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_BTCUSDm_M15_8237 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_BTCUSDm_M15_8237.json
+2026-03-10 03:15:17,682 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_BTCUSDm_M15_9787 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_BTCUSDm_M15_9787.json
+2026-03-10 03:15:17,683 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_BTCUSDm_M15_6148 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_BTCUSDm_M15_6148.json
+2026-03-10 03:15:17,683 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_1613 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_1613.json
+2026-03-10 03:15:17,685 [INFO] autonomous_trading_ai.strategies.generator: Saved strategy rb_XAUUSDm_M15_4148 to C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\strategies\generated\rb_XAUUSDm_M15_4148.json
+2026-03-10 03:15:17,685 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:18,165 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:18,166 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (1 < 30)
+2026-03-10 03:15:18,166 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.428, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9950.0, 'net_profit': -50.0, 'return_pct': -0.5, 'sharpe_ratio': -1.833, 'max_drawdown_pct': -0.5, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 1.0}
+2026-03-10 03:15:18,167 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:18,168 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:18,208 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:18,209 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:18,209 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:18,251 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:18,251 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:18,252 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:18,297 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:18,297 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:18,298 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_8199 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:18,337 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_8199: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:18,339 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:18,342 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-50.00, p5=-50.00, p95=-50.00, max_dd_mean=0.00
+2026-03-10 03:15:18,342 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_8199 status=disabled score=-0.428
+2026-03-10 03:15:18,575 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_8199:XAUUSDm:M15
+2026-03-10 03:15:18,576 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:19,190 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:19,191 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:19,191 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:19,191 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:19,192 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:19,231 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:19,231 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:19,232 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:19,272 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:19,272 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:19,273 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:19,311 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:19,312 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:19,312 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1186 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:19,352 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1186: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:19,354 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:19,355 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_1186 status=disabled score=0.300
+2026-03-10 03:15:19,609 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_1186:XAUUSDm:M15
+2026-03-10 03:15:19,609 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:20,082 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:20,083 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:20,083 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:20,084 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:20,084 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:20,123 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:20,123 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:20,124 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:20,164 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:20,165 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:20,165 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:20,217 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:20,217 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:20,218 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_2309 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:20,261 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_2309: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:20,262 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:20,262 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_2309 status=disabled score=0.300
+2026-03-10 03:15:20,528 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_2309:XAUUSDm:M15
+2026-03-10 03:15:20,528 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_1122 on BTCUSDm M15 (len=1950)
+2026-03-10 03:15:21,064 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_1122: trades=4, final_eq=9801.50, max_dd=-1.99%
+2026-03-10 03:15:21,064 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (4 < 30)
+2026-03-10 03:15:21,064 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-1.148, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9801.495, 'net_profit': -198.505, 'return_pct': -1.985, 'sharpe_ratio': -3.67, 'max_drawdown_pct': -1.985, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 4.0}
+2026-03-10 03:15:21,065 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:21,065 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_1122 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:21,106 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_1122: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:21,107 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:21,107 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_1122 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:21,147 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_1122: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:21,147 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:21,148 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_1122 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:21,186 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_1122: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:21,187 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:21,187 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_1122 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:21,227 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_1122: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:21,228 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:21,231 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-198.50, p5=-198.50, p95=-198.50, max_dd_mean=-148.88
+2026-03-10 03:15:21,231 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_BTCUSDm_M15_1122 status=disabled score=-1.148
+2026-03-10 03:15:21,514 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_BTCUSDm_M15_1122:BTCUSDm:M15
+2026-03-10 03:15:21,514 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9328 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:21,976 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9328: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:21,976 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:21,976 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:21,977 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:21,977 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9328 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:22,016 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9328: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,016 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:22,017 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9328 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:22,054 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9328: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,054 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:22,055 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9328 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:22,092 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9328: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,092 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:22,093 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_9328 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:22,129 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_9328: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,130 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:22,131 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_9328 status=disabled score=0.300
+2026-03-10 03:15:22,390 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_9328:XAUUSDm:M15
+2026-03-10 03:15:22,390 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_8237 on BTCUSDm M15 (len=1950)
+2026-03-10 03:15:22,895 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_8237: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:22,895 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (1 < 30)
+2026-03-10 03:15:22,895 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.428, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9950.0, 'net_profit': -50.0, 'return_pct': -0.5, 'sharpe_ratio': -1.833, 'max_drawdown_pct': -0.5, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 1.0}
+2026-03-10 03:15:22,896 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:22,896 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_8237 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:22,943 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_8237: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,944 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:22,944 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_8237 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:22,999 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_8237: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:22,999 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:23,000 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_8237 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:23,040 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_8237: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,040 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:23,041 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_8237 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:23,082 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_8237: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,083 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:23,087 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-50.00, p5=-50.00, p95=-50.00, max_dd_mean=0.00
+2026-03-10 03:15:23,087 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_BTCUSDm_M15_8237 status=disabled score=-0.428
+2026-03-10 03:15:23,344 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_BTCUSDm_M15_8237:BTCUSDm:M15
+2026-03-10 03:15:23,344 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_9787 on BTCUSDm M15 (len=1950)
+2026-03-10 03:15:23,854 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_9787: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,854 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:23,855 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:23,856 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:23,856 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_9787 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:23,895 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_9787: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,895 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:23,896 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_9787 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:23,934 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_9787: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,935 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:23,935 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_9787 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:23,977 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_9787: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:23,978 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:23,978 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_9787 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:24,035 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_9787: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:24,038 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:24,038 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_BTCUSDm_M15_9787 status=disabled score=0.300
+2026-03-10 03:15:24,335 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_BTCUSDm_M15_9787:BTCUSDm:M15
+2026-03-10 03:15:24,336 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_6148 on BTCUSDm M15 (len=1950)
+2026-03-10 03:15:24,896 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_6148: trades=14, final_eq=9510.63, max_dd=-4.89%
+2026-03-10 03:15:24,896 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (14 < 30)
+2026-03-10 03:15:24,896 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-1.565, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9510.626, 'net_profit': -489.374, 'return_pct': -4.894, 'sharpe_ratio': -4.908, 'max_drawdown_pct': -4.894, 'profit_factor': 0.164, 'win_rate': 0.143, 'num_trades': 14.0}
+2026-03-10 03:15:24,897 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:24,897 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_6148 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:24,939 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_6148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:24,940 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:24,940 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_6148 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:24,980 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_6148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:24,981 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:24,981 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_6148 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:25,025 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_6148: trades=4, final_eq=9999.50, max_dd=-0.50%
+2026-03-10 03:15:25,026 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:25,026 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_BTCUSDm_M15_6148 on BTCUSDm M15 (len=147)
+2026-03-10 03:15:25,079 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_BTCUSDm_M15_6148: trades=1, final_eq=9950.00, max_dd=-0.50%
+2026-03-10 03:15:25,081 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=-0.290, max_dd=-0.50%
+2026-03-10 03:15:25,086 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-489.37, p5=-489.37, p95=-489.37, max_dd_mean=-469.47
+2026-03-10 03:15:25,086 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_BTCUSDm_M15_6148 status=disabled score=-1.565
+2026-03-10 03:15:25,354 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_BTCUSDm_M15_6148:BTCUSDm:M15
+2026-03-10 03:15:25,354 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1613 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:25,839 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1613: trades=2, final_eq=9900.25, max_dd=-1.00%
+2026-03-10 03:15:25,839 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (2 < 30)
+2026-03-10 03:15:25,839 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=-0.727, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 9900.25, 'net_profit': -99.75, 'return_pct': -0.997, 'sharpe_ratio': -2.594, 'max_drawdown_pct': -0.997, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 2.0}
+2026-03-10 03:15:25,840 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:25,840 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1613 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:25,879 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1613: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:25,880 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:25,880 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1613 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:25,920 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1613: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:25,921 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:25,921 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1613 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:25,964 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1613: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:25,965 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:25,965 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_1613 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:26,005 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_1613: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,007 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:26,010 [INFO] autonomous_trading_ai.backtests.monte_carlo: Monte Carlo: runs=200, final_eq_mean=-99.75, p5=-99.75, p95=-99.75, max_dd_mean=-49.89
+2026-03-10 03:15:26,010 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_1613 status=disabled score=-0.727
+2026-03-10 03:15:26,261 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_1613:XAUUSDm:M15
+2026-03-10 03:15:26,262 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4148 on XAUUSDm M15 (len=1950)
+2026-03-10 03:15:26,738 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,740 [INFO] autonomous_trading_ai.backtests.evaluation: Rejected strategy: too few trades (0 < 30)
+2026-03-10 03:15:26,740 [INFO] autonomous_trading_ai.backtests.evaluation: Evaluation result: score=0.300, accepted=False, stats={'initial_equity': 10000.0, 'final_equity': 10000.0, 'net_profit': 0.0, 'return_pct': 0.0, 'sharpe_ratio': 0.0, 'max_drawdown_pct': 0.0, 'profit_factor': 0.0, 'win_rate': 0.0, 'num_trades': 0.0}
+2026-03-10 03:15:26,740 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 0: train [0:340], test [340:487]
+2026-03-10 03:15:26,741 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4148 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:26,778 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,779 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 1: train [487:827], test [827:974]
+2026-03-10 03:15:26,779 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4148 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:26,819 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,820 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 2: train [974:1314], test [1314:1461]
+2026-03-10 03:15:26,820 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4148 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:26,859 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,860 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward window 3: train [1461:1803], test [1803:1950]
+2026-03-10 03:15:26,860 [INFO] autonomous_trading_ai.backtests.engine: Running backtest for rb_XAUUSDm_M15_4148 on XAUUSDm M15 (len=147)
+2026-03-10 03:15:26,898 [INFO] autonomous_trading_ai.backtests.engine: Backtest complete for rb_XAUUSDm_M15_4148: trades=0, final_eq=10000.00, max_dd=0.00%
+2026-03-10 03:15:26,899 [INFO] autonomous_trading_ai.backtests.walkforward: Walk-forward aggregate: windows=4, sharpe=0.000, max_dd=0.00%
+2026-03-10 03:15:26,899 [INFO] autonomous_trading_ai.strategies.pool: Pool upsert: rb_XAUUSDm_M15_4148 status=disabled score=0.300
+2026-03-10 03:15:27,172 [INFO] autonomous_trading_ai.vector_memory.research_memory: ResearchMemory: stored result for rb_XAUUSDm_M15_4148:XAUUSDm:M15
+2026-03-10 03:15:27,174 [INFO] autonomous_trading_ai.strategies.pool: Pool saved: 17 strategies
+2026-03-10 03:15:27,174 [INFO] autonomous_trading_ai.scheduler.main: Scheduler: job_research_strategies done
+2026-03-10 03:15:27,174 [INFO] autonomous_trading_ai.data.collector_mt5: Shutdown MetaTrader5 connection
