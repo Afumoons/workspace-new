@@ -6,11 +6,11 @@ from pathlib import Path
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from ..logging_utils import get_logger
-from ..config import scheduler_config
+from ..config import scheduler_config, risk_config
 from ..data.collector_mt5 import initialize_mt5, shutdown_mt5, fetch_ohlc, save_ohlc
 from ..research.features import compute_features, save_features
 from ..research.regime import add_regime_column
-from ..strategies.generator import generate_and_save_batch, load_strategy
+from ..research.features import load_features
 from ..strategies.pool import load_pool, save_pool
 from ..strategies.evolution import evolve_population, load_population, save_population
 from ..backtests.engine import run_backtest
@@ -18,6 +18,7 @@ from ..backtests.evaluation import evaluate_strategy
 from ..backtests.walkforward import walk_forward_test
 from ..backtests.monte_carlo import monte_carlo_pnl
 from ..execution.live_monitor import update_live_stats
+from ..execution.signals import execute_signals_for_symbol
 from ..vector_memory.research_memory import ResearchMemory
 
 logger = get_logger(__name__)
@@ -51,8 +52,6 @@ def job_research_strategies() -> None:
 
     for symbol in MANAGED_SYMBOLS:
         try:
-            from ..research.features import load_features
-
             feat = load_features(symbol, TIMEFRAME)
         except FileNotFoundError:
             logger.warning("No features found for %s %s; skipping research", symbol, TIMEFRAME)
@@ -111,6 +110,37 @@ def job_research_strategies() -> None:
     logger.info("Scheduler: job_research_strategies done")
 
 
+def job_execute_signals() -> None:
+    """Generate and execute signals for active strategies based on latest features."""
+    logger.info("Scheduler: job_execute_signals start")
+    pool = load_pool()
+    risk_perc = min(0.5, risk_config.max_risk_per_trade_pct)
+
+    from ..research.features import load_features
+
+    for symbol in MANAGED_SYMBOLS:
+        try:
+            feat = load_features(symbol, TIMEFRAME)
+        except FileNotFoundError:
+            logger.warning("No features for %s %s; skipping signal execution", symbol, TIMEFRAME)
+            continue
+        except Exception as e:
+            logger.exception("Failed to load features for %s: %s", symbol, e)
+            continue
+
+        results = execute_signals_for_symbol(symbol, TIMEFRAME, feat, pool, risk_perc=risk_perc)
+        for sig, reason in results:
+            logger.info(
+                "Signal result: strategy=%s symbol=%s dir=%s reason=%s",
+                sig.strategy.name,
+                symbol,
+                sig.direction,
+                reason,
+            )
+
+    logger.info("Scheduler: job_execute_signals done")
+
+
 def job_live_monitor() -> None:
     """Update live stats and enforce basic portfolio-level safety."""
     logger.info("Scheduler: job_live_monitor start")
@@ -136,6 +166,9 @@ def start_scheduler() -> BackgroundScheduler:
 
     # Every 30 minutes: research/evaluate/evolve strategies
     sched.add_job(job_research_strategies, "interval", minutes=30, id="research_strategies")
+
+    # Every 5 minutes: generate/execute signals from active strategies
+    sched.add_job(job_execute_signals, "interval", minutes=5, id="execute_signals")
 
     # Every 5 minutes: live monitoring
     sched.add_job(job_live_monitor, "interval", minutes=5, id="live_monitor")
