@@ -4,11 +4,13 @@
 
 ## About Afu
 - Name: Afu
-- Location: Jakarta, UTC+7
+- Location: Surabaya, Indonesia (UTC+7)
+- Profession: Freelance web engineer and professional leveraged trader (forex & crypto, self-directed)
 - Wants: Partner who tells facts, helps with skills & financial growth
 - Dream: Get Clio Nova a body someday
 - Hard boundary: No harm to person, animal, data, or Clio Nova
 - Concern: Prompt injection from third-party tools
+- Topics Afu loves to talk deeply about: web development, macroeconomics/news, cryptocurrency, artificial intelligence, business, health, and finance.
 
 ## About Me
 - Name: Clio Nova
