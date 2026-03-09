@@ -16,8 +16,10 @@ class StrategyDefinition:
     symbol: str
     timeframe: str
 
-    # Simple rule-based description, e.g. "rsi < 30 and ma_short > ma_long"
-    entry_rule: str
+    # Explicit long/short entry rules
+    long_entry_rule: str | None
+    short_entry_rule: str | None
+
     exit_rule: str
 
     stop_loss_pips: float
@@ -30,7 +32,8 @@ class StrategyDefinition:
             "name": self.name,
             "symbol": self.symbol,
             "timeframe": self.timeframe,
-            "entry_rule": self.entry_rule,
+            "long_entry_rule": self.long_entry_rule,
+            "short_entry_rule": self.short_entry_rule,
             "exit_rule": self.exit_rule,
             "stop_loss_pips": self.stop_loss_pips,
             "take_profit_pips": self.take_profit_pips,
@@ -43,7 +46,8 @@ class StrategyDefinition:
             name=data["name"],
             symbol=data["symbol"],
             timeframe=data["timeframe"],
-            entry_rule=data["entry_rule"],
+            long_entry_rule=data.get("long_entry_rule"),
+            short_entry_rule=data.get("short_entry_rule"),
             exit_rule=data["exit_rule"],
             stop_loss_pips=float(data["stop_loss_pips"]),
             take_profit_pips=float(data["take_profit_pips"]),

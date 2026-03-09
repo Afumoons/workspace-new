@@ -15,10 +15,14 @@ GENERATED_DIR = STRATEGY_DIR / "generated"
 GENERATED_DIR.mkdir(exist_ok=True)
 
 
-ENTRY_TEMPLATES = [
+LONG_ENTRY_TEMPLATES = [
     "rsi < {rsi_low} and ma_short > ma_long",
-    "rsi > {rsi_high} and ma_short < ma_long",
     "trend_strength > {trend_min} and volatility < {vol_max}",
+]
+
+SHORT_ENTRY_TEMPLATES = [
+    "rsi > {rsi_high} and ma_short < ma_long",
+    "trend_strength < {-trend_min} and volatility < {vol_max}",
 ]
 
 EXIT_TEMPLATES = [
@@ -29,8 +33,9 @@ EXIT_TEMPLATES = [
 
 
 def random_strategy(symbol: str, timeframe: str) -> StrategyDefinition:
-    """Generate a simple random rule-based strategy config."""
-    entry_tpl = random.choice(ENTRY_TEMPLATES)
+    """Generate a simple random rule-based strategy config with explicit long/short rules."""
+    long_tpl = random.choice(LONG_ENTRY_TEMPLATES)
+    short_tpl = random.choice(SHORT_ENTRY_TEMPLATES)
     exit_tpl = random.choice(EXIT_TEMPLATES)
 
     params = {
@@ -42,7 +47,8 @@ def random_strategy(symbol: str, timeframe: str) -> StrategyDefinition:
         "trend_exit": round(random.uniform(-0.1, 0.1), 2),
     }
 
-    entry_rule = entry_tpl.format(**params)
+    long_entry_rule = long_tpl.format(**params)
+    short_entry_rule = short_tpl.format(**params)
     exit_rule = exit_tpl.format(**params)
 
     stop_loss_pips = random.choice([50, 75, 100, 150])
@@ -54,7 +60,8 @@ def random_strategy(symbol: str, timeframe: str) -> StrategyDefinition:
         name=name,
         symbol=symbol,
         timeframe=timeframe,
-        entry_rule=entry_rule,
+        long_entry_rule=long_entry_rule,
+        short_entry_rule=short_entry_rule,
         exit_rule=exit_rule,
         stop_loss_pips=stop_loss_pips,
         take_profit_pips=take_profit_pips,
