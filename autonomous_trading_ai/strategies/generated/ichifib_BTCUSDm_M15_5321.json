@@ -1,0 +1,18 @@
+{
+  "name": "ichifib_BTCUSDm_M15_5321",
+  "symbol": "BTCUSDm",
+  "timeframe": "M15",
+  "long_entry_rule": "fib_zone_382 == 1 and trend_strength > 0.37",
+  "short_entry_rule": "tenkan_sen < kijun_sen and close < senkou_span_a and close < senkou_span_b",
+  "exit_rule": "trend_strength < 0.04",
+  "stop_loss_pips": 75,
+  "take_profit_pips": 200,
+  "params": {
+    "trend_min": 0.9281042267302222,
+    "rsi_exit": 51,
+    "trend_exit": -0.040618985737465016,
+    "rsi_high": 84,
+    "vol_max": 0.0036377535876022295,
+    "rsi_low": 18
+  }
+}

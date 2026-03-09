@@ -1,0 +1,18 @@
+{
+  "name": "rb_XAUUSDm_M15_3932",
+  "symbol": "XAUUSDm",
+  "timeframe": "M15",
+  "long_entry_rule": "rsi < 15 and ma_short > ma_long",
+  "short_entry_rule": "trend_strength < -0.95 and volatility < 0.0129",
+  "exit_rule": "rsi < 43",
+  "stop_loss_pips": 150,
+  "take_profit_pips": 100,
+  "params": {
+    "rsi_low": 11,
+    "rsi_high": 66,
+    "trend_min": 0.42,
+    "vol_max": 0.0293,
+    "rsi_exit": 57,
+    "trend_exit": -0.0
+  }
+}

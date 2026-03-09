@@ -5,8 +5,8 @@
   "long_entry_rule": "trend_strength > 0.15 and volatility < 0.0066",
   "short_entry_rule": "rsi > 82 and ma_short < ma_long",
   "exit_rule": "rsi < 42",
-  "stop_loss_pips": 100,
-  "take_profit_pips": 150,
+  "stop_loss_pips": 100.0,
+  "take_profit_pips": 150.0,
   "params": {
     "rsi_low": 13,
     "rsi_high": 82,

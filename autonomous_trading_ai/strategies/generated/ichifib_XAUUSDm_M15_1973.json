@@ -1,0 +1,15 @@
+{
+  "name": "ichifib_XAUUSDm_M15_1973",
+  "symbol": "XAUUSDm",
+  "timeframe": "M15",
+  "long_entry_rule": "tenkan_sen > kijun_sen and close > senkou_span_a and close > senkou_span_b",
+  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.14",
+  "exit_rule": "trend_strength < 0.06",
+  "stop_loss_pips": 100,
+  "take_profit_pips": 50,
+  "params": {
+    "trend_min": 0.14,
+    "rsi_exit": 46,
+    "trend_exit": 0.06
+  }
+}

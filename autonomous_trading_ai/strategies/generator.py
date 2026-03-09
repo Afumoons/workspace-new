@@ -15,14 +15,19 @@ GENERATED_DIR = STRATEGY_DIR / "generated"
 GENERATED_DIR.mkdir(exist_ok=True)
 
 
+# Bias towards Ichimoku + Fibonacci-style structures
 LONG_ENTRY_TEMPLATES = [
-    "rsi < {rsi_low} and ma_short > ma_long",
-    "trend_strength > {trend_min} and volatility < {vol_max}",
+    # Ichimoku: bullish alignment above the cloud
+    "tenkan_sen > kijun_sen and close > senkou_span_a and close > senkou_span_b",
+    # Fib + trend
+    "fib_zone_382 == 1 and trend_strength > {trend_min}",
 ]
 
 SHORT_ENTRY_TEMPLATES = [
-    "rsi > {rsi_high} and ma_short < ma_long",
-    "trend_strength < -{trend_min} and volatility < {vol_max}",
+    # Ichimoku: bearish alignment below the cloud
+    "tenkan_sen < kijun_sen and close < senkou_span_a and close < senkou_span_b",
+    # Fib + trend
+    "fib_zone_618 == 1 and trend_strength < -{trend_min}",
 ]
 
 EXIT_TEMPLATES = [
@@ -33,16 +38,13 @@ EXIT_TEMPLATES = [
 
 
 def random_strategy(symbol: str, timeframe: str) -> StrategyDefinition:
-    """Generate a simple random rule-based strategy config with explicit long/short rules."""
+    """Generate a strategy config with Ichimoku/Fib-biased rules."""
     long_tpl = random.choice(LONG_ENTRY_TEMPLATES)
     short_tpl = random.choice(SHORT_ENTRY_TEMPLATES)
     exit_tpl = random.choice(EXIT_TEMPLATES)
 
     params = {
-        "rsi_low": random.randint(10, 35),
-        "rsi_high": random.randint(65, 90),
         "trend_min": round(random.uniform(0.1, 1.0), 2),
-        "vol_max": round(random.uniform(0.005, 0.05), 4),
         "rsi_exit": random.randint(40, 60),
         "trend_exit": round(random.uniform(-0.1, 0.1), 2),
     }
@@ -54,7 +56,7 @@ def random_strategy(symbol: str, timeframe: str) -> StrategyDefinition:
     stop_loss_pips = random.choice([50, 75, 100, 150])
     take_profit_pips = random.choice([50, 100, 150, 200])
 
-    name = f"rb_{symbol}_{timeframe}_{random.randint(1000, 9999)}"
+    name = f"ichifib_{symbol}_{timeframe}_{random.randint(1000, 9999)}"
 
     strat = StrategyDefinition(
         name=name,

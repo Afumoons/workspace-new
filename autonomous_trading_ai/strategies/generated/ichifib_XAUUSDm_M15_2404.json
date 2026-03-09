@@ -1,0 +1,15 @@
+{
+  "name": "ichifib_XAUUSDm_M15_2404",
+  "symbol": "XAUUSDm",
+  "timeframe": "M15",
+  "long_entry_rule": "fib_zone_382 == 1 and trend_strength > 0.22",
+  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.22",
+  "exit_rule": "rsi > 45",
+  "stop_loss_pips": 100,
+  "take_profit_pips": 150,
+  "params": {
+    "trend_min": 0.22,
+    "rsi_exit": 45,
+    "trend_exit": 0.01
+  }
+}
