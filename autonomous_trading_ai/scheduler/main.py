@@ -10,13 +10,15 @@ from ..config import scheduler_config
 from ..data.collector_mt5 import initialize_mt5, shutdown_mt5, fetch_ohlc, save_ohlc
 from ..research.features import compute_features, save_features
 from ..research.regime import add_regime_column
-from ..strategies.generator import generate_and_save_batch
+from ..strategies.generator import generate_and_save_batch, load_strategy
 from ..strategies.pool import load_pool, save_pool
+from ..strategies.evolution import evolve_population, load_population, save_population
 from ..backtests.engine import run_backtest
 from ..backtests.evaluation import evaluate_strategy
 from ..backtests.walkforward import walk_forward_test
 from ..backtests.monte_carlo import monte_carlo_pnl
 from ..execution.live_monitor import update_live_stats
+from ..vector_memory.research_memory import ResearchMemory
 
 logger = get_logger(__name__)
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -42,9 +44,10 @@ def job_update_data() -> None:
 
 
 def job_research_strategies() -> None:
-    """Generate candidate strategies, backtest, evaluate, and update pool."""
+    """Generate/evolve strategies, backtest, evaluate, and update pool + memory."""
     logger.info("Scheduler: job_research_strategies start")
     pool = load_pool()
+    memory = ResearchMemory()
 
     for symbol in MANAGED_SYMBOLS:
         try:
@@ -58,13 +61,19 @@ def job_research_strategies() -> None:
             logger.exception("Failed to load features for %s: %s", symbol, e)
             continue
 
-        # Generate a small batch of random strategies for this symbol
-        paths = generate_and_save_batch(symbol, TIMEFRAME, n=3)
-        from ..strategies.generator import load_strategy
+        # Load existing population and scores from pool
+        existing_strats = [
+            (s, pool.strategies.get(s.name).score)
+            for s in load_population()
+            if s.name in pool.strategies
+        ]
 
-        for path in paths:
+        # Evolve population for this symbol/timeframe
+        new_population = evolve_population(symbol, TIMEFRAME, existing_strats)
+        save_population(new_population)
+
+        for strat in new_population:
             try:
-                strat = load_strategy(path)
                 result = run_backtest(
                     feat,
                     strat,
@@ -75,7 +84,7 @@ def job_research_strategies() -> None:
                 wf = walk_forward_test(feat, strat)
                 mc = monte_carlo_pnl(result.trades, n_runs=200)
 
-                # Merge some robustness stats into eval_result
+                # Merge robustness stats into eval_result
                 eval_result["wf_overall_sharpe"] = wf.get("aggregate", {}).get("overall_sharpe", 0.0)
                 eval_result["wf_overall_max_drawdown_pct"] = wf.get("aggregate", {}).get("overall_max_drawdown_pct", 0.0)
                 eval_result.update(mc)
@@ -86,8 +95,17 @@ def job_research_strategies() -> None:
                     score=eval_result.get("score", 0.0),
                     status="candidate" if eval_result.get("accepted") else "disabled",
                 )
+
+                # Store research result in Chroma
+                memory.store_strategy_result(
+                    strategy_name=strat.name,
+                    symbol=strat.symbol,
+                    timeframe=strat.timeframe,
+                    stats=eval_result,
+                )
+
             except Exception as e:
-                logger.exception("Research error for strategy file %s: %s", path, e)
+                logger.exception("Research error for strategy %s: %s", strat.name, e)
 
     save_pool(pool)
     logger.info("Scheduler: job_research_strategies done")
@@ -116,7 +134,7 @@ def start_scheduler() -> BackgroundScheduler:
     # Every 5 minutes: update data/features/regimes
     sched.add_job(job_update_data, "interval", minutes=5, id="update_data")
 
-    # Every 30 minutes: research/evaluate candidate strategies
+    # Every 30 minutes: research/evaluate/evolve strategies
     sched.add_job(job_research_strategies, "interval", minutes=30, id="research_strategies")
 
     # Every 5 minutes: live monitoring
