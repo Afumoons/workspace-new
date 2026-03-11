@@ -198,6 +198,68 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
+## 9. External review – Kimi assessment snapshot (2026-03-12)
+
+**Summary:**
+- Confirms the system as a strong **autonomous trading system** with:
+  - Modular architecture (data → research → strategies → backtests → risk → execution).
+  - Evolutionary research loop (generation + evolution + robustness checks).
+  - Vector-backed research memory (Chroma).
+  - Multi-layer risk management (per-trade, portfolio DD, daily caps, position limits).
+  - Robust orchestration with APScheduler.
+
+**Identified gaps / upgrade axes (Kimi):**
+- ML / AI core:
+  - Current system is evolutionary rule-based, not ML-driven.
+  - Suggested modules:
+    - `ml_models/price_predictor.py` – LSTM/Transformer-style forecasting.
+    - `ml_models/rl_agent.py` – RL agent (e.g. PPO/SAC) for decision-making / sizing.
+    - `ml_models/anomaly_detector.py` – autoencoder or similar for regime/anomaly detection.
+    - `ml_models/sentiment_analyzer.py` – NLP for news/social sentiment.
+- Explainability & model monitoring:
+  - Extend explainability with:
+    - SHAP-style feature importance for ML models.
+    - Attention visualization if using Transformers.
+    - Counterfactual reasoning ("what would have needed to change for this trade to win?").
+    - Model drift detection alerts when performance degrades statistically.
+- Meta-learning & adaptation:
+  - Add meta-learner components:
+    - `meta_learner.py` – learn when to switch strategy pools.
+    - `online_learning.py` – incremental model updates.
+    - `transfer_learning.py` – reuse knowledge across symbols/markets.
+- Advanced risk management analytics:
+  - Add VaR / CVaR / tail risk analysis.
+  - Correlation breakdown detection.
+  - Liquidity risk modeling / slippage and market impact modeling.
+- Robustness & fault tolerance:
+  - Additional infrastructure-level modules:
+    - `circuit_breaker.py` – halt trading on abnormal error rates or conditions.
+    - `fallback_strategies.py` – simple baseline strategies when AI layer fails.
+    - `data_quality_checks.py` – validate OHLCV (outliers, missing data, gaps).
+    - `mt5_connection_pool.py` – handle disconnects/reconnects gracefully.
+
+**Priority upgrade suggestions (Kimi):**
+- Priority 1 (production-critical):
+  - Data quality pipeline before models/decisions.
+  - Circuit breakers for anomalies.
+  - Model monitoring + drift detection.
+- Priority 2 (true AI depth):
+  - RL agents and predictive models layered on top of existing rule/evolution framework.
+  - Ensemble of RL + ML + rule-based signals with some voting/weighting.
+  - Meta-learning for when/how fast to adapt.
+- Priority 3 (optimization):
+  - Advanced risk metrics (VaR/CVaR, tail risk).
+  - Cross-asset correlation and portfolio risk.
+  - Richer transaction cost modeling.
+
+**Benchmarking framing (Kimi):**
+- Relative to:
+  - Hedge fund quant stack.
+  - Typical retail auto-trading bots.
+- Current system scores high on architecture, research pipeline, and risk; lower on ML/AI core, explainability for ML models, and robustness relative to institutional systems.
+
+---
+
 This file is a parking lot for future improvements. None of these are required for the
 current system to function; they are "potensi" upgrades we can revisit when you have
 time/energy or when the current setup has run for a while and we want to push it further.
