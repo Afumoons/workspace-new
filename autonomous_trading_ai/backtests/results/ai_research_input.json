@@ -1,0 +1,657 @@
+{
+  "symbol": "XAUUSDm",
+  "timeframe": "M15",
+  "total_strategies": 257,
+  "selected_count": 25,
+  "strategies": [
+    {
+      "name": "rb_XAUUSDm_M15_9888",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_2309",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_1186",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_9328",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_4148",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_7333",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_6503",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_8423",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_1635",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_3428",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_8976",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_8249",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_3932",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_1673",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "rb_XAUUSDm_M15_6916",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_5807",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_8880",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_9087",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_5803",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_1973",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "active",
+      "score": 0.3,
+      "stats": {
+        "return_pct": 0.0,
+        "sharpe_ratio": 0.0,
+        "max_drawdown_pct": 0.0,
+        "profit_factor": 0.0,
+        "win_rate": 0.0,
+        "num_trades": 0.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_4435",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "disabled",
+      "score": -29.975375742408612,
+      "stats": {
+        "return_pct": -99.44167811976776,
+        "sharpe_ratio": -78.22424140143666,
+        "max_drawdown_pct": -99.44167811976776,
+        "profit_factor": 0.06634678989458148,
+        "win_rate": 0.09651257096512571,
+        "num_trades": 1233.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {
+          "high_vol": {
+            "return_pct": -2.7696234443330874,
+            "net_profit": -276.9623444333087,
+            "num_trades": 66,
+            "avg_rr": 0.0,
+            "win_rate": 0.07575757575757576
+          },
+          "low_vol": {
+            "return_pct": -5.9069916170196235,
+            "net_profit": -590.6991617019623,
+            "num_trades": 79,
+            "avg_rr": 0.0,
+            "win_rate": 0.12658227848101267
+          },
+          "ranging": {
+            "return_pct": -13.711301268081458,
+            "net_profit": -1371.1301268081459,
+            "num_trades": 108,
+            "avg_rr": 0.0,
+            "win_rate": 0.08333333333333333
+          },
+          "trending_down": {
+            "return_pct": -33.17696297336481,
+            "net_profit": -3317.696297336481,
+            "num_trades": 367,
+            "avg_rr": 0.0,
+            "win_rate": 0.08991825613079019
+          },
+          "trending_up": {
+            "return_pct": -43.87679881696875,
+            "net_profit": -4387.679881696875,
+            "num_trades": 613,
+            "avg_rr": 0.0,
+            "win_rate": 0.10114192495921696
+          }
+        },
+        "stability": {
+          "subperiod_sharpe": [
+            -25.651259735095945,
+            -23.387040957914568,
+            -27.09723793027762
+          ],
+          "subperiod_return_pct": [
+            -82.06114366642817,
+            -14.583880955438353,
+            -2.796653497901224
+          ],
+          "sharpe_std": 1.5269105040212383
+        },
+        "news_behavior": {
+          "trades_around_high_impact": {
+            "num_trades": 0,
+            "return_pct": 0.0,
+            "avg_rr": 0.0
+          },
+          "avoidance_rate": 0.0,
+          "pre_news_return_pct": 0.0,
+          "post_news_return_pct": 0.0
+        },
+        "meta": {
+          "best_regime": "high_vol",
+          "worst_regime": "trending_up",
+          "is_trend_follower": false,
+          "is_range_trader": false
+        }
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_8344",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "disabled",
+      "score": -29.946954574433217,
+      "stats": {
+        "return_pct": -99.4341945302119,
+        "sharpe_ratio": -78.15255190427666,
+        "max_drawdown_pct": -99.43419453021191,
+        "profit_factor": 0.06574747325111123,
+        "win_rate": 0.0966693744922827,
+        "num_trades": 1231.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {
+          "high_vol": {
+            "return_pct": -2.7433851844480803,
+            "net_profit": -274.338518444808,
+            "num_trades": 66,
+            "avg_rr": 0.0,
+            "win_rate": 0.07575757575757576
+          },
+          "low_vol": {
+            "return_pct": -5.851103322130265,
+            "net_profit": -585.1103322130265,
+            "num_trades": 79,
+            "avg_rr": 0.0,
+            "win_rate": 0.12658227848101267
+          },
+          "ranging": {
+            "return_pct": -14.049297694356515,
+            "net_profit": -1404.9297694356517,
+            "num_trades": 109,
+            "avg_rr": 0.0,
+            "win_rate": 0.08256880733944955
+          },
+          "trending_down": {
+            "return_pct": -32.842724956138895,
+            "net_profit": -3284.2724956138895,
+            "num_trades": 363,
+            "avg_rr": 0.0,
+            "win_rate": 0.09090909090909091
+          },
+          "trending_up": {
+            "return_pct": -43.94768337313816,
+            "net_profit": -4394.768337313816,
+            "num_trades": 614,
+            "avg_rr": 0.0,
+            "win_rate": 0.10097719869706841
+          }
+        },
+        "stability": {
+          "subperiod_sharpe": [
+            -25.696642585990894,
+            -23.558954103239298,
+            -26.666715300832212
+          ],
+          "subperiod_return_pct": [
+            -81.97099865972683,
+            -14.657295557052613,
+            -2.8059003134324803
+          ],
+          "sharpe_std": 1.2982438044712803
+        },
+        "news_behavior": {
+          "trades_around_high_impact": {
+            "num_trades": 0,
+            "return_pct": 0.0,
+            "avg_rr": 0.0
+          },
+          "avoidance_rate": 0.0,
+          "pre_news_return_pct": 0.0,
+          "post_news_return_pct": 0.0
+        },
+        "meta": {
+          "best_regime": "high_vol",
+          "worst_regime": "trending_up",
+          "is_trend_follower": false,
+          "is_range_trader": false
+        }
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_6411",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "disabled",
+      "score": -29.910648477336288,
+      "stats": {
+        "return_pct": -99.4360527459082,
+        "sharpe_ratio": -78.06136174333032,
+        "max_drawdown_pct": -99.4360527459082,
+        "profit_factor": 0.06511897512254775,
+        "win_rate": 0.0966693744922827,
+        "num_trades": 1231.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_6833",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "disabled",
+      "score": -29.71209179561756,
+      "stats": {
+        "return_pct": -99.42368526196243,
+        "sharpe_ratio": -77.56719082751957,
+        "max_drawdown_pct": -99.42368526196243,
+        "profit_factor": 0.06849227590214739,
+        "win_rate": 0.0983739837398374,
+        "num_trades": 1230.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    },
+    {
+      "name": "ichifib_XAUUSDm_M15_1545",
+      "symbol": "XAUUSDm",
+      "timeframe": "M15",
+      "status": "disabled",
+      "score": -29.542823168813797,
+      "stats": {
+        "return_pct": -99.49605415428606,
+        "sharpe_ratio": -77.14401051067229,
+        "max_drawdown_pct": -99.49605415428606,
+        "profit_factor": 0.0660683130408608,
+        "win_rate": 0.07218167072181671,
+        "num_trades": 1233.0
+      },
+      "strategy_explain": {
+        "regime_pnl": {},
+        "stability": {},
+        "news_behavior": {},
+        "meta": {}
+      }
+    }
+  ]
+}
