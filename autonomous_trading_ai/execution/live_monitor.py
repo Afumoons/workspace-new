@@ -11,7 +11,7 @@ from ..strategies.pool import load_pool, save_pool
 
 logger = get_logger(__name__)
 
-LIVE_STATE_PATH = Path(__file__).resolve().parent / "live_state.json"
+LIVE_STATE_PATH = Path(__file__).resolve().parent / "equity_history.json"
 
 
 @dataclass

@@ -2,14 +2,17 @@
   "name": "ichifib_XAUUSDm_M15_1973",
   "symbol": "XAUUSDm",
   "timeframe": "M15",
-  "long_entry_rule": "tenkan_sen > kijun_sen and close > senkou_span_a and close > senkou_span_b",
-  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.14",
-  "exit_rule": "trend_strength < 0.06",
-  "stop_loss_pips": 100,
-  "take_profit_pips": 50,
+  "long_entry_rule": "fib_zone_382 == 1 and trend_strength > 0.13",
+  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.13",
+  "exit_rule": "rsi < 60",
+  "stop_loss_pips": 150,
+  "take_profit_pips": 100,
   "params": {
-    "trend_min": 0.14,
-    "rsi_exit": 46,
-    "trend_exit": 0.06
+    "trend_min": 0.65,
+    "rsi_exit": 58,
+    "trend_exit": 0.011090694066942276,
+    "vol_max": 0.030077231601482894,
+    "rsi_high": 68,
+    "rsi_low": 13
   }
 }

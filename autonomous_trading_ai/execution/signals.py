@@ -9,7 +9,7 @@ from ..logging_utils import get_logger
 from ..strategies.base import StrategyDefinition
 from ..strategies.pool import StrategyPool
 from ..execution.engine import execute_trade
-
+from autonomous_trading_ai.execution.live_state_utils import can_open_new_trade
 logger = get_logger(__name__)
 
 
@@ -54,6 +54,19 @@ def execute_signals_for_symbol(
         return []
 
     latest = features_df.sort_values("time").iloc[-1]
+
+    # Daily limits: optionally block new trades after daily DD / trade cap
+    from autonomous_trading_ai.config import risk_config
+    from autonomous_trading_ai.execution.live_monitor import _get_account_equity
+
+    if not can_open_new_trade(
+        current_equity=_get_account_equity(),
+        max_dd_pct=risk_config.max_daily_drawdown_pct,
+        max_trades=risk_config.max_trades_per_day,
+        enabled=risk_config.daily_limits_enabled,
+    ):
+        logger.info("Daily limits prevent opening new trades for %s %s", symbol, timeframe)
+        return []
 
     # Active strategies for this symbol/timeframe
     active_records = [
