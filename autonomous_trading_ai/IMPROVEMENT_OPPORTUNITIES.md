@@ -94,6 +94,50 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
+## 7. External review – ChatGPT assessment snapshot (2026-03-12)
+
+**Summary:**
+- Overall system assessed as an **Advanced Autonomous Research + Execution Engine (~7.5–8/10 maturity)** for an individual developer / small quant lab.
+- Strengths:
+  - Full research loop (data → features → regime → strategy generation → backtest → evaluation → robustness → pool → execution).
+  - Strategy evolution (elite selection, mutation, crossover).
+  - Robustness testing (walk-forward, Monte Carlo).
+  - Separated risk layer before MT5 execution.
+  - Daily state control (PnL, trade caps, loss caps).
+  - Strategy pool with statuses (`active`, `candidate`, `disabled`).
+  - Scheduler orchestration for 24/7 operation.
+  - Research memory (Chroma) + explainability.
+
+**Identified missing components / future upgrade axes:**
+- Portfolio intelligence:
+  - Account for correlation, clustered exposure, portfolio-level risk when selecting strategies.
+  - Consider mean-variance / risk-parity / hierarchical risk parity style allocators.
+- Strategy allocation engine:
+  - Capital weighting per strategy based on Sharpe, stability, recent performance, and regime suitability (not equal-weight).
+- Regime-adaptive allocation:
+  - Use existing regime detection to route capital:
+    - trend regimes → trend-follow strategies,
+    - range regimes → mean reversion,
+    - high-vol regimes → breakout, etc.
+- Strategy degradation detection:
+  - Detect edge decay in live trading and auto-quarantine strategies, e.g.:
+    - live Sharpe < 0.5 × backtest Sharpe,
+    - prolonged underperformance vs expectations.
+- Position sizing engine:
+  - Move beyond fixed risk% per trade towards volatility targeting / Kelly-style fractions / risk-parity sizing (within safe bounds).
+- Research intelligence loop:
+  - Use vector memory + explainability to *guide* strategy generation/evolution instead of pure generate→test.
+- Portfolio backtesting:
+  - Simulate portfolio-level equity & drawdown for combinations of strategies, not just per-strategy.
+- Execution robustness:
+  - Add retries, latency tolerance, spread-spike guards, partial-fill handling to the MT5 execution layer.
+
+**Autonomy level framing:**
+- Current level estimated as **Level 7 – evolving autonomous research system** on a 1–10 autonomy scale.
+- Clear path to Level 8–9 once portfolio intelligence, regime-adaptive allocation, and degradation detection are implemented.
+
+---
+
 This file is a parking lot for future improvements. None of these are required for the
 current system to function; they are "potensi" upgrades we can revisit when you have
 time/energy or when the current setup has run for a while and we want to push it further.
