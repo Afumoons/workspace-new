@@ -259,6 +259,18 @@ python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --
 This prints a concise summary of the best strategies and their
 `strategy_explain` fields so you can audit what the system has learned.
 
+For **AI-assisted research (Level 1)**, there is also:
+
+```powershell
+python -m autonomous_trading_ai.scripts.ai_generate_strategies --symbol XAUUSDm --timeframe M15 --limit 20
+```
+
+This prepares `backtests/results/ai_research_input.json` with a compact
+view of the best and worst strategies (including `strategy_explain`).
+Clio can read that file, analyse patterns, and write new
+`StrategyDefinition` JSON files into `strategies/generated/` for the
+research engine to backtest.
+
 ### 7.4. Start the scheduler loop
 
 ```powershell

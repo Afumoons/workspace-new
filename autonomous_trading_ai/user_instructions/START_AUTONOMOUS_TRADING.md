@@ -141,6 +141,26 @@ python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --
 The scheduler will keep evolving, evaluating, and promoting/retiring
 strategies automatically over time – a constantly self-improving system.
 
+If you want **extra AI-assisted research** (Level 1), you can occasionally
+run:
+
+```powershell
+python -m autonomous_trading_ai.scripts.ai_generate_strategies --symbol XAUUSDm --timeframe M15 --limit 20
+```
+
+This writes a compact summary of the best & worst strategies (including
+their `strategy_explain` fields) to:
+
+- `autonomous_trading_ai/backtests/results/ai_research_input.json`
+
+From there, Clio can read that file, analyse what works/doesn’t, and
+propose new `StrategyDefinition` configs to save under
+`strategies/generated/`. These are then treated like any other
+strategy by the research engine (backtest → explain → evaluate → pool).
+
+Live execution remains 100% deterministic; AI is only used **offline**
+for smarter strategy ideation.
+
 ---
 
 ## 6. Start the Autonomous Scheduler (24/7 Loop)
