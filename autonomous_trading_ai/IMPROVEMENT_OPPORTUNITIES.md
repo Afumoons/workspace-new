@@ -108,7 +108,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
   - Scheduler orchestration for 24/7 operation.
   - Research memory (Chroma) + explainability.
 
-**Identified missing components / future upgrade axes:**
+**Identified missing components / future upgrade axes (ChatGPT):**
 - Portfolio intelligence:
   - Account for correlation, clustered exposure, portfolio-level risk when selecting strategies.
   - Consider mean-variance / risk-parity / hierarchical risk parity style allocators.
@@ -132,9 +132,69 @@ Right now, we still use the legacy `regime` label column in many places. We have
 - Execution robustness:
   - Add retries, latency tolerance, spread-spike guards, partial-fill handling to the MT5 execution layer.
 
-**Autonomy level framing:**
+**Autonomy level framing (ChatGPT):**
 - Current level estimated as **Level 7 – evolving autonomous research system** on a 1–10 autonomy scale.
 - Clear path to Level 8–9 once portfolio intelligence, regime-adaptive allocation, and degradation detection are implemented.
+
+---
+
+## 8. External review – Claude assessment snapshot (2026-03-12)
+
+**Summary:**
+- Architecture considered **solid for a personal autonomous trading system**.
+- End-to-end pipeline (data → features → strategy generation → backtesting → risk → execution → monitoring) is complete and ahead of most retail bots.
+- Recognizes evolutionary strategy pool, vector memory, walk-forward + Monte Carlo, and layered risk management as strong points.
+
+**Identified gaps / upgrade axes (Claude):**
+- AI / ML depth:
+  - Current system is rule-based + evolutionary optimization rather than true learning.
+  - Suggested additions:
+    - Predictive models (ML/DL) for signals (e.g. gradient boosting, light ML layer).
+    - Online / incremental learning (e.g. River) or RL-style agents over time.
+- Regime detection sophistication:
+  - Current regime detection is heuristic/threshold-based.
+  - Consider:
+    - Hidden Markov Models for regime switching.
+    - Unsupervised clustering (GMM, k-means) over return/volatility features.
+- Macro news integration:
+  - Macro/news features are currently optional; for XAUUSD they should be treated as critical.
+  - Suggested:
+    - Real-time news/calendar pipeline (e.g. Forex Factory, economic calendar APIs).
+    - Sentiment/scoring models (FinBERT/GPT-based) for news impact.
+    - Automatic "news blackout" windows for high-impact events.
+- Live performance feedback loop:
+  - Make live trade performance an explicit input into strategy evolution and selection, not just backtests.
+  - Example: boost fitness for strategies with strong live Sharpe vs backtest, penalize those degrading.
+- Adversarial / stress testing:
+  - Beyond Monte Carlo, simulate:
+    - flash crashes,
+    - liquidity gaps,
+    - spread spikes around news.
+
+**Priority upgrade suggestions (Claude):**
+- Add ML signal layer:
+  - A lightweight ML model (e.g. LightGBM/XGBoost) as a scoring/filter over rule-based signals.
+  - Optional online learner module for incremental adaptation.
+- Real-time news pipeline:
+  - Integrate calendar + sentiment features into the feature pipeline.
+  - Enforce auto blackout/lockout rules around high-impact news.
+- Agentic decision layer:
+  - LLM-based meta-controller that reads research memory + live performance + market context to decide:
+    - when to halt trading (risk-off),
+    - which strategies to prioritize under current regime,
+    - when to trigger deeper research cycles.
+- Stronger live feedback into research:
+  - Feed `closed_trades_state` / live MT5 history into the research loop as an explicit signal when evolving/promoting strategies.
+
+**Autonomy / capability framing (Claude):**
+- Scores (approximate):
+  - Architecture: 8/10
+  - Risk management: 8/10
+  - AI/ML depth: 4/10
+  - Adaptability: 5/10
+  - News/macro awareness: 3/10
+  - Autonomy: 6/10
+- Overall: **autonomous execution system yang kuat**, belum penuh sebagai "autonomous intelligence" system.
 
 ---
 
