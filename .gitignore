@@ -1,3 +1,31 @@
+# === AI / Vector DB data ===
 chroma_data/
 memory/chroma_ingest.log
-autonomous_trading_ai/strategies/generated
+
+# === Temp & scratch ===
+tmp/
+*.tmp
+*.log
+*.swp
+.DS_Store
+Thumbs.db
+
+# === Node / JS ecosystem (kalau ada) ===
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# === Python (kalau nanti dipakai) ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pytest_cache/
+.mypy_cache/
+
+# === VSCode / IDE ===
+.vscode/
+.idea/
+
+# === Generated strategies / models ===
+autonomous_trading_ai/strategies/generated/
