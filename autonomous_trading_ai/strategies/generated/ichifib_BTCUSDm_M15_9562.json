@@ -4,12 +4,15 @@
   "timeframe": "M15",
   "long_entry_rule": "tenkan_sen > kijun_sen and close > senkou_span_a and close > senkou_span_b",
   "short_entry_rule": "tenkan_sen < kijun_sen and close < senkou_span_a and close < senkou_span_b",
-  "exit_rule": "rsi > 50",
-  "stop_loss_pips": 100,
+  "exit_rule": "trend_strength < 0.05",
+  "stop_loss_pips": 150,
   "take_profit_pips": 150,
   "params": {
-    "trend_min": 0.51,
-    "rsi_exit": 50,
-    "trend_exit": -0.08
+    "trend_min": 0.9109913070531326,
+    "rsi_exit": 54,
+    "trend_exit": -0.059691355467537205,
+    "vol_max": 0.009881055840684327,
+    "rsi_high": 85,
+    "rsi_low": 15
   }
 }

@@ -5,8 +5,8 @@
   "long_entry_rule": "fib_zone_382 == 1 and trend_strength > 0.36",
   "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.36",
   "exit_rule": "rsi < 41",
-  "stop_loss_pips": 75,
-  "take_profit_pips": 200,
+  "stop_loss_pips": 75.0,
+  "take_profit_pips": 200.0,
   "params": {
     "trend_min": 0.36,
     "rsi_exit": 41,

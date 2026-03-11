@@ -67,7 +67,7 @@ Leave this window running while you test.
 
 ```powershell
 cd C:\Users\afusi\.openclaw\workspace
-.autonomous_trading_ai\.venv\Scripts\activate
+.\autonomous_trading_ai\.venv\Scripts\activate
 ```
 
 You should see the venv name in your prompt.

@@ -2,17 +2,17 @@
   "name": "ichifib_BTCUSDm_M15_9541",
   "symbol": "BTCUSDm",
   "timeframe": "M15",
-  "long_entry_rule": "fib_zone_382 == 1 and trend_strength > 0.18",
-  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.18",
-  "exit_rule": "trend_strength < -0.05",
-  "stop_loss_pips": 75,
-  "take_profit_pips": 200,
+  "long_entry_rule": "tenkan_sen > kijun_sen and close > senkou_span_a and close > senkou_span_b",
+  "short_entry_rule": "fib_zone_618 == 1 and trend_strength < -0.25",
+  "exit_rule": "rsi < 52",
+  "stop_loss_pips": 50,
+  "take_profit_pips": 150,
   "params": {
-    "trend_min": 0.9109913070531326,
-    "rsi_exit": 57,
-    "trend_exit": -0.059691355467537205,
-    "vol_max": 0.011252221259127403,
-    "rsi_low": 15,
-    "rsi_high": 85
+    "trend_min": 0.8983528064853445,
+    "rsi_exit": 49,
+    "trend_exit": -0.04419709464530286,
+    "vol_max": 0.005133868955611902,
+    "rsi_high": 81,
+    "rsi_low": 15
   }
 }
