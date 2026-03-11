@@ -229,15 +229,35 @@ python -c "from autonomous_trading_ai.data.collector_mt5 import initialize_mt5, 
 python -c "from autonomous_trading_ai.data.collector_mt5 import initialize_mt5, shutdown_mt5; from autonomous_trading_ai.scheduler.main import job_research_strategies; initialize_mt5(); job_research_strategies(); shutdown_mt5()"
 ```
 
-### 7.3. Promote top strategies to active
+### 7.3. Strategy selection & self-improvement (automatic)
 
-This determines which strategies can actually send signals.
+In the current design, manual promotion is **not required** in normal
+operation. The scheduler's `job_research_strategies` job:
+
+- Backtests, evaluates, and runs walk-forward + Monte Carlo.
+- Builds a rich `strategy_explain` object per strategy capturing:
+  - PnL by market regime (trend / range / high-vol).
+  - Session behavior (Asia / London / New York).
+  - Risk behavior (R:R, SL/TP vs rule exits, holding time, losing streaks).
+  - Stability across time (sub-period Sharpe, Sharpe stddev).
+  - Behavior around macro news (performance near high-impact events,
+    avoidance rate, pre/post news returns).
+- Computes a score and applies an **automatic promotion policy**:
+  - `active`   → strategies that satisfy stricter live criteria
+                 (PnL > 0, DD <= ~20%, PF >= ~1.1, positive trend
+                 performance, not catastrophically bad in ranges).
+  - `candidate` → strategies that pass base thresholds but not the
+                  stricter promotion filter.
+  - `disabled` → everything else.
+
+You (or future Clio) can still inspect the pool manually using:
 
 ```powershell
-python -m autonomous_trading_ai.scripts.promote_strategies
+python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --timeframe M15 --status active --limit 5
 ```
 
-This promotes the top N candidates (default 3) to `active` in the pool.
+This prints a concise summary of the best strategies and their
+`strategy_explain` fields so you can audit what the system has learned.
 
 ### 7.4. Start the scheduler loop
 

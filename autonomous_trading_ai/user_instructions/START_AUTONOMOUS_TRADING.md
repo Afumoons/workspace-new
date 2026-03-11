@@ -103,22 +103,43 @@ This will:
 
 ---
 
-## 5. Promote Top Strategies to Active
+## 5. Strategy Selection & Self-Improvement (No Manual Promotion Needed)
 
-Promotion decides which strategies are actually allowed to send signals.
+The system now promotes strategies automatically based on rich
+explanations of their behavior (`strategy_explain`). You **do not** need
+to manually run a promotion script in normal operation.
+
+On each `job_research_strategies` cycle, the agent now:
+
+- Backtests and evaluates strategies as before.
+- Builds a `strategy_explain` object per strategy, describing:
+  - PnL per market regime (trending_up, trending_down, ranging, etc.).
+  - Session behavior (Asia / London / New York).
+  - Risk behavior (R:R, SL/TP vs rule exits, holding time, losing streaks).
+  - Stability over time (sub-period sharpe, sharpe_std).
+  - Behavior around macro news (performance near high-impact events,
+    avoidance rate, pre/post news PnL).
+- Computes a score that rewards:
+  - Profit in trending regimes.
+  - Reasonable performance in ranges.
+  - Stable behavior across time.
+  - Sensible behavior around news (not kamikaze into high-impact events).
+- Automatically sets pool status:
+  - `active`   → strategies that pass stricter criteria (PnL > 0, DD <= 20%,
+                 PF >= 1.1, healthy trend performance, not destroyed in ranges).
+  - `candidate` → strategies that pass base thresholds but not the stricter
+                  promotion policy.
+  - `disabled` → everything else.
+
+For inspection/debugging, you can still review the pool manually:
 
 ```powershell
-python -m autonomous_trading_ai.scripts.promote_strategies
+# Show top XAUUSDm M15 strategies and their explanations
+python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --timeframe M15 --status active --limit 5
 ```
 
-This will:
-
-- Load the strategy pool.
-- Take the top 3 `candidate` strategies by score.
-- Mark them as `active`.
-- Save back to `strategies/pool_state.json`.
-
-You can rerun this after future research cycles to refresh the active set.
+The scheduler will keep evolving, evaluating, and promoting/retiring
+strategies automatically over time – a constantly self-improving system.
 
 ---
 

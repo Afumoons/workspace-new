@@ -101,6 +101,99 @@ def compute_fib_zones(df: pd.DataFrame, window: int = 100) -> pd.DataFrame:
     return df
 
 
+NEWS_PATH = DATA_DIR / "raw" / "news_events.parquet"
+
+
+def _load_news_events() -> pd.DataFrame | None:
+    """Load macro news events if available.
+
+    This is a lightweight, optional dependency. If the file does not
+    exist or fails to load, we simply skip news-based features.
+    """
+    if not NEWS_PATH.exists():
+        logger.info("No news_events.parquet found at %s; skipping news features", NEWS_PATH)
+        return None
+    try:
+        news = pd.read_parquet(NEWS_PATH)
+    except Exception as e:
+        logger.exception("Failed to load news events from %s: %s", NEWS_PATH, e)
+        return None
+    if "time" not in news.columns:
+        logger.warning("News events file missing 'time' column; skipping news features")
+        return None
+    news = news.copy()
+    news["time"] = pd.to_datetime(news["time"], utc=True)
+    return news
+
+
+def _add_news_features(df: pd.DataFrame, news: pd.DataFrame, window_min: int = 30) -> pd.DataFrame:
+    """Join macro news context into the feature DataFrame.
+
+    For each bar time, we compute proximity to the nearest news event
+    and derive simple features:
+
+    - has_news_window
+    - news_impact_level
+    - news_time_delta_min
+    - news_surprise
+    - in_news_lockout (high-impact within window)
+    """
+    if news is None or news.empty:
+        return df
+
+    df = df.copy()
+    df["time"] = pd.to_datetime(df["time"], utc=True)
+
+    # Map impact strings to integer levels
+    impact_map = {"low": 1, "medium": 2, "high": 3}
+    news = news.copy()
+    news["impact_level"] = news["impact"].map(impact_map).fillna(0).astype(int)
+
+    # For simplicity, we treat all events as relevant to XAUUSD for now
+    # (USD-centric). Later we can filter by currency if needed.
+
+    # Sort for merge_asof
+    news = news.sort_values("time")
+    df = df.sort_values("time")
+
+    # Forward and backward nearest events
+    nearest_forward = pd.merge_asof(
+        df[["time"]], news[["time", "impact_level", "surprise"]],
+        on="time", direction="forward")
+    nearest_backward = pd.merge_asof(
+        df[["time"]], news[["time", "impact_level", "surprise"]],
+        on="time", direction="backward")
+
+    # Compute deltas in minutes
+    fwd_delta = (nearest_forward["time_y"] - df["time"]).dt.total_seconds() / 60.0
+    bwd_delta = (df["time"] - nearest_backward["time_y"]).dt.total_seconds() / 60.0
+
+    # Choose event with smaller absolute delta
+    fwd_abs = fwd_delta.abs().fillna(np.inf)
+    bwd_abs = bwd_delta.abs().fillna(np.inf)
+    use_fwd = fwd_abs <= bwd_abs
+
+    nearest_time = np.where(use_fwd, nearest_forward["time_y"], nearest_backward["time_y"])
+    nearest_impact = np.where(use_fwd,
+                              nearest_forward["impact_level"],
+                              nearest_backward["impact_level"])
+    nearest_surprise = np.where(use_fwd,
+                                nearest_forward["surprise"],
+                                nearest_backward["surprise"])
+    nearest_delta = np.where(use_fwd, fwd_delta, -bwd_delta)
+
+    df["news_time_delta_min"] = nearest_delta
+    df["news_impact_level"] = pd.Series(nearest_impact, index=df.index).fillna(0).astype(int)
+    df["news_surprise"] = pd.Series(nearest_surprise, index=df.index)
+
+    window = float(window_min)
+    df["has_news_window"] = df["news_time_delta_min"].abs() <= window
+    # Simple lockout: high-impact within window
+    df["in_news_lockout"] = (df["news_impact_level"] >= 3) & df["has_news_window"]
+
+    return df
+
+
 def compute_features(
     df: pd.DataFrame,
     symbol: str,
@@ -112,7 +205,7 @@ def compute_features(
     vol_window: int = 20,
     trend_window: int = 50,
 ) -> pd.DataFrame:
-    """Given OHLCV DataFrame, compute technical features.
+    """Given OHLCV DataFrame, compute technical + macro-context features.
 
     Expected df columns: ["time", "open", "high", "low", "close", "tick_volume"].
     """
@@ -137,6 +230,11 @@ def compute_features(
 
     # Fibonacci zones
     df = compute_fib_zones(df, window=100)
+
+    # Optional: macro news features
+    news = _load_news_events()
+    if news is not None:
+        df = _add_news_features(df, news)
 
     df.dropna(inplace=True)
     logger.info(

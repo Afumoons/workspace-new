@@ -109,11 +109,37 @@ def job_research_strategies() -> None:
                 eval_result["wf_overall_max_drawdown_pct"] = wf.get("aggregate", {}).get("overall_max_drawdown_pct", 0.0)
                 eval_result.update(mc)
 
+                # Determine pool status: active / candidate / disabled
+                def _should_promote(stats: dict) -> bool:
+                    ex = stats.get("strategy_explain", {}) or {}
+                    regime = ex.get("regime_pnl", {}) or {}
+                    trend_ret = (
+                        regime.get("trending_up", {}).get("return_pct", 0.0) +
+                        regime.get("trending_down", {}).get("return_pct", 0.0)
+                    )
+                    range_ret = regime.get("ranging", {}).get("return_pct", 0.0)
+
+                    return (
+                        stats.get("num_trades", 0.0) >= 40 and
+                        stats.get("return_pct", 0.0) > 0.0 and
+                        stats.get("max_drawdown_pct", 100.0) <= 20.0 and
+                        stats.get("profit_factor", 0.0) >= 1.1 and
+                        trend_ret > 0.0 and
+                        range_ret > -5.0
+                    )
+
+                if _should_promote(eval_result):
+                    status = "active"
+                elif eval_result.get("accepted"):
+                    status = "candidate"
+                else:
+                    status = "disabled"
+
                 pool.upsert_strategy(
                     strategy=strat,
                     stats=eval_result,
                     score=eval_result.get("score", 0.0),
-                    status="candidate" if eval_result.get("accepted") else "disabled",
+                    status=status,
                 )
 
                 # Store research result in Chroma

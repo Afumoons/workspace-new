@@ -42,12 +42,14 @@ class BacktestResult:
     stats: Dict[str, float]
 
     def to_dict(self) -> Dict:
+        # Convert equity_curve index to ISO strings to keep JSON keys valid
+        eq_curve = {str(ts): float(v) for ts, v in self.equity_curve.items()}
         return {
             "strategy": self.strategy.to_dict(),
             "symbol": self.symbol,
             "timeframe": self.timeframe,
             "trades": [t.__dict__ for t in self.trades],
-            "equity_curve": self.equity_curve.to_dict(),
+            "equity_curve": eq_curve,
             "stats": self.stats,
         }
 
@@ -229,6 +231,22 @@ def run_backtest(
     equity_series = pd.Series(equity_curve, index=pd.to_datetime(times))
 
     stats = _compute_basic_stats(equity_series, trades, initial_equity, strategy.timeframe)
+
+    # Strategy-level explanation (regime/session/risk/stability/news)
+    try:
+        from .explain import build_strategy_explain
+
+        trades_df = pd.DataFrame([t.__dict__ for t in trades]) if trades else pd.DataFrame()
+        explain = build_strategy_explain(
+            trades=trades_df,
+            features=df,
+            regime_column=regime_column or "regime",
+            initial_equity=initial_equity,
+            symbol=strategy.symbol,
+        )
+        stats["strategy_explain"] = explain
+    except Exception as e:
+        logger.exception("Failed to build strategy_explain for %s: %s", strategy.name, e)
 
     logger.info(
         "Backtest complete for %s: trades=%d, final_eq=%.2f, max_dd=%.2f%%",

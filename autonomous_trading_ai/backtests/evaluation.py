@@ -36,11 +36,49 @@ def compute_score(stats: Dict[str, float], cfg: EvaluationConfig = DEFAULT_EVAL_
     else:
         dd_penalty = max(0.0, 1.0 - dd / cfg.max_drawdown_pct)
 
-    score = (
+    base_score = (
         cfg.weight_sharpe * sharpe +
         cfg.weight_profit_factor * pf +
         cfg.weight_drawdown_penalty * dd_penalty
     )
+
+    # Optional strategy_explain-aware adjustments
+    explain = stats.get("strategy_explain", {}) or {}
+
+    # Regime preference: reward strategies that earn in trending regimes
+    regime_pnl = explain.get("regime_pnl", {}) or {}
+    trend_ret = (
+        regime_pnl.get("trending_up", {}).get("return_pct", 0.0) +
+        regime_pnl.get("trending_down", {}).get("return_pct", 0.0)
+    )
+    range_ret = regime_pnl.get("ranging", {}).get("return_pct", 0.0)
+
+    regime_bonus = 0.0
+    if trend_ret > 0:
+        regime_bonus += 0.2
+    if range_ret > -3.0:
+        regime_bonus += 0.1
+
+    # Stability: penalize highly unstable Sharpe across subperiods
+    stability = explain.get("stability", {}) or {}
+    sharpe_std = float(stability.get("sharpe_std", 0.0) or 0.0)
+    stability_penalty = min(0.2, max(0.0, sharpe_std))
+
+    # News behavior: avoid strategies that consistently lose around high-impact news
+    news = explain.get("news_behavior", {}) or {}
+    hi = news.get("trades_around_high_impact", {}) or {}
+    hi_ret = float(hi.get("return_pct", 0.0) or 0.0)
+    hi_count = int(hi.get("num_trades", 0) or 0)
+    avoidance_rate = float(news.get("avoidance_rate", 0.0) or 0.0)
+
+    news_bonus = 0.0
+    news_penalty = 0.0
+    if hi_count >= 5 and hi_ret < -2.0:
+        news_penalty = 0.2
+    if avoidance_rate > 0.7 and hi_ret >= 0.0:
+        news_bonus = 0.1
+
+    score = base_score + regime_bonus + news_bonus - stability_penalty - news_penalty
     return float(score)
 
 

@@ -5,8 +5,8 @@
   "long_entry_rule": "rsi < 10 and ma_short > ma_long",
   "short_entry_rule": "rsi > 90 and ma_short < ma_long",
   "exit_rule": "rsi < 60",
-  "stop_loss_pips": 150,
-  "take_profit_pips": 150,
+  "stop_loss_pips": 150.0,
+  "take_profit_pips": 150.0,
   "params": {
     "rsi_low": 10,
     "rsi_high": 90,
