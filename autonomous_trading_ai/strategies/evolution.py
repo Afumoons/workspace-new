@@ -17,9 +17,10 @@ GENERATED_DIR = STRATEGY_DIR / "generated"
 
 @dataclass
 class EvolutionConfig:
-    population_size: int = 10
-    elite_frac: float = 0.3
-    mutation_rate: float = 0.3
+    # Slightly larger, more exploratory population for discovery.
+    population_size: int = 20
+    elite_frac: float = 0.2
+    mutation_rate: float = 0.4
     crossover_rate: float = 0.4
 
 

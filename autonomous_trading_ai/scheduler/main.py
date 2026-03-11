@@ -25,7 +25,8 @@ logger = get_logger(__name__)
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 # Symbols/timeframes to manage (can be externalized/configured later)
-MANAGED_SYMBOLS = ["XAUUSDm", "BTCUSDm"]
+# MANAGED_SYMBOLS = ["XAUUSDm", "BTCUSDm"]
+MANAGED_SYMBOLS = ["XAUUSDm"]
 TIMEFRAME = "M15"
 
 
@@ -60,14 +61,27 @@ def job_research_strategies() -> None:
             logger.exception("Failed to load features for %s: %s", symbol, e)
             continue
 
-        # Load existing population and scores from pool
-        existing_strats = [
-            (s, pool.strategies.get(s.name).score)
-            for s in load_population()
-            if s.name in pool.strategies
-        ]
+        # Select top parent strategies from pool for this symbol/timeframe
+        from ..strategies.generator import load_strategy
 
-        # Evolve population for this symbol/timeframe
+        parent_records = [
+            rec
+            for rec in pool.strategies.values()
+            if rec.symbol == symbol and rec.timeframe == TIMEFRAME
+        ]
+        parent_records.sort(key=lambda r: r.score, reverse=True)
+        parent_records = parent_records[:20]
+
+        existing_strats = []
+        for rec in parent_records:
+            path = BASE_DIR / "strategies" / "generated" / f"{rec.name}.json"
+            try:
+                strat = load_strategy(path)
+                existing_strats.append((strat, rec.score))
+            except Exception as e:
+                logger.exception("Failed to load parent strategy %s from %s: %s", rec.name, path, e)
+
+        # Evolve population for this symbol/timeframe (or random if no parents yet)
         new_population = evolve_population(symbol, TIMEFRAME, existing_strats)
         save_population(new_population)
 
@@ -79,6 +93,13 @@ def job_research_strategies() -> None:
                     regime_column="regime",
                 )
                 eval_result = evaluate_strategy(result.stats)
+
+                # Skip strategies that essentially never trade (num_trades too low)
+                num_trades = eval_result.get("num_trades", 0.0)
+                if num_trades < 5:
+                    logger.info("Skipping strategy %s due to low trade count: %.0f", strat.name, num_trades)
+                    continue
+
                 # Walk-forward
                 wf = walk_forward_test(feat, strat)
                 mc = monte_carlo_pnl(result.trades, n_runs=200)

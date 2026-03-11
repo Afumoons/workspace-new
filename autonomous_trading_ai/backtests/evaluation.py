@@ -10,10 +10,12 @@ logger = get_logger(__name__)
 
 @dataclass
 class EvaluationConfig:
-    min_trades: int = 30
-    min_sharpe: float = 0.5
+    # Looser thresholds for discovery; we still compute scores for ranking
+    # and can tighten these later for live trading selection.
+    min_trades: int = 15
+    min_sharpe: float = 0.1
     max_drawdown_pct: float = 30.0
-    min_profit_factor: float = 1.2
+    min_profit_factor: float = 1.05
 
     weight_sharpe: float = 0.4
     weight_profit_factor: float = 0.3
