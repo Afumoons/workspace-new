@@ -62,13 +62,20 @@ This README gives the high-level map. Each submodule has its own
    - `live_monitor.py` tracks equity history in `execution/equity_history.json`,
      computes drawdown, optionally disables strategies, and wires **real closed
      MT5 deals** into `DailyState` via `closed_trades_state.json`.
+   - `strategy_live_stats.py` maintains aggregated **per-strategy live PnL**
+     (including a rolling window of recent PnLs) in
+     `execution/strategy_live_stats.json`, which is used for **strategy
+     degradation detection**.
 
 7. **Scheduler / Orchestration (`scheduler/`)**
    - `main.py` uses APScheduler to orchestrate the whole loop:
      - `job_update_data` (every 5 min): fetch OHLC → compute features + regime → save.
      - `job_research_strategies` (every 30 min): evolve strategies, backtest,
        evaluate, run robustness checks, update `StrategyPool`, and write to
-       `ResearchMemory`.
+       `ResearchMemory`. After each cycle, it also applies conservative
+       **live-performance-based degradation rules** that demote clearly
+       underperforming `active` strategies back to `candidate` based on their
+       recent live returns.
      - `job_execute_signals` (every 5 min): load features + active strategies,
        generate/execute signals, enforced by risk + daily limits.
      - `job_live_monitor` (every 5 min): update equity history and daily state,
@@ -103,7 +110,8 @@ From there, the system loops indefinitely:
 - evolving and re-evaluating the strategy pool,
 - executing signals from `active` strategies with risk/daily guards,
 - monitoring equity/drawdown,
-- logging research outcomes to Chroma.
+- logging research outcomes to Chroma,
+- and continuously **pruning underperforming strategies** based on live results.
 
 ## Where to Look for Details
 

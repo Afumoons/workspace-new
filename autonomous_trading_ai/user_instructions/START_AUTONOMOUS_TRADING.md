@@ -106,60 +106,58 @@ This will:
 ## 5. Strategy Selection & Self-Improvement (No Manual Promotion Needed)
 
 The system now promotes strategies automatically based on rich
-explanations of their behavior (`strategy_explain`). You **do not** need
-to manually run a promotion script in normal operation.
+explanations of their behavior (`strategy_explain`) **dan juga menjaga
+kualitas pool berdasarkan performa live**. Kamu **tidak perlu** lagi
+menjalankan script promosi manual di workflow normal.
 
-On each `job_research_strategies` cycle, the agent now:
+Pada setiap `job_research_strategies`:
 
-- Backtests and evaluates strategies as before.
-- Builds a `strategy_explain` object per strategy, describing:
-  - PnL per market regime (trending_up, trending_down, ranging, etc.).
-  - Session behavior (Asia / London / New York).
-  - Risk behavior (R:R, SL/TP vs rule exits, holding time, losing streaks).
-  - Stability over time (sub-period sharpe, sharpe_std).
-  - Behavior around macro news (performance near high-impact events,
-    avoidance rate, pre/post news PnL).
-- Computes a score that rewards:
-  - Profit in trending regimes.
-  - Reasonable performance in ranges.
-  - Stable behavior across time.
-  - Sensible behavior around news (not kamikaze into high-impact events).
-- Automatically sets pool status:
-  - `active`   → strategies that pass stricter criteria (PnL > 0, DD <= 20%,
-                 PF >= 1.1, healthy trend performance, not destroyed in ranges).
-  - `candidate` → strategies that pass base thresholds but not the stricter
-                  promotion policy.
-  - `disabled` → everything else.
+- Agent akan:
+  - Backtest dan evaluate strategi seperti biasa.
+  - Membangun `strategy_explain` per strategi (regime/session/risk/stability/news).
+  - Menghitung skor dan menetapkan status pool:
+    - `active`   → lolos kriteria ketat (PnL > 0, DD <= ~20%, PF >= ~1.1,
+                   performa di tren oke, tidak hancur di range).
+    - `candidate` → lolos threshold dasar tapi belum layak `active`.
+    - `disabled` → sisanya.
 
-For inspection/debugging, you can still review the pool manually:
+- Setelah itu, sistem juga melihat **performa live**:
+  - Membaca `execution/strategy_live_stats.json`, yang berisi:
+    - total PnL live per strategi,
+    - jumlah trade live,
+    - dan **rolling window ~30 trade terakhir**.
+  - Untuk strategi yang sudah `active` dan punya trade live cukup banyak:
+    - kalau return live recent jelas jelek vs ekspektasi backtest,
+    - status otomatis diturunkan dari `active` → `candidate`.
+
+Artinya:
+- Promosi ke `active` masih berbasis riset backtest + explainability.
+- Strategi yang mulai busuk di live akan otomatis “ditarik ke bangku
+  cadangan” tanpa kamu harus pantau satu-satu.
+
+Untuk inspeksi/debug, kamu tetap bisa cek pool:
 
 ```powershell
 # Show top XAUUSDm M15 strategies and their explanations
 python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --timeframe M15 --status active --limit 5
 ```
 
-The scheduler will keep evolving, evaluating, and promoting/retiring
-strategies automatically over time – a constantly self-improving system.
-
-If you want **extra AI-assisted research** (Level 1), you can occasionally
-run:
+Jika mau **AI-assisted research (Level 1)** tambahan, sesekali kamu bisa
+jalankan:
 
 ```powershell
 python -m autonomous_trading_ai.scripts.ai_generate_strategies --symbol XAUUSDm --timeframe M15 --limit 20
 ```
 
-This writes a compact summary of the best & worst strategies (including
-their `strategy_explain` fields) to:
+Ini menulis ringkasan strategi terbaik/terburuk (termasuk
+`strategy_explain`) ke:
 
 - `autonomous_trading_ai/backtests/results/ai_research_input.json`
 
-From there, Clio can read that file, analyse what works/doesn’t, and
-propose new `StrategyDefinition` configs to save under
-`strategies/generated/`. These are then treated like any other
-strategy by the research engine (backtest → explain → evaluate → pool).
-
-Live execution remains 100% deterministic; AI is only used **offline**
-for smarter strategy ideation.
+Dari situ Clio bisa baca file tersebut, analisis pola, dan mengusulkan
+`StrategyDefinition` baru untuk disimpan ke `strategies/generated/`.
+Eksekusi live tetap deterministik; AI hanya dipakai **offline** untuk
+ide strategi lebih cerdas.
 
 ---
 
@@ -188,6 +186,7 @@ What it does:
         (risk manager + MT5 execution).
     - `job_live_monitor`
       - Update equity history & peak in `execution/live_state.json`.
+      - Wire closed MT5 deals into `DailyState` dan `strategy_live_stats`.
       - If drawdown exceeds a safety threshold, can disable strategies.
 
   - **Every 30 minutes:**
@@ -197,7 +196,9 @@ What it does:
       - Evolve the population.
       - Backtest + evaluate + walk-forward + Monte Carlo.
       - Update pool (scores, status, stats).
-      - Store research results in Chroma.
+      - Store research result in Chroma.
+      - Terapkan degradasi berdasarkan performa live (demote `active`
+        yang recent live-nya buruk).
 
 Leave this running while you want the autonomous system active.
 Stopping this process stops automatic trading.
@@ -230,9 +231,6 @@ If I disappear and you want to get things running again:
    python -c "from autonomous_trading_ai.scheduler.main import job_update_data; job_update_data()"
    python -c "from autonomous_trading_ai.scheduler.main import job_research_strategies; job_research_strategies()"
 
-   # Promote best candidates
-   python -m autonomous_trading_ai.scripts.promote_strategies
-
    # Start the scheduler loop
    python -m autonomous_trading_ai.scheduler.main
    ```
@@ -242,7 +240,7 @@ back online and managing:
 
 - Data ingestion & feature engineering
 - Strategy evolution + evaluation
-- Strategy pool management
+- Strategy pool management (termasuk degradasi berbasis live)
 - Risk-checked MT5 execution
 - Live monitoring & basic safety
 
