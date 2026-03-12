@@ -115,7 +115,36 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 8. External review – ChatGPT assessment snapshot (2026-03-12)
+## 8. Live-performance aware strategy management
+
+Beyond the implemented conservative *degradation* rules (demoting clearly
+underperforming live strategies from `active` → `candidate`), a future extension
+is to also **flag strategies whose live performance substantially exceeds their
+backtest** despite weak historical stats.
+
+**Goal:** Treat "backtest jelek, tapi 30 trade terakhir live bagus" as a
+research signal, bukan langsung auto-promote.
+
+**Ideas:**
+- During `_apply_live_degradation` (or a sibling function), detect strategies where:
+  - backtest `return_pct` and/or `sharpe_ratio` are low/negative, **but**
+  - recent live return (rolling window) is significantly positive.
+- Instead of promoting them automatically, annotate their `stats` with a flag, e.g.:
+  - `stats["live_anomaly"] = "outperforming_backtest"`.
+- Use this flag in AI-assisted research (Level 2/3) to:
+  - surface them as R&D candidates for manual/AI review,
+  - analyse whether the live edge is structural or hanya noise/regime-specific.
+
+**Impact:**
+- Menangkap potensi edge baru tanpa mengorbankan disiplin risk.
+- Memisahkan:
+  - "strategi yang kebetulan hoki" vs
+  - "strategi yang mungkin menangkap perubahan struktur market".
+- Menjaga sistem tetap **conservative di eksekusi**, tapi **curious di riset**.
+
+---
+
+## 9. External review – ChatGPT assessment snapshot (2026-03-12)
 
 **Summary:**
 - Overall system assessed as an **Advanced Autonomous Research + Execution Engine (~7.5–8/10 maturity)** for an individual developer / small quant lab.
@@ -159,7 +188,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 9. External review – Claude assessment snapshot (2026-03-12)
+## 10. External review – Claude assessment snapshot (2026-03-12)
 
 **Summary:**
 - Architecture considered **solid for a personal autonomous trading system**.
@@ -219,7 +248,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 10. External review – Kimi assessment snapshot (2026-03-12)
+## 11. External review – Kimi assessment snapshot (2026-03-12)
 
 **Summary:**
 - Confirms the system as a strong **autonomous trading system** with:
