@@ -9,7 +9,8 @@ It provides:
 
 - A serializable `StrategyDefinition` config object (no executable code).
 - Tools to generate and mutate strategies (Ichimoku + Fibonacci-biased).
-- A `StrategyPool` abstraction to track scores, statuses, and stats.
+- A `StrategyPool` abstraction to track scores, statuses, stats, and (via
+  other modules) live performance.
 
 ## Key Files
 
@@ -96,6 +97,10 @@ It provides:
 - `strategies/pool_state.json`
   - Serialized `StrategyPool`.
   - Updated by `scheduler.job_research_strategies()` on each research cycle.
+  - After each cycle, additional **live performance-based degradation rules**
+    are applied using aggregated stats from
+    `execution/strategy_live_stats.json`, demoting clearly underperforming
+    `active` strategies back to `candidate`.
 
 ## How It’s Used
 
@@ -106,6 +111,12 @@ It provides:
   - Backtests and evaluates each candidate.
   - Calls `pool.upsert_strategy(...)` with status determined by promotion logic
     (active/candidate/disabled).
+  - Stores evaluation results in vector memory.
+  - Finally, applies a conservative **live degradation pass** that:
+    - reads `execution/strategy_live_stats.json`,
+    - for each `active` strategy with enough live trades and good backtests,
+      demotes it to `candidate` if live returns are significantly negative or
+      far below backtest expectations.
   - Calls `save_pool(pool)` at the end of the job.
 
 - `execution/signals.execute_signals_for_symbol(...)`:
@@ -123,3 +134,6 @@ It provides:
   file), it is skipped and an exception is logged.
 - Strategy names are used as IDs and must be unique; collisions will overwrite
   previous records in the pool.
+- Live degradation rules are intentionally conservative and one-sided: they
+  only downgrade strategies that are clearly failing; they do not auto-upgrade
+  based on live performance alone.

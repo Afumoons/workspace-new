@@ -19,6 +19,7 @@ from ..backtests.walkforward import walk_forward_test
 from ..backtests.monte_carlo import monte_carlo_pnl
 from ..execution.live_monitor import update_live_stats
 from ..execution.signals import execute_signals_for_symbol
+from ..execution.strategy_live_stats import load_all_strategy_stats
 from ..vector_memory.research_memory import ResearchMemory
 
 logger = get_logger(__name__)
@@ -43,6 +44,56 @@ def job_update_data() -> None:
         except Exception as e:
             logger.exception("job_update_data error for %s: %s", symbol, e)
     logger.info("Scheduler: job_update_data done")
+
+
+def _apply_live_degradation(pool) -> None:
+    """Adjust strategy statuses based on simple live performance heuristics.
+
+    Uses aggregated per-strategy PnL from `execution/strategy_live_stats.json`.
+    This is intentionally conservative: it only *downgrades* strategies that
+    are clearly underperforming live vs their backtest expectations.
+    """
+    live_stats = load_all_strategy_stats()
+    if not live_stats:
+        return
+
+    for name, rec in live_stats.items():
+        pool_rec = pool.strategies.get(name)
+        if not pool_rec:
+            continue
+        if pool_rec.status != "active":
+            continue
+
+        stats = pool_rec.stats or {}
+        bt_ret = float(stats.get("return_pct", 0.0) or 0.0)
+        bt_sharpe = float(stats.get("sharpe_ratio", 0.0) or 0.0)
+
+        # Only consider strategies that looked decent in backtest
+        if bt_ret <= 0 or bt_sharpe <= 0.3:
+            continue
+
+        # Require a minimum amount of live data before judging
+        if rec.num_trades < 10:
+            continue
+
+        live_ret_pct = rec.total_pnl / max(stats.get("initial_equity", 1.0), 1.0) * 100.0
+
+        # Simple degradation rules:
+        # - live return significantly negative while backtest was positive
+        # - or live underperformance by large margin vs backtest
+        if live_ret_pct < -5.0 or live_ret_pct < 0.25 * bt_ret:
+            old_status = pool_rec.status
+            pool_rec.status = "candidate"
+            logger.warning(
+                "Degradation: demoting %s from %s to candidate (bt_ret=%.2f%%, bt_sharpe=%.2f, "
+                "live_ret=%.2f%%, live_trades=%d)",
+                name,
+                old_status,
+                bt_ret,
+                bt_sharpe,
+                live_ret_pct,
+                rec.num_trades,
+            )
 
 
 def job_research_strategies() -> None:
@@ -152,6 +203,10 @@ def job_research_strategies() -> None:
 
             except Exception as e:
                 logger.exception("Research error for strategy %s: %s", strat.name, e)
+
+    # After updating pool with latest backtest-based scores/statuses, apply
+    # conservative live degradation rules based on StrategyLiveStats.
+    _apply_live_degradation(pool)
 
     save_pool(pool)
     logger.info("Scheduler: job_research_strategies done")
