@@ -6,9 +6,10 @@ This module is responsible for **turning strategy signals into real MT5 trades**
 and for **tracking live account state** used by risk controls:
 
 - Execute trades via the MetaTrader5 Python API with basic sizing & logging.
-- Enforce risk decisions from `risk/manager.py` before sending orders.
+- Enforce risk decisions from `risk/manager.py` before sending any order.
 - Maintain daily state (PnL, return %, trade count, daily lockout).
 - Record equity history and wire closed MT5 deals into `DailyState`.
+- Track per-strategy live PnL stats for degradation detection.
 
 ## Key Files
 
@@ -40,6 +41,17 @@ and for **tracking live account state** used by risk controls:
     - Filtering for close/exit deals.
     - For each new deal, calling `register_trade_pnl(pnl, equity_now)`.
     - Tracking processed tickets in `closed_trades_state.json` so deals are not double-counted.
+  - Additionally updates per-strategy live stats by reading MT5 `deal.comment`
+    (set as `"clio-auto-{strategy_name}"` by `engine.execute_trade`).
+
+- `strategy_live_stats.py`
+  - Maintains aggregated **live PnL per strategy** in
+    `execution/strategy_live_stats.json`.
+  - Core pieces:
+    - `StrategyLiveStats` dataclass – `name`, `total_pnl`, `num_trades`, `last_update`.
+    - `load_all_strategy_stats()` / `save_all_strategy_stats(...)` – I/O helpers.
+    - `register_strategy_pnl(strategy_name, pnl)` – called from `live_monitor` for
+      each closed MT5 deal tagged with that strategy's comment.
 
 ## Data & State Files
 
@@ -64,6 +76,12 @@ and for **tracking live account state** used by risk controls:
     - `last_check_time` – last time we queried `mt5.history_deals_get`.
     - `processed_deal_ids` – list of MT5 deal tickets already applied to `DailyState`.
 
+- `execution/strategy_live_stats.json`
+  - Aggregated live PnL stats per strategy:
+    - `total_pnl`, `num_trades`, `avg_pnl`, `last_update`.
+  - Intended as an input for **strategy degradation detection** and
+    live-aware promotion/demotion logic in the strategy pool.
+
 ## How It’s Used
 
 - `scheduler/main.py` calls into this module via jobs such as:
@@ -75,6 +93,7 @@ and for **tracking live account state** used by risk controls:
     - calls `live_monitor.update_live_stats()` periodically to:
       - append to equity history,
       - wire closed MT5 deals into `DailyState`,
+      - update per-strategy live stats,
       - enforce portfolio-level DD safety switches.
 
 - Risk interaction:
@@ -84,6 +103,8 @@ and for **tracking live account state** used by risk controls:
 ## Gotchas / Notes
 
 - All PnL & daily state are assumed to be **per account**, not per strategy.
+- Per-strategy stats in `strategy_live_stats.json` are **aggregated PnL only**;
+  they do not yet reflect exact per-strategy equity curves or volatility.
 - `live_monitor` uses MT5 **deal history**; make sure MT5 history is not truncated too aggressively by the broker/terminal.
 - On first run, `closed_trades_state.json` may look back a default window (e.g. 7 days) and will then converge as trades are processed once.
 - If symbols, pip size conventions, or account precision differ by broker, adjust:

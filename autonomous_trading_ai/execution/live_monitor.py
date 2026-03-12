@@ -9,6 +9,7 @@ import MetaTrader5 as mt5
 from ..logging_utils import get_logger
 from ..strategies.pool import load_pool, save_pool
 from .live_state_utils import register_trade_pnl
+from .strategy_live_stats import register_strategy_pnl
 
 logger = get_logger(__name__)
 
@@ -73,13 +74,14 @@ def _save_closed_trades_state(state: dict) -> None:
 
 
 def _update_daily_pnl_from_closed_deals() -> None:
-    """Pull new closed MT5 deals and wire them into DailyState.
+    """Pull new closed MT5 deals and wire them into DailyState and per-strategy stats.
 
     This function:
     - reads the last check time and processed deal ids,
     - calls mt5.history_deals_get(last_check_time, now),
     - filters for close/exit deals,
     - for each new deal, calls register_trade_pnl(pnl, equity_now),
+      and updates per-strategy live stats based on deal.comment,
     - updates state so the same deal is not processed twice.
 
     Any errors are logged but should not crash the live monitor.
@@ -141,6 +143,18 @@ def _update_daily_pnl_from_closed_deals() -> None:
         try:
             equity_now = _get_account_equity()
             register_trade_pnl(pnl=pnl, current_equity=equity_now)
+
+            # Update per-strategy live stats using MT5 comment, which is set
+            # by execution.engine.execute_trade as "clio-auto-{strategy_name}".
+            comment = getattr(deal, "comment", "") or ""
+            if comment.startswith("clio-auto-"):
+                strategy_name = comment.replace("clio-auto-", "", 1)
+                if strategy_name:
+                    try:
+                        register_strategy_pnl(strategy_name=strategy_name, pnl=pnl)
+                    except Exception:
+                        logger.exception("Failed to update StrategyLiveStats for %s", strategy_name)
+
             processed_ids.add(ticket)
             trades_processed += 1
         except Exception:
@@ -152,7 +166,7 @@ def _update_daily_pnl_from_closed_deals() -> None:
     _save_closed_trades_state(state)
 
     if trades_processed:
-        logger.info("Processed %d new closed deals into DailyState", trades_processed)
+        logger.info("Processed %d new closed deals into DailyState and StrategyLiveStats", trades_processed)
 
 
 def update_live_stats() -> None:
@@ -160,7 +174,8 @@ def update_live_stats() -> None:
 
     This now also wires closed MT5 deals into DailyState so that
     daily_pnl / daily_return_pct / trades_today are backed by *real* account
-    history, not synthetic updates.
+    history, not synthetic updates. In addition, per-strategy live PnL stats
+    are updated from deal comments for future degradation detection.
     """
     import json
     from datetime import datetime
@@ -189,6 +204,7 @@ def update_live_stats() -> None:
     logger.info("Live monitor: equity=%.2f peak=%.2f", equity, stats.peak_equity)
 
     # Wire in closed trades to DailyState (PnL, return %, trades_today)
+    # and per-strategy live stats.
     try:
         _update_daily_pnl_from_closed_deals()
     except Exception:
