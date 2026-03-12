@@ -19,7 +19,7 @@ from ..backtests.walkforward import walk_forward_test
 from ..backtests.monte_carlo import monte_carlo_pnl
 from ..execution.live_monitor import update_live_stats
 from ..execution.signals import execute_signals_for_symbol
-from ..execution.strategy_live_stats import load_all_strategy_stats
+from ..execution.strategy_live_stats import load_all_strategy_stats, MAX_RECENT_TRADES
 from ..vector_memory.research_memory import ResearchMemory
 
 logger = get_logger(__name__)
@@ -73,26 +73,33 @@ def _apply_live_degradation(pool) -> None:
             continue
 
         # Require a minimum amount of live data before judging
-        if rec.num_trades < 10:
+        if rec.num_trades < max(10, MAX_RECENT_TRADES):
             continue
 
-        live_ret_pct = rec.total_pnl / max(stats.get("initial_equity", 1.0), 1.0) * 100.0
+        initial_eq = float(stats.get("initial_equity", 1.0) or 1.0)
+        live_ret_total_pct = rec.total_pnl / max(initial_eq, 1.0) * 100.0
+        live_ret_recent_pct = sum(rec.recent_pnls) / max(initial_eq, 1.0) * 100.0 if rec.recent_pnls else 0.0
 
-        # Simple degradation rules:
-        # - live return significantly negative while backtest was positive
-        # - or live underperformance by large margin vs backtest
-        if live_ret_pct < -5.0 or live_ret_pct < 0.25 * bt_ret:
+        # Simple degradation rules (conservative):
+        # - recent live return clearly negative, OR
+        # - recent live return far below backtest expectation.
+        if (
+            live_ret_recent_pct < -3.0
+            or live_ret_recent_pct < 0.25 * bt_ret
+        ):
             old_status = pool_rec.status
             pool_rec.status = "candidate"
             logger.warning(
                 "Degradation: demoting %s from %s to candidate (bt_ret=%.2f%%, bt_sharpe=%.2f, "
-                "live_ret=%.2f%%, live_trades=%d)",
+                "live_total_ret=%.2f%%, live_recent_ret=%.2f%%, live_trades=%d, recent_window=%d)",
                 name,
                 old_status,
                 bt_ret,
                 bt_sharpe,
-                live_ret_pct,
+                live_ret_total_pct,
+                live_ret_recent_pct,
                 rec.num_trades,
+                len(rec.recent_pnls),
             )
 
 

@@ -9,7 +9,8 @@ and for **tracking live account state** used by risk controls:
 - Enforce risk decisions from `risk/manager.py` before sending any order.
 - Maintain daily state (PnL, return %, trade count, daily lockout).
 - Record equity history and wire closed MT5 deals into `DailyState`.
-- Track per-strategy live PnL stats for degradation detection.
+- Track per-strategy live PnL stats (including a recent rolling window) for
+  degradation detection.
 
 ## Key Files
 
@@ -48,10 +49,13 @@ and for **tracking live account state** used by risk controls:
   - Maintains aggregated **live PnL per strategy** in
     `execution/strategy_live_stats.json`.
   - Core pieces:
-    - `StrategyLiveStats` dataclass – `name`, `total_pnl`, `num_trades`, `last_update`.
+    - `StrategyLiveStats` dataclass – `name`, `total_pnl`, `num_trades`,
+      `last_update`, and `recent_pnls` (rolling window of the last
+      `MAX_RECENT_TRADES` PnLs).
     - `load_all_strategy_stats()` / `save_all_strategy_stats(...)` – I/O helpers.
     - `register_strategy_pnl(strategy_name, pnl)` – called from `live_monitor` for
-      each closed MT5 deal tagged with that strategy's comment.
+      each closed MT5 deal tagged with that strategy's comment; keeps
+      `recent_pnls` capped at `MAX_RECENT_TRADES`.
 
 ## Data & State Files
 
@@ -78,7 +82,7 @@ and for **tracking live account state** used by risk controls:
 
 - `execution/strategy_live_stats.json`
   - Aggregated live PnL stats per strategy:
-    - `total_pnl`, `num_trades`, `avg_pnl`, `last_update`.
+    - `total_pnl`, `num_trades`, `avg_pnl`, `last_update`, `recent_pnls`.
   - Intended as an input for **strategy degradation detection** and
     live-aware promotion/demotion logic in the strategy pool.
 
@@ -93,7 +97,7 @@ and for **tracking live account state** used by risk controls:
     - calls `live_monitor.update_live_stats()` periodically to:
       - append to equity history,
       - wire closed MT5 deals into `DailyState`,
-      - update per-strategy live stats,
+      - update per-strategy live stats (including the recent PnL window),
       - enforce portfolio-level DD safety switches.
 
 - Risk interaction:
