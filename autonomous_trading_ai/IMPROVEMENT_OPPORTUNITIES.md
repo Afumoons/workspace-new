@@ -48,7 +48,28 @@ Snapshot as of 2026-03-12 – potential future upgrades we discussed.
 
 ---
 
-## 3. Session-aware behavior
+## 3. AI-assisted research – Level 3 (model-guided generation & scoring)
+
+**Goal:** Move from "AI membantu membaca hasil riset" ke **"AI ikut mengarahkan riset"**.
+
+**Ideas:**
+- Tambah modul `ml_research/` yang berfokus pada meta-analisis strategi:
+  - `strategy_meta_dataset.py` – membangun dataset dari `strategy_explain`, stats backtest, dan hasil live.
+  - `meta_ranker.py` – model (mis. gradient boosting) yang memprediksi "survival probability" atau expected live edge dari strategi baru.
+  - `guided_generator.py` – adaptor antara `generator/evolution` dan meta_ranker:
+    - generate batch strategi → skor dengan meta_ranker → hanya subset teratas yang masuk ke backtest penuh.
+- Integrasi dengan Chroma (`ResearchMemory`):
+  - Gunakan similarity search untuk menemukan strategi mirip yang historically survive / gagal dan pakai itu sebagai fitur tambahan di meta_ranker.
+- Feedback loop live:
+  - Label tambahan: "live_outperform / live_underperform" untuk strategi yang sudah jalan cukup lama, sebagai target training untuk meta_ranker.
+
+**Impact:**
+- Mengurangi waktu & biaya compute karena backtest yang mahal hanya dijalankan pada kandidat yang sudah disaring.
+- Membuka jalan ke **self-improving research loop**: sistem belajar pola strategi yang cenderung bertahan di live dan mengarahkan generator/evolution ke arah itu.
+
+---
+
+## 4. Session-aware behavior
 
 **Goal:** Use `session_pnl` from `strategy_explain` to shape which strategies are active in which sessions (Asia/London/NY) or to bias evolution.
 
@@ -59,7 +80,7 @@ Snapshot as of 2026-03-12 – potential future upgrades we discussed.
 
 ---
 
-## 4. Post-session auto journaling
+## 5. Post-session auto journaling
 
 **Goal:** Mirror your manual journaling workflow (journal-YYYY-MM.md) using live trade data.
 
@@ -71,7 +92,7 @@ Snapshot as of 2026-03-12 – potential future upgrades we discussed.
 
 ---
 
-## 5. Regime_structured rollout
+## 6. Regime_structured rollout
 
 Right now, we still use the legacy `regime` label column in many places. We have a richer
 `detect_regime_structured` implementation that could be adopted more widely.
@@ -83,7 +104,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 6. Parameterized risk profiles
+## 7. Parameterized risk profiles
 
 **Goal:** Make it easy to switch between conservative / normal / aggressive risk profiles.
 
@@ -94,7 +115,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 7. External review – ChatGPT assessment snapshot (2026-03-12)
+## 8. External review – ChatGPT assessment snapshot (2026-03-12)
 
 **Summary:**
 - Overall system assessed as an **Advanced Autonomous Research + Execution Engine (~7.5–8/10 maturity)** for an individual developer / small quant lab.
@@ -138,7 +159,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 8. External review – Claude assessment snapshot (2026-03-12)
+## 9. External review – Claude assessment snapshot (2026-03-12)
 
 **Summary:**
 - Architecture considered **solid for a personal autonomous trading system**.
@@ -198,7 +219,7 @@ Right now, we still use the legacy `regime` label column in many places. We have
 
 ---
 
-## 9. External review – Kimi assessment snapshot (2026-03-12)
+## 10. External review – Kimi assessment snapshot (2026-03-12)
 
 **Summary:**
 - Confirms the system as a strong **autonomous trading system** with:
