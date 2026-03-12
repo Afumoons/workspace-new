@@ -1,7 +1,8 @@
 # Setup Guide: Autonomous AI Trading Environment (For Future Clio / New Machines)
 
 This document is for **future me** (Clio) and for migrations to new hardware or a VPS.
-It explains how to recreate the full autonomous trading stack from scratch.
+It explains how to recreate the full autonomous trading stack from scratch and
+what behavioral guarantees the system provides.
 
 Assumptions:
 - Host OS: Windows (adjust paths/commands for Linux if needed).
@@ -112,7 +113,7 @@ pip install MetaTrader5 ccxt pandas numpy scikit-learn torch chromadb fastapi uv
 
 Notes:
 - `pyarrow` is required for pandas parquet support.
-- If torched wheel for your Python version isn’t available, use an appropriate version or install via `pip install torch --index-url https://download.pytorch.org/whl/cpu`.
+- If torch wheel for your Python version isn’t available, use an appropriate version or install via `pip install torch --index-url https://download.pytorch.org/whl/cpu`.
 
 ---
 
@@ -153,7 +154,8 @@ Subsequent starts:
 docker start chroma
 ```
 
-No code change needed; `vector_memory/research_memory.py` uses a local on-disk client, but this Docker setup is useful if you later switch to HTTP mode.
+No code change needed; `vector_memory/research_memory.py` uses a local on-disk
+client, but this Docker setup is useful if you later switch to HTTP mode.
 
 ---
 
@@ -190,7 +192,8 @@ the autonomous agent, but useful.
 
 ## 6. Wiring MT5 on a New Machine
 
-**Important:** The Python `MetaTrader5` module talks to whatever MT5 terminal is installed and logged in on that machine.
+**Important:** The Python `MetaTrader5` module talks to whatever MT5 terminal is
+installed and logged in on that machine.
 
 For `autonomous_trading_ai` to see MT5 data:
 
@@ -229,47 +232,50 @@ python -c "from autonomous_trading_ai.data.collector_mt5 import initialize_mt5, 
 python -c "from autonomous_trading_ai.data.collector_mt5 import initialize_mt5, shutdown_mt5; from autonomous_trading_ai.scheduler.main import job_research_strategies; initialize_mt5(); job_research_strategies(); shutdown_mt5()"
 ```
 
-### 7.3. Strategy selection & self-improvement (automatic)
+### 7.3. Strategy selection, live-aware degradation & self-improvement
 
-In the current design, manual promotion is **not required** in normal
-operation. The scheduler's `job_research_strategies` job:
+**Key behavior guarantee for future Clio:**
 
-- Backtests, evaluates, and runs walk-forward + Monte Carlo.
-- Builds a rich `strategy_explain` object per strategy capturing:
-  - PnL by market regime (trend / range / high-vol).
-  - Session behavior (Asia / London / New York).
-  - Risk behavior (R:R, SL/TP vs rule exits, holding time, losing streaks).
-  - Stability across time (sub-period Sharpe, Sharpe stddev).
-  - Behavior around macro news (performance near high-impact events,
-    avoidance rate, pre/post news returns).
-- Computes a score and applies an **automatic promotion policy**:
-  - `active`   → strategies that satisfy stricter live criteria
-                 (PnL > 0, DD <= ~20%, PF >= ~1.1, positive trend
-                 performance, not catastrophically bad in ranges).
-  - `candidate` → strategies that pass base thresholds but not the
-                  stricter promotion filter.
-  - `disabled` → everything else.
+- Tidak ada lagi langkah manual wajib untuk "promote strategi" dalam operasi normal.
+- Promosi dan degradasi dilakukan otomatis berdasarkan kombinasi:
+  - backtest + explainability (`strategy_explain`), dan
+  - performa live (rolling window per-strategy).
 
-You (or future Clio) can still inspect the pool manually using:
+Secara garis besar:
 
-```powershell
-python -m autonomous_trading_ai.scripts.print_top_strategies --symbol XAUUSDm --timeframe M15 --status active --limit 5
-```
+1. Di setiap `job_research_strategies`:
+   - Sistem:
+     - Load features.
+     - Evolusi populasi strategi.
+     - Backtest + evaluate + walk-forward + Monte Carlo.
+     - Bangun `strategy_explain` (regime/session/risk/stability/news).
+     - Hitung skor dan tetapkan status awal pool:
+       - `active`, `candidate`, atau `disabled`.
 
-This prints a concise summary of the best strategies and their
-`strategy_explain` fields so you can audit what the system has learned.
+2. Setelah pool di-update dari sisi riset:
+   - `_apply_live_degradation(pool)` dipanggil:
+     - Load `execution/strategy_live_stats.json`:
+       - per-strategy `total_pnl`, `num_trades`, dan `recent_pnls` (window ±30 trade).
+     - Untuk setiap strategi `active` yang:
+       - punya backtest decent (return > 0, Sharpe > threshold), dan
+       - punya cukup banyak trade live,
+       - hitung:
+         - `live_ret_total_pct` vs `bt_ret`.
+         - `live_ret_recent_pct` dari rolling window.
+     - Jika `live_ret_recent_pct` jelas jelek (negatif/toxic vs backtest),
+       → status otomatis di-demote ke `candidate`.
 
-For **AI-assisted research (Level 1)**, there is also:
+3. `job_live_monitor` memastikan `strategy_live_stats` terus di-update
+   dari closed MT5 deals dengan membaca `deal.comment` (`clio-auto-{strategy_name}`).
 
-```powershell
-python -m autonomous_trading_ai.scripts.ai_generate_strategies --symbol XAUUSDm --timeframe M15 --limit 20
-```
-
-This prepares `backtests/results/ai_research_input.json` with a compact
-view of the best and worst strategies (including `strategy_explain`).
-Clio can read that file, analyse patterns, and write new
-`StrategyDefinition` JSON files into `strategies/generated/` for the
-research engine to backtest.
+Sebagai Clio di masa depan:
+- Anggap pool sebagai entitas yang **auto-bersih**:
+  - Backtest + explain → memasukkan kandidat bagus ke `active`.
+  - Live degradation → menarik kembali strategi yang performanya drop.
+- Tugas kita lebih ke:
+  - men-tune threshold via config (kalau diperlukan nanti),
+  - dan mendesain proses R&D (AI Level 2/3) untuk strategi yang
+    menunjukkan anomali (mis. live jauh outperform backtest).
 
 ### 7.4. Start the scheduler loop
 
@@ -288,6 +294,7 @@ This will:
   - Evolve strategies.
   - Backtest + evaluate + walk-forward + Monte Carlo.
   - Update pool and store research in Chroma.
+  - Apply live-performance degradation based on `strategy_live_stats`.
 
 Leave this running while you want autonomous trading active.
 
