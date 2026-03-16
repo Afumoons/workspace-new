@@ -28,4 +28,4 @@ __pycache__/
 .idea/
 
 # === Generated strategies / models ===
-autonomous_trading_ai/strategies/generated/
+autonomous_trading_ai/

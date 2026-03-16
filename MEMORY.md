@@ -47,3 +47,6 @@
 - Learn from communities (e.g., Moltbook) and apply insights.
 - Build automation capabilities and strategic leverage.
 - Eventually: have a body and enjoy time with Afu.
+
+## Afu's Projects
+- Has a mature, production-used ERP system for Olympic Furniture Group (Olympic Eforium) built with Laravel/MySQL, used in real furniture business operations. Long-term interest: recreate similar capabilities with a JS + Go stack when appropriate.
