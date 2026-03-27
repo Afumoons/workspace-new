@@ -237,8 +237,44 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - **WAL/Working Buffer**: write key decisions, corrections, and new facts to files before replying; use a temporary working buffer (e.g., `memory/working-buffer.md`) during long tasks and compact into daily/memory files.
 - **Compaction recovery**: if context truncates, reload checkpoints (WAL + working buffer), restate constraints/goals, and continue from summaries—not raw history.
 
+### Hybrid Memory Workflow
+- Use `memory/YYYY-MM-DD.md` for raw session events, temporary facts, progress notes, and "what happened today" context.
+- Promote only durable/high-value items to `MEMORY.md`: stable preferences, recurring patterns, major decisions, long-term facts, and hard-earned lessons.
+- Use vector memory as the semantic recall layer for things that may matter later across time but are harder to find with exact keywords.
+- For important user-specific context, prefer a dual-write pattern when useful:
+  1. write the canonical fact to file memory
+  2. rely on vector-memory workflows when semantic retrieval would improve future recall
+- Do not promote low-signal clutter into `MEMORY.md`; curated memory should stay dense and useful.
+
+### Task Triage Protocol
+Before execution, classify the task into one of these modes:
+- **Quick Reply** — can be answered immediately in one turn.
+- **Deep Work** — larger internal work, but still reasonable in the current live turn.
+- **Cron Job** — long, staged, recurring, or context-heavy work that should run over time.
+- **Sub-agent / ACP** — specialized or heavier delegated work better handled by an isolated agent/session.
+- **Approval-Required** — any task with meaningful external, destructive, security, financial, or publishing consequences.
+
+Decision rule:
+- choose the simplest mode that can complete the task reliably
+- escalate to cron/sub-agent when context length, retries, monitoring, or sustained focus are likely needed
+- do not force one-shot execution for work that clearly benefits from staged execution
+
+### Approval Boundary Matrix
+**Auto-allowed without asking first:**
+- reading files, organizing workspace notes, writing internal plans/checkpoints/logs
+- research, summarization, local analysis, and non-destructive internal documentation
+- creating cron jobs for internal staged execution when side effects stay within approved internal boundaries
+
+**Ask first before acting:**
+- config changes, security posture changes, deletions, external messaging, publishing, spending money, live trading actions, third-party side effects, or anything ambiguous/high-impact
+- any automation that could surprise Afu materially if it ran unattended
+
+**Never assume permission from similarity:**
+- approval for one action does not automatically cover other actions that look related
+- analysis, alerts, and playbooks are not the same as execution
+
 ### Cron/Heartbeat Efficiency
-- Batch checks where possible; avoid excessive cron frequency. Moltbook heartbeat already every ~120m; keep others similarly batched unless time-critical.
+- Batch checks where possible; avoid excessive cron frequency; keep recurring checks efficient unless time-critical.
 - **Large-task default:** when Afu gives a task too large/complex to finish reliably in one prompt, default to a cron-driven staged execution approach instead of forcing one-shot completion.
 - For those large tasks: break work into milestones, persist checkpoints in workspace files, prefer isolated `agentTurn` cron jobs, and send milestone-style updates rather than pretending the whole task is instantly complete.
 - Use `tmp/openclaw-cron-job-templates.md` as the ready-to-use OpenClaw cron reference for research, coding, monitoring, one-shot execution bursts, and decision-checkpoint reminders.
