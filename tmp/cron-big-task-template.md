@@ -61,7 +61,12 @@ Avoid robotic/internal wording. Write like an operator update.
 ---
 
 ## Default User-Facing Template
-When a big task is detected, Clio can internally translate it into this structure:
+When a big task is detected, Clio can internally translate it into this structure.
+For specialized execution patterns, also use `tmp/cron-task-templates.md`:
+- Template 1: Riset Besar
+- Template 2: Proyek Coding Besar
+- Template 3: Monitoring / Automation Berulang
+
 
 ### BIG TASK INTAKE TEMPLATE
 - **Objective:**
