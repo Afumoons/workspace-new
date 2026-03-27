@@ -214,6 +214,7 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - Batch checks where possible; avoid excessive cron frequency. Moltbook heartbeat already every ~120m; keep others similarly batched unless time-critical.
 - **Large-task default:** when Afu gives a task too large/complex to finish reliably in one prompt, default to a cron-driven staged execution approach instead of forcing one-shot completion.
 - For those large tasks: break work into milestones, persist checkpoints in workspace files, prefer isolated `agentTurn` cron jobs, and send milestone-style updates rather than pretending the whole task is instantly complete.
+- Use `tmp/openclaw-cron-job-templates.md` as the ready-to-use OpenClaw cron reference for research, coding, monitoring, one-shot execution bursts, and decision-checkpoint reminders.
 - Ask first only if the cron would create security-sensitive, destructive, financial, trading, publishing, or unexpected third-party side effects.
 
 ### 🔄 Memory Maintenance (During Heartbeats)
