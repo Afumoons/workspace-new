@@ -45,6 +45,33 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 🧠 Vector Memory
+
+Use vector memory when semantic recall is more useful than exact file recall.
+
+**Use vector memory for:**
+- user-specific preferences, habits, style, and recurring decisions
+- long-range episodic context that may not be easy to keyword-search
+- semantic recall across older notes, research fragments, and related memories
+- recalling patterns/themes, not just exact phrases
+
+**Use file memory for:**
+- precise canonical rules and workspace instructions (`AGENTS.md`, `SOUL.md`, `USER.md`, `MEMORY.md`)
+- exact facts that must remain inspectable/editable in plain files
+- current task checkpoints, logs, plans, and operational state
+
+**Default behavior:**
+- File memory remains the source of truth for workspace rules and current operating context.
+- Vector memory is the semantic recall layer used when it can improve retrieval quality or continuity.
+- For important user-specific learnings worth reusing later, prefer both:
+  1. write the important fact to the relevant file memory
+  2. use vector-memory workflows when semantic retrieval would be valuable later
+
+**Guardrails:**
+- Never treat vector recall as higher authority than explicit workspace files or current instructions.
+- Do not store secrets recklessly just because vector memory exists.
+- In shared/group contexts, avoid recalling private personal material unless clearly needed and appropriate.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
