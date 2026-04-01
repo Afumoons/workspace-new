@@ -12,8 +12,9 @@ import uvicorn
 
 # --- Simple risk/config guardrails ---
 # Whitelist of broker symbols we allow the bridge to trade (for trading actions).
-# Adjust this list to match your broker's symbol names (e.g. "EURUSDm").
-ALLOWED_SYMBOLS = {"EURUSDm", "XAUUSDm", "BTCUSDm", "ETHUSDm"}
+# Keep this aligned with the actual broker symbol list available in MT5.
+# Example: on some HFM accounts there is no BTCUSD/BTCUSDm market at all.
+ALLOWED_SYMBOLS = {"EURUSDm", "XAUUSDm", "ETHUSDm"}
 MAX_VOLUME = 1.0        # max lots per trade
 MIN_VOLUME = 0.01       # min lots per trade
 MAX_OPEN_TRADES = 5     # per symbol (simple guardrail)
