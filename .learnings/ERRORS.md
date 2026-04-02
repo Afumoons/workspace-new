@@ -86,3 +86,38 @@ Use PowerShell separators (`;`) or separate exec calls for chained commands in t
 - **Notes**: Re-ran verification with `;` separators and confirmed the repo state successfully.
 
 ---
+
+## [ERR-20260331-001] powershell-search-session-killed
+
+**Logged**: 2026-03-31T13:07:00+07:00
+**Priority**: low
+**Status**: resolved
+**Area**: diagnostics
+
+### Summary
+Two diagnostic exec sessions were SIGKILLed while searching the workspace during investigation of `live_manifest.json` updates.
+
+### Error
+- Exec failed (`signal SIGKILL`) on broad recursive search attempts.
+- One attempt also used a bash-style heredoc (`python - <<'PY'`) which is not valid in this PowerShell environment.
+
+### Context
+- Task: trace who updates `autonomous_trading_ai/strategies/live_manifest.json`
+- Environment: OpenClaw exec on Windows PowerShell
+- Commands were broader/heavier than needed for the diagnosis.
+
+### Cause
+- Used Linux/bash-oriented patterns in PowerShell.
+- Used recursive content search wider than necessary, causing noisy/long-running sessions that were then killed.
+
+### Fix / Next steps
+- Prefer targeted reads of known files over broad recursive grep-style scans.
+- In PowerShell, avoid bash heredocs; use native PowerShell or `python -c` if Python is needed.
+- Kill stale diagnostic sessions quickly and continue with narrower file inspection.
+
+### Resolution
+- **Resolved**: 2026-03-31T13:07:00+07:00
+- **Commit/PR**: pending current workspace commit
+- **Notes**: Switched to direct file inspection (`live_manifest.py`, `pool.py`) and confirmed manifest rebuild depends on `save_pool()`.
+
+---
