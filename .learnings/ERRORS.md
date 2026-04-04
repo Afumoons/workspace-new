@@ -121,3 +121,30 @@ Two diagnostic exec sessions were SIGKILLed while searching the workspace during
 - **Notes**: Switched to direct file inspection (`live_manifest.py`, `pool.py`) and confirmed manifest rebuild depends on `save_pool()`.
 
 ---
+## [ERR-20260403-001] ripgrep_missing_in_powershell_env
+
+**Logged**: 2026-04-03T06:05:00Z
+**Priority**: low
+**Status**: pending
+**Area**: infra
+
+### Summary
+Attempted to use g for repo search during governance audit, but ripgrep is not installed in this PowerShell environment.
+
+### Error
+`
+rg : The term 'rg' is not recognized as the name of a cmdlet, function, script file, or operable program.
+`
+
+### Context
+- Command attempted in workspace repo inspection
+- Environment: OpenClaw on Windows PowerShell
+
+### Suggested Fix
+Prefer native PowerShell search fallback (Get-ChildItem + Select-String) unless ripgrep presence is confirmed first.
+
+### Metadata
+- Reproducible: yes
+- Related Files: C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md
+
+---
