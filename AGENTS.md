@@ -147,6 +147,12 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 
 Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
 
+### Repo-Specific Frontend Rule
+
+- For frontend work inside `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui-front`, always read that repo's local `AGENTS.md` before planning or editing.
+- Treat `ui-front/AGENTS.md` as mandatory local instructions for that repo, especially because its Next.js conventions may differ from default assumptions.
+- Before writing code there, read the relevant guide under `ui-front/node_modules/next/dist/docs/` when the task touches framework APIs, structure, or conventions.
+
 **🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
 
 **📝 Platform Formatting:**
