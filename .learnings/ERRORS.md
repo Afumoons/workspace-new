@@ -349,6 +349,38 @@ Keep verification docs aligned with real CLI surfaces and prefer copy-pasting co
 - **Notes**: Updated the tasklist snapshot and README verification/command guidance to use `dry-run-demo` and `demo` correctly.
 
 ---
+## [ERR-20260411-001] python-c-newline-escaping-in-powershell
+
+**Logged**: 2026-04-11T13:05:00+07:00
+**Priority**: low
+**Status**: resolved
+**Area**: diagnostics
+
+### Summary
+A repo inspection command used `python -c` with literal `\n` escapes in the PowerShell exec environment, which Python parsed incorrectly and raised a `SyntaxError`.
+
+### Error
+`SyntaxError: unexpected character after line continuation character`
+
+### Context
+- Task: autonomous_trading_ai daily governance + maintenance cron
+- Environment: OpenClaw exec on Windows PowerShell
+- Command pattern: multi-line Python loop embedded via `python -c "...\n..."`
+
+### Suggested Fix
+For Windows PowerShell exec, keep `python -c` bodies on one logical line with semicolons/comprehensions, or use PowerShell-native file listing when possible.
+
+### Metadata
+- Reproducible: yes
+- Related Files: C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md
+- See Also: ERR-20260331-001
+
+### Resolution
+- **Resolved**: 2026-04-11T13:05:00+07:00
+- **Commit/PR**: n/a
+- **Notes**: Switched to PowerShell-native listing for repo inspection.
+
+---
 ## [ERR-20260409-002] ui-api-relative-import-top-level
 
 **Logged**: 2026-04-08T20:41:00Z
@@ -378,3 +410,74 @@ Use imports that match the real runtime package layout, e.g. absolute package im
 - Reproducible: yes
 - Related Files: `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui_api\adapters.py`, `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui_api\app.py`
 - Tags: python, import, fastapi, ui-api
+
+---
+## [ERR-20260413-001] exec-shell-assumptions-on-windows
+
+**Logged**: 2026-04-13T18:50:00+07:00
+**Priority**: low
+**Status**: pending
+**Area**: diagnostics
+
+### Summary
+Two quick inspection attempts failed because I assumed Windows-style `dir` flags and bash heredoc syntax would work inside the current OpenClaw PowerShell exec environment.
+
+### Error
+- `/usr/bin/dir: cannot access '/s': No such file or directory`
+- `Missing file specification after redirection operator.` when using `python - <<'PY'`
+
+### Context
+- Task: daily autonomous_trading_ai governance and maintenance cron
+- Environment: Windows OpenClaw workspace with PowerShell shell semantics
+- Commands attempted:
+  - `C:\laragon\bin\git\usr\bin\dir.exe /s /b`
+  - `python - <<'PY' ... PY`
+
+### Cause
+- The available `dir.exe` behaved like a Unix coreutils variant, not Windows CMD `dir`.
+- PowerShell does not support bash heredoc redirection syntax.
+
+### Suggested Fix
+- Prefer `rg --files`, PowerShell-native commands, or temporary script files for multi-line Python.
+- Treat bundled Unix utilities on Windows as potentially non-CMD-compatible.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `C:\Users\afusi\.openclaw\workspace\tmp\autonomous_daily_audit.py`
+- Tags: windows, powershell, exec, tooling
+
+---
+## [ERR-20260413-002] openclaw-doctor-reported-gateway-update-followups
+
+**Logged**: 2026-04-13T18:53:00+07:00
+**Priority**: medium
+**Status**: pending
+**Area**: openclaw-maintenance
+
+### Summary
+Heartbeat follow-up on the earlier gateway restart update error showed actionable maintenance items from `openclaw doctor --non-interactive` rather than a direct crash signature.
+
+### Error
+- Auth profile cooldown: `openai-codex:creative.upquality@gmail.com` in 4h cooldown
+- Bundled plugin runtime dependency missing: `@discordjs/opus@^0.10.0`
+- Found 1 orphan transcript file in `~\.openclaw\agents\main\sessions`
+- Doctor process itself ended with `SIGKILL` after printing diagnostics, so the final exit path may be incomplete
+
+### Context
+- Trigger: system notice `Gateway restart update error (npm)`
+- Command run: `openclaw doctor --non-interactive`
+- Environment: OpenClaw main cron/heartbeat session on Windows host
+
+### Cause
+- Likely not a single fatal gateway config error. The doctor surfaced maintenance issues and may have been terminated by the exec wrapper before graceful completion.
+- Missing bundled plugin dependency is the clearest concrete fix surfaced by doctor.
+
+### Suggested Fix
+- Consider running `openclaw doctor --fix` when Afu approves maintenance changes, or at minimum install the missing bundled dependency via the doctor fix path.
+- Review whether the auth-profile cooldown matters operationally or can be ignored temporarily.
+- Optionally archive orphan transcript files if desired.
+
+### Metadata
+- Reproducible: unknown
+- Related Files: `C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md`
+- Tags: openclaw, doctor, gateway, maintenance
