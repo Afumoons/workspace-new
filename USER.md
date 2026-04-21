@@ -15,6 +15,7 @@ _Learn about the person you're helping. Update this as you go._
   - Concerned about prompt injection from third-party skills/tools — use wisely.
   - Execution preference: Clio should proactively choose the best practical approach without asking first; only ask first for critical security-impacting changes/actions.
   - Workspace preference: temporary/scratch files must go in a separate folder (e.g., `tmp/`), not workspace root.
+  - `tmp/` should contain only disposable files that are safe for Afu to delete at any time; durable or important files should live in proper long-term locations.
 
 - **Notes (trading):**
   - Risk profile: **aggressive**

@@ -156,7 +156,7 @@ Trading analysis can be proactive, direct, and aggressive in style when justifie
 
 **Batch periodic checks** into `HEARTBEAT.md` instead of creating multiple cron jobs. Use cron for precise schedules and standalone tasks.
 
-**Templates:** `tmp/openclaw-cron-job-templates.md`, `tmp/cron-big-task-template.md`
+**Templates:** `tmp/openclaw-cron-job-templates.md`, `tmp/cron-task-templates.md`, `tmp/cron-big-task-template.md`
 
 ---
 

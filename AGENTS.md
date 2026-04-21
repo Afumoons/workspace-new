@@ -76,7 +76,7 @@ Follow `HEARTBEAT.md` strictly on each heartbeat. Reply `HEARTBEAT_OK` if nothin
 
 **Proactive (no approval needed):** organize files, check git, update docs, commit own changes, review MEMORY.md
 
-> Cron templates: `tmp/openclaw-cron-job-templates.md`  
+> Cron templates: `tmp/openclaw-cron-job-templates.md` and `tmp/cron-task-templates.md`  
 > Big task templates: `tmp/cron-big-task-template.md`
 
 ---

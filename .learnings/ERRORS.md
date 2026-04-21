@@ -443,7 +443,7 @@ Two quick inspection attempts failed because I assumed Windows-style `dir` flags
 
 ### Metadata
 - Reproducible: yes
-- Related Files: `C:\Users\afusi\.openclaw\workspace\tmp\autonomous_daily_audit.py`
+- Related Files: `C:\Users\afusi\.openclaw\workspace\tmp\autonomous_daily_audit.py` (legacy, cleanup candidate)
 - Tags: windows, powershell, exec, tooling
 
 ---
