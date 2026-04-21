@@ -3,7 +3,7 @@ chroma_data/
 memory/chroma_ingest.log
 
 # === Temp & scratch ===
-tmp/
+
 *.tmp
 *.log
 *.swp
