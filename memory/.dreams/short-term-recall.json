@@ -1,0 +1,347 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-20T12:24:00.028Z",
+  "entries": {
+    "memory:memory/2026-03-27.md:1:24": {
+      "key": "memory:memory/2026-03-27.md:1:24",
+      "path": "memory/2026-03-27.md",
+      "startLine": 1,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "# 2026-03-27 - Afu requested a new operating rule: when given a very large/complex task that cannot be completed well in a single prompt, Clio should automatically use a cron-job approach by default. - Implemented this as a workspace rule in `AGENTS.md` and created a reusable template in `tmp/cron-big-task-template.md`. - Intent of the rule: staged execution, persisted checkpoints, milestone updates, and better continuity/reliability for oversized tasks. - Added three specialized cron templates in `tmp/cron-task-templates.md`: - Riset Besar - Proyek Coding Besar - Monitoring / Automation Berulang - Linked the general big-task template to the specialized template file so future large t",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T02:52:34.967Z",
+      "lastRecalledAt": "2026-04-20T02:52:34.967Z",
+      "queryHashes": [
+        "7d87b512c4f5"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "large/complex",
+        "cron-job",
+        "agents.md",
+        "tmp/cron-big-task-template.md",
+        "continuity/reliability",
+        "tmp/cron-task-templates.md",
+        "big-task",
+        "afu"
+      ]
+    },
+    "memory:memory/2026-04-01.md:1:25": {
+      "key": "memory:memory/2026-04-01.md:1:25",
+      "path": "memory/2026-04-01.md",
+      "startLine": 1,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "## 2026-04-01 14:25 (Asia/Jakarta) - Added size-based log rotation to `autonomous_trading_ai/logging_utils.py` using `RotatingFileHandler`. - `logs/system.log` now rotates at 5 MB per file. - Keeps 5 backup files to prevent unbounded growth. - Updated `trading-bridge/bridge.py` symbol allowlist to remove `BTCUSDm`. - Reason: current HFM broker setup does not provide a `BTCUSD`/`BTCUSDm` market, so missing BTC updates are expected from broker symbol availability, not a generic feed bug. - Validation: both edited Python files compiled successfully with `python -m compileall`. ## 2026-04-01 15:38 (Asia/Jakarta) - Rotation patch hit Windows file-lock issue: `PermissionError [WinError 32]`",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "backup",
+        "asia/jakarta",
+        "size-based",
+        "logs/system.log",
+        "trading-bridge/bridge.py",
+        "file-lock",
+        "asia",
+        "jakarta"
+      ]
+    },
+    "memory:memory/2026-03-26.md:1:11": {
+      "key": "memory:memory/2026-03-26.md:1:11",
+      "path": "memory/2026-03-26.md",
+      "startLine": 1,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "## 2026-03-26 19:55 (Asia/Jakarta) - autonomous_trading_ai docs updated to reframe system as specialist-strategy + routing-layer architecture, not universal strategy search. - Added docs/clio/06-M15_IMPROVEMENT_ROADMAP.md and aligned 01-OVERVIEW.md, 02-ARCHITECTURE.md, 03-DEVELOPMENT_PLAN.md, 04-IMPROVEMENT_OPPORTUNITIES.md. - Git commits created in autonomous_trading_ai: 9eda4ff (add M15 roadmap/alignment), 82d790a (reframe around specialist strategies). - Routing layer audit completed. - Key finding: current code already has regime/session-aware routing foundations, but remains score-driven and implicit rather than explicit policy-driven specialist routing. - Main gaps identified: missing",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "asia/jakarta",
+        "autonomous-trading-ai",
+        "specialist-strategy",
+        "routing-layer",
+        "01-overview.md",
+        "02-architecture.md",
+        "03-development-plan.md",
+        "04-improvement-opportunities.md"
+      ]
+    },
+    "memory:memory/2026-04-09.md:1:6": {
+      "key": "memory:memory/2026-04-09.md:1:6",
+      "path": "memory/2026-04-09.md",
+      "startLine": 1,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "## 2026-04-09 (Asia/Jakarta) - Continued `autonomous_trading_ai/ui-front` Phase 1-3 operator UI implementation. - Added shared query/error/freshness state system, route-level resilience, manual + auto refresh, overview health strip, execution diagnosis panel, pool strategy drill-down, audit filters/expansion, and broad design-system polish aligned with `DESIGN.md`. - Updated `ui-front/TASKLIST.md` to mark most roadmap items complete. - Current remaining checkbox: final healthy-backend QA pass under Tasklist 4.3. Build and lint are both green.",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "asia/jakarta",
+        "autonomous-trading-ai/ui-front",
+        "1-3",
+        "query/error/freshness",
+        "route-level",
+        "drill-down",
+        "filters/expansion",
+        "design-system"
+      ]
+    },
+    "memory:memory/2026-04-08.md:1:11": {
+      "key": "memory:memory/2026-04-08.md:1:11",
+      "path": "memory/2026-04-08.md",
+      "startLine": 1,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "- autonomous_trading_ai follow-up improvement ideas to revisit later: - run fresh post-patch research cycles and do empirical before/after audits - add observability/reporting for family entropy, motif entropy, novelty distribution, duplicate rejection rate, acceptance by family/motif, and live manifest composition - add underrepresented family/motif bootstrap policy - add behavior/correlation-aware diversity metrics (equity curve / regime behavior / drawdown synchronization), not only rule-level similarity - consider stronger research-stage Pareto or bucketed acceptance, not only scalar-centric selection - add motif/family live validation and survival analysis - add proper reg",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "follow-up",
+        "post-patch",
+        "before/after",
+        "observability/reporting",
+        "family/motif",
+        "behavior/correlation-aware",
+        "rule-level"
+      ]
+    },
+    "memory:memory/2026-04-03.md:31:44": {
+      "key": "memory:memory/2026-04-03.md:31:44",
+      "path": "memory/2026-04-03.md",
+      "startLine": 31,
+      "endLine": 44,
+      "source": "memory",
+      "snippet": "- Afu wants Clio to remember `C:\\laragon\\www\\awesome-design-md` as a reusable design reference library for future website/web-app development, so Clio can consciously reference DESIGN.md-style inspirations when building frontend work. - Afu agreed with a Hermes-inspired but OpenClaw-safe operational approach: Clio should improve workspace continuity through `tmp/` artifacts instead of changing OpenClaw core. Initial artifacts created: - `tmp/repo-maps/awesome-design-md.md` - `tmp/repo-maps/hermes-agent.md` - `tmp/playbooks/autonomous_trading_ai.md` - `tmp/playbooks/hermes-agent.md` - `tmp/decision-records/workspace-operational-legibility.md` - `tmp/validations/workspace-operation",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "awesome-design-md",
+        "website/web-app",
+        "design.md-style",
+        "hermes-inspired",
+        "openclaw-safe",
+        "tmp/repo-maps/hermes-agent.md",
+        "tmp/playbooks/hermes-agent.md",
+        "afu"
+      ]
+    },
+    "memory:memory/2026-04-02.md:1:17": {
+      "key": "memory:memory/2026-04-02.md:1:17",
+      "path": "memory/2026-04-02.md",
+      "startLine": 1,
+      "endLine": 17,
+      "source": "memory",
+      "snippet": "## 2026-04-02 (Asia/Jakarta) - Afu requested improvement streams be named explicitly because using only \"phase\" references had become ambiguous. - Created `autonomous_trading_ai/tmp/improvement-tracks.md` to separate the current work into named tracks: - Track A — Research Pipeline Improvement - Track B — Live Monitoring & Attribution Improvement - Track C — XAU Exit Hardening Improvement - Explicit unfinished items now tracked as: - Track A: A2b, A3, A4 still pending (A2a already done) - Track B: B2 partially done / needs runtime verification, B3 pending - Track C: ideation captured, not implemented yet - Going forward, references should use track + phase labels (e.g. `Track A /",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "asia/jakarta",
+        "e.g",
+        "asia",
+        "jakarta",
+        "afu",
+        "requested",
+        "improvement",
+        "streams"
+      ]
+    },
+    "memory:memory/2026-04-04.md:57:76": {
+      "key": "memory:memory/2026-04-04.md:57:76",
+      "path": "memory/2026-04-04.md",
+      "startLine": 57,
+      "endLine": 76,
+      "source": "memory",
+      "snippet": "- added/updated tests, with focused pytest run passing after pytest was installed. - Separate commits created: - workspace root commit for notes/backlog: `6c90056` - `autonomous_trading_ai` repo code commit: `462d869` (`Guard exploratory fallback and track same-bar ambiguity`) - Important user workflow preference learned: - if a task fails because a common local Python dependency is missing (e.g. `pytest`, `pyarrow`), install it directly and continue without asking a second prompt, as long as it is a low-risk local dependency needed for the task. - Installed during this session to unblock work: - `pytest` - `pyarrow` - Result of sample-based ambiguity recompute audit: - reran r",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "added/updated",
+        "notes/backlog",
+        "autonomous-trading-ai",
+        "same-bar",
+        "e.g",
+        "low-risk",
+        "sample-based",
+        "added"
+      ]
+    },
+    "memory:memory/2026-04-03.md:1:17": {
+      "key": "memory:memory/2026-04-03.md:1:17",
+      "path": "memory/2026-04-03.md",
+      "startLine": 1,
+      "endLine": 17,
+      "source": "memory",
+      "snippet": "## 2026-04-03 (Asia/Jakarta) - Afu requested explicit naming for improvement streams because plain \"Phase 1/2/3\" references had become ambiguous. - Created named improvement tracks in `autonomous_trading_ai/tmp/improvement-tracks.md`: - Track A — Research Pipeline Improvement - Track B — Live Monitoring & Attribution Improvement - Track C — XAU Exit Hardening Improvement - Naming rule going forward: always refer to work as track + phase/subphase (e.g. `Track A / A2a`, `Track B / B2`, `Track C / C1`) instead of plain phase numbers. - Afu prefers that when Clio creates/edits files in the workspace, Clio should commit those changes; if a task involves deleting files, Clio should tell Afu",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "asia/jakarta",
+        "1/2/3",
+        "phase/subphase",
+        "e.g",
+        "creates/edits",
+        "asia",
+        "jakarta",
+        "afu"
+      ]
+    },
+    "memory:memory/2026-04-01.md:38:56": {
+      "key": "memory:memory/2026-04-01.md:38:56",
+      "path": "memory/2026-04-01.md",
+      "startLine": 38,
+      "endLine": 56,
+      "source": "memory",
+      "snippet": "## 2026-04-01 20:40 (Asia/Jakarta) - Fixed family-metadata pipeline for live strategy persistence. - Root cause: live manifest builder relied on `stats.strategy.family` / `playbook_type`, but persisted strategy payload was too thin and did not include `params`, so downstream family resolution often fell back to `unknown`. - Changes made: - `scheduler/main.py`: persist richer `eval_result[\"strategy\"]` including `params`, `stop_loss_pips`, and `take_profit_pips`. - `strategies/live_manifest.py`: stronger family fallback chain using `strategy`, `strategy.params`, and long/short family hints. - `strategies/pool.py`: family extraction helpers now also inspect nested `strategy.params` and lo",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "asia/jakarta",
+        "family-metadata",
+        "stats.strategy.family",
+        "playbook-type",
+        "scheduler/main.py",
+        "eval-result",
+        "stop-loss-pips",
+        "take-profit-pips"
+      ]
+    },
+    "memory:memory/2026-04-01.md:18:41": {
+      "key": "memory:memory/2026-04-01.md:18:41",
+      "path": "memory/2026-04-01.md",
+      "startLine": 18,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "- Safe-reset live execution state for a new real US-cent account. - Reset files: - `execution/live_state.json` - `execution/equity_history.json` - `execution/closed_trades_state.json` - `execution/ticket_strategy_map.json` - `execution/open_trades.json` - Preserved `execution/trades.log` (per Afu request: safe reset only). - Baseline used for the new account state: equity/account start = `5880.0` (US cent account context). ## 2026-04-01 16:05 (Asia/Jakarta) - Implemented Phase 1 account-switch / live-baseline guard in `autonomous_trading_ai/execution/live_monitor.py`. - New behavior: - stores MT5 account identity (`login`, `server`, `currency`, `company`) alongside equity histor",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "queryHashes": [
+        "cb02987e9983"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "safe-reset",
+        "us-cent",
+        "execution/live-state.json",
+        "execution/equity-history.json",
+        "execution/open-trades.json",
+        "execution/trades.log",
+        "equity/account",
+        "5880.0"
+      ]
+    }
+  }
+}
