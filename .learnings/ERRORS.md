@@ -1,483 +1,298 @@
-﻿# Errors Log
+## [ERR-20260511-001] web_search_dns_failure
 
-## Entry Template
-```
-## [ERR-YYYYMMDD-XXX]
-**Logged**: YYYY-MM-DDTHH:MM:SSZ
-**Context**: command/task
-**Impact**: low|med|high
-**Status**: pending|in_progress|resolved|wont_fix
-**Owner**: (optional)
-
-### What happened
-- command/tool/API and error message
-
-### Cause (if known)
-- root cause or hypothesis
-
-### Fix / Next steps
-- remediation steps
-- follow-up actions
-```
-
-## [ERR-20260409-001] mt5-history-deals-rebuild-returned-none
-
-**Logged**: 2026-04-09T13:11:00+07:00
+**Logged**: 2026-05-11T09:26:00+07:00
 **Priority**: medium
 **Status**: pending
-**Area**: diagnostics
+**Area**: infra
 
 ### Summary
-`rebuild_strategy_live_stats.py` failed during the daily governance pass because `mt5.history_deals_get(...)` returned `None`, so derived live PnL stats could not be refreshed.
+`web_search` failed repeatedly with `getaddrinfo ENOTFOUND html.duckduckgo.com` during Morning Market Brief cron.
 
-### Error
-`RuntimeError: mt5.history_deals_get returned None for range 2026-03-26 06:10:15.128774+00:00 -> 2026-04-09 06:10:15.128774+00:00`
+### Details
+Multiple parallel market/news searches failed due DNS resolution for DuckDuckGo HTML endpoint. Workaround used direct `web_fetch` to Stooq, CoinGecko, ForexFactory calendar, and Treasury/MarketWatch where available. Yahoo Finance and Investing.com were rate-limited/blocked.
 
-### Context
-- Task: autonomous_trading_ai daily governance + maintenance cron
-- Command: `python -m autonomous_trading_ai.scripts.rebuild_strategy_live_stats`
-- Environment: Windows OpenClaw workspace, project venv, MT5-backed repo
-- This was a safe maintenance attempt to refresh derived `execution/strategy_live_stats.json`
-
-### Cause
-- MT5 history API returned `None`; exact cause not yet diagnosed from repo-visible evidence.
-- Could be terminal/session state, history range availability, or MT5 bridge readiness during the cron run.
-
-### Suggested Fix
-- Add defensive logging around `mt5.last_error()` in `rebuild_strategy_live_stats.py` before raising.
-- Check whether MT5 terminal/session is connected and whether history range queries succeed interactively.
-- Consider fallback reconciliation from repo-side artifacts when MT5 history is temporarily unavailable.
+### Suggested Action
+For scheduled market briefs, prefer resilient direct-data fallbacks first (Stooq CSV, CoinGecko, ForexFactory calendar, Treasury/FRED where working), then use web_search only for narrative/news context. Consider configuring a more reliable search provider or fallback endpoint.
 
 ### Metadata
-- Reproducible: unknown
-- Related Files: autonomous_trading_ai/scripts/rebuild_strategy_live_stats.py, autonomous_trading_ai/execution/strategy_live_stats.json
+- Source: error
+- Tags: web_search, dns, market-brief, cron
 
 ---
-## [ERR-20260327-001] powershell-command-chaining
+## [ERR-20260514-001] autonomous_trading_ai_daily_audit_path_and_shell_gotchas
 
-**Logged**: 2026-03-27T04:31:00+07:00
-**Priority**: low
-**Status**: resolved
-**Area**: config
-
-### Summary
-PowerShell in this OpenClaw workspace rejected a git add/commit command chained with bash-style &&.
-
-### Error
-`
-The token '&&' is not a valid statement separator in this version.
-`
-
-### Context
-- Command attempted during autonomous_trading_ai Pass 3 finalization
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: git add ... && git commit ...
-
-### Suggested Fix
-Use separate exec calls or PowerShell-compatible separators instead of bash-style &&.
-
-### Metadata
-- Reproducible: yes
-- Related Files: autonomous_trading_ai/tmp/pass3-tasklist.md
-
-### Resolution
-- **Resolved**: 2026-03-27T04:31:00+07:00
-- **Commit/PR**: pending current commit
-- **Notes**: Retried with separate git add and git commit commands.
-
----
-
-## [ERR-20260327-002] powershell-and-separator-followup
-
-**Logged**: 2026-03-27T05:30:00+07:00
-**Priority**: low
-**Status**: resolved
-**Area**: config
-
-### Summary
-A follow-up verification command used bash-style `&&` again and failed under this Windows PowerShell exec environment.
-
-### Error
-`
-The token '&&' is not a valid statement separator in this version.
-`
-
-### Context
-- Command attempted while verifying autonomous_trading_ai Pass 3 completion marker and latest commit
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: `git rev-parse --short HEAD && git log -1 --oneline && git status --short`
-
-### Suggested Fix
-Use PowerShell separators (`;`) or separate exec calls for chained commands in this workspace.
-
-### Metadata
-- Reproducible: yes
-- Related Files: autonomous_trading_ai/tmp/pass3-tasklist.md
-- See Also: ERR-20260327-001
-
-### Resolution
-- **Resolved**: 2026-03-27T05:31:00+07:00
-- **Commit/PR**: n/a
-- **Notes**: Re-ran verification with `;` separators and confirmed the repo state successfully.
-
----
-
-## [ERR-20260331-001] powershell-search-session-killed
-
-**Logged**: 2026-03-31T13:07:00+07:00
-**Priority**: low
-**Status**: resolved
-**Area**: diagnostics
-
-### Summary
-Two diagnostic exec sessions were SIGKILLed while searching the workspace during investigation of `live_manifest.json` updates.
-
-### Error
-- Exec failed (`signal SIGKILL`) on broad recursive search attempts.
-- One attempt also used a bash-style heredoc (`python - <<'PY'`) which is not valid in this PowerShell environment.
-
-### Context
-- Task: trace who updates `autonomous_trading_ai/strategies/live_manifest.json`
-- Environment: OpenClaw exec on Windows PowerShell
-- Commands were broader/heavier than needed for the diagnosis.
-
-### Cause
-- Used Linux/bash-oriented patterns in PowerShell.
-- Used recursive content search wider than necessary, causing noisy/long-running sessions that were then killed.
-
-### Fix / Next steps
-- Prefer targeted reads of known files over broad recursive grep-style scans.
-- In PowerShell, avoid bash heredocs; use native PowerShell or `python -c` if Python is needed.
-- Kill stale diagnostic sessions quickly and continue with narrower file inspection.
-
-### Resolution
-- **Resolved**: 2026-03-31T13:07:00+07:00
-
----
-
-## [ERR-20260409-001] powershell-git-chain-regression
-
-**Logged**: 2026-04-09T09:33:00+07:00
-**Priority**: low
-**Status**: resolved
-**Area**: config
-
-### Summary
-A git add/commit command during `ui-front` roadmap finalization used bash-style `&&` again and failed under the Windows PowerShell exec environment.
-
-### Error
-`
-The token '&&' is not a valid statement separator in this version.
-`
-
-### Context
-- Task: finalize `autonomous_trading_ai/ui-front` Phase 1–3 roadmap closure
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: `git add ... && git commit ...`
-
-### Suggested Fix
-Use separate exec calls or PowerShell-compatible separators like `;` instead of bash-style `&&` in this workspace.
-
-### Metadata
-- Reproducible: yes
-- Related Files: autonomous_trading_ai/ui-front/package.json, autonomous_trading_ai/ui-front/TASKLIST.md
-- See Also: ERR-20260327-001, ERR-20260327-002
-
-### Resolution
-- **Resolved**: 2026-04-09T09:34:00+07:00
-- **Commit/PR**: pending current commit
-- **Notes**: Retried the git add and git commit as separate commands.
-- **Commit/PR**: pending current workspace commit
-
----
-
-## [ERR-20260408-001] powershell-command-chaining-repeat
-
-**Logged**: 2026-04-08T19:43:11+07:00
-**Priority**: low
-**Status**: resolved
-**Area**: config
-
-### Summary
-A git add/commit command for the ATA2 batch used bash-style `&&` again and failed in the Windows PowerShell exec environment.
-
-### Error
-`
-The token '&&' is not a valid statement separator in this version.
-`
-
-### Context
-- Task: commit ATA2 smoke-test batch
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: `git add ... && git commit ...`
-
-### Suggested Fix
-Use separate exec calls or PowerShell-compatible separators such as `;` in this workspace.
-
-### Metadata
-- Reproducible: yes
-- Related Files: C:\laragon\www\ATA2
-- See Also: ERR-20260327-001, ERR-20260327-002
-
-### Resolution
-- **Resolved**: 2026-04-08T19:43:11+07:00
-- **Commit/PR**: pending ATA2 smoke-test commit
-- **Notes**: Will retry with separate git commands.
-- **Notes**: Switched to direct file inspection (`live_manifest.py`, `pool.py`) and confirmed manifest rebuild depends on `save_pool()`.
-
----
-## [ERR-20260403-001] ripgrep_missing_in_powershell_env
-
-**Logged**: 2026-04-03T06:05:00Z
+**Logged**: 2026-05-14T04:14:00+07:00
 **Priority**: low
 **Status**: pending
 **Area**: infra
 
 ### Summary
-Attempted to use 
-g for repo search during governance audit, but ripgrep is not installed in this PowerShell environment.
+Daily ATA governance audit initially failed on the prompted workspace path and two PowerShell/Python invocation gotchas.
 
 ### Error
-`
-rg : The term 'rg' is not recognized as the name of a cmdlet, function, script file, or operable program.
-`
+```
+Get-ChildItem: Cannot find path C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai
+ModuleNotFoundError: No module named 'autonomous_trading_ai' when running scripts\print_live_summary.py from repo root without PYTHONPATH
+PowerShell rejected bash-style heredoc: python - <<'PY'
+```
 
 ### Context
-- Command attempted in workspace repo inspection
-- Environment: OpenClaw on Windows PowerShell
+- Actual known repo path used successfully: C:\laragon\www\autonomous_trading_ai
+- Python repo scripts need PYTHONPATH=C:\laragon\www in this environment.
+- PowerShell does not support bash heredoc syntax; use temp scripts or PowerShell here-strings.
 
 ### Suggested Fix
-Prefer native PowerShell search fallback (Get-ChildItem + Select-String) unless ripgrep presence is confirmed first.
+For future ATA cron runs, prefer the long-term memory path if the prompted path is absent, set PYTHONPATH before package scripts, and avoid bash heredocs in PowerShell.
 
 ### Metadata
 - Reproducible: yes
-- Related Files: C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md
+- Related Files: C:\laragon\www\autonomous_trading_ai
+- Tags: autonomous_trading_ai, powershell, pythonpath, cron
 
 ---
+## [ERR-20260514-002] market_brief_data_source_failures
 
-## [ERR-20260408-001] gateway-obfuscation-detector-blocked-python-c
-
-**Logged**: 2026-04-08T13:36:00+07:00
+**Logged**: 2026-05-14T04:35:00+07:00
 **Priority**: medium
 **Status**: pending
-**Area**: diagnostics
-
-### Summary
-A diagnostic `python -c` command to scan recent log lines was denied by the exec gateway with `approval-timeout (obfuscation-detected)` even though the task was a benign local log inspection.
-
-### Error
-`
-Exec denied (gateway id=367e7aad-3dc7-41f1-9508-224908f06e87, approval-timeout (obfuscation-detected))
-`
-
-### Context
-- Task: inspect `autonomous_trading_ai/logs/system.log` for recent errors/stall indicators
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: `python -c "from pathlib import Path; ..."` with regex scanning over recent log lines
-
-### Suggested Fix
-Prefer direct file reads for log inspection first, or use simpler/non-obfuscated command forms when shell execution is actually necessary.
-
-### Metadata
-- Reproducible: unknown
-- Related Files: C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\logs\system.log
-- See Also: ERR-20260331-001
-
----
-## [ERR-20260409-001] exec-powershell-separator
-
-**Logged**: 2026-04-08T17:45:00Z
-**Priority**: low
-**Status**: resolved
 **Area**: infra
 
 ### Summary
-PowerShell exec commands in this environment do not accept `&&` as a statement separator.
+Morning Market Brief hit recurring `web_search` DNS failure plus blocked/rate-limited market endpoints.
 
 ### Error
 ```
-The token '&&' is not a valid statement separator in this version.
+web_search: getaddrinfo ENOTFOUND html.duckduckgo.com
+web_fetch Investing.com: 403 / Just a moment
+web_fetch ForexFactory: getaddrinfo ENOTFOUND www.forexfactory.com
+web_fetch Yahoo chart API: 429 Too Many Requests
 ```
 
 ### Context
-- Command attempted: `git add ... && git commit ...`
-- Environment: OpenClaw exec on Windows / PowerShell
-- Correct approach: use `;` or separate exec calls
+Used direct fallbacks that worked: MarketWatch/CNBC pages, Stooq quote CSV one symbol at a time, CoinGecko simple price, and Treasury XML yield curve.
 
 ### Suggested Fix
-Prefer `;` for chained PowerShell commands in this environment, or run commands separately.
+Create a resilient market-brief data-source order: Treasury XML + Stooq per-symbol + CoinGecko first; then news pages; avoid relying on DuckDuckGo/Yahoo chart API during cron.
 
 ### Metadata
 - Reproducible: yes
+- Tags: web_search, web_fetch, market-brief, cron, rate-limit
+- See Also: ERR-20260511-001
+
+---
+## [ERR-20260514-001] laravel_test_timestamp_mass_assignment
+
+**Logged**: 2026-05-14T06:03:00+07:00
+**Priority**: medium
+**Status**: pending
+**Area**: tests
+
+### Summary
+Feature test expected a manually backdated Eloquent `created_at`, but `create([...])` ignored the timestamp because the model fillable list does not include timestamp columns.
+
+### Error
+```
+Expected response to contain: 5 days open
+Actual rendered aging cue: 0 days open
+```
+
+### Context
+- Command attempted: `php artisan test --filter=OperatorValidationPageTest`
+- Slice: operator validation unresolved-aging cues
+- Related file: `tests/Feature/OperatorValidationPageTest.php`
+
+### Suggested Fix
+Create the model first, then update timestamps with `forceFill([...])->saveQuietly()` or a direct query update when tests need controlled `created_at` values.
+
+### Metadata
+- Reproducible: yes
+- Related Files: tests/Feature/OperatorValidationPageTest.php, app/Models/OperatorValidationFinding.php
+
+---
+## [ERR-20260515-001] repo_path_mismatch
+
+**Logged**: 2026-05-15T14:46:00+07:00
+**Priority**: low
+**Status**: pending
+**Area**: ops
+
+### Summary
+Daily autonomous_trading_ai cron prompt referenced workspace path that does not exist; long-term memory path was correct.
+
+### Error
+```
+Get-ChildItem : Cannot find path 'C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai' because it does not exist.
+```
+
+### Context
+- Task: daily autonomous_trading_ai governance audit
+- Actual repo found at `C:\laragon\www\autonomous_trading_ai`
+
+### Suggested Fix
+Update cron/task instructions to use the current repo path or add an explicit fallback note.
+
+### Metadata
+- Reproducible: yes
+- Related Files: MEMORY.md
+- Tags: autonomous_trading_ai, cron, path
+
+---
+## [ERR-20260515-001] market_brief_search_and_source_failures_recurring
+
+**Logged**: 2026-05-15T14:56:00+07:00
+**Priority**: medium
+**Status**: pending
+**Area**: infra
+
+### Summary
+Morning Market Brief again hit `web_search` DNS failure and blocked market pages; Yahoo quote endpoint returned 401, while Yahoo chart endpoint worked.
+
+### Error
+```
+web_search: getaddrinfo ENOTFOUND html.duckduckgo.com
+web_fetch Investing.com: 403 / Just a moment
+Yahoo quote API: HTTP Error 401: Unauthorized
+PowerShell rejected bash-style heredoc: python - <<'PY'
+```
+
+### Context
+- Direct Yahoo chart API (`/v8/finance/chart/{symbol}?range=5d&interval=1d`) worked for GC=F, BTC-USD, ES=F, DX-Y.NYB, ^TNX, CL=F, ^GSPC.
+- TradingEconomics calendar page worked for extracting today�s macro watchouts.
+
+### Suggested Fix
+For market brief cron, implement/use a local helper that starts with Yahoo chart API + TradingEconomics calendar and avoids bash heredocs in PowerShell.
+
+### Metadata
+- Reproducible: yes
+- Tags: web_search, yahoo, investing, market-brief, powershell, cron
+- See Also: ERR-20260514-002
+
+---
+
+## [ERR-20260515-001] live_market_data_lookup
+
+**Logged**: 2026-05-15T14:58:00+07:00
+**Priority**: medium
+**Status**: pending
+**Area**: tools
+
+### Summary
+Urgent market-data lookup for Afu failed due to provider/API connectivity and rate limits.
+
+### Details
+- PowerShell rejected Bash-style `python - <<'PY'` heredoc; use temp files or `python -c` single-line in PowerShell.
+- Yahoo Finance chart endpoint returned HTTP 429 for multiple symbols.
+- Binance public API and web_search failed DNS resolution (`getaddrinfo` / `ENOTFOUND`).
+
+### Suggested Action
+For urgent trading/market briefs, prefer configured broker/exchange CLI/API if available; otherwise use a resilient quote adapter with multiple fallbacks and cached last-known data.
+
+### Metadata
+- Source: error
+- Related Files: tmp/quote_check.py
+- Tags: powershell, market-data, yahoo-finance, dns, rate-limit
+---
+
+## [ERR-20260515-002] github_bounty_search_stdout_rate_limit
+
+**Logged**: 2026-05-15T17:47:00+07:00
+**Priority**: low
+**Status**: pending
+**Area**: tools
+
+### Summary
+GitHub bounty scouting partially succeeded but hit unauthenticated API rate limits and Windows console Unicode encoding issues.
+
+### Details
+- GitHub API search worked initially and returned candidate bounty issues.
+- Printing Unicode arrows on Windows cp1252 stdout caused `UnicodeEncodeError`; set `sys.stdout.reconfigure(encoding='utf-8')` in scripts.
+- Further unauthenticated GitHub API searches returned HTTP 403 rate limit exceeded.
+
+### Suggested Action
+Use authenticated GitHub token for sustained issue scouting; default Python helper scripts should set UTF-8 stdout on Windows.
+
+### Metadata
+- Source: error
+- Related Files: tmp/github_bounty_search.py, tmp/github_bounty_search2.py
+- Tags: github-api, rate-limit, windows, unicode
+---
+
+## [ERR-20260515-003] web_search_dns_failure
+
+**Logged**: 2026-05-15T17:50:00+07:00
+**Priority**: low
+**Status**: pending
+**Area**: tools
+
+### Summary
+Web search failed during bounty scouting due to DuckDuckGo DNS resolution errors.
+
+### Error
+```
+getaddrinfo ENOTFOUND html.duckduckgo.com
+```
+
+### Context
+- Operation attempted: web_search for Algora/Polar/GitHub bounty issues
+- Environment: OpenClaw subagent on Windows, Asia/Jakarta
+
+### Suggested Fix
+Fall back to direct GitHub/Algora/Polar page fetches or GitHub API/CLI; retry search later if DNS recovers.
+
+### Metadata
+- Reproducible: unknown
 - Related Files: none
-- Tags: powershell, exec, windows
-
-### Resolution
-- **Resolved**: 2026-04-08T17:45:00Z
-- **Commit/PR**: n/a
-- **Notes**: Switched to PowerShell-compatible command chaining.
-
+- Tags: web_search, dns, bounty-scouting
 ---
-## [ERR-20260409-001] ata2-verification-command-drift
-**Logged**: 2026-04-09T01:05:00+07:00
-**Priority**: medium
-**Status**: resolved
-**Area**: docs
 
-### Summary
-ATA2 production-candidate docs recorded `python -m ata2.cli demo --dry-run` as a successful verification command, but the CLI does not expose a `--dry-run` flag on `demo`.
+## 2026-05-15 - jlcsearch bounty local validation blockers
 
-### Error
-`usage: ata2 [-h] {serve,summary,runtime-artifacts,runtime-summary,dry-run-demo,deployment-checklist,demo} ...`
-`ata2: error: unrecognized arguments: --dry-run`
-
-### Context
-- Task: cron verification pass for ATA2 production-candidate status
-- Environment: OpenClaw exec on Windows PowerShell
-- Actual CLI behavior: `dry-run-demo` is the end-to-end dry-run command; `demo` is a separate sample flow that still reports `execution_mode: "dry-run"` under default safe config.
-
-### Suggested Fix
-Keep verification docs aligned with real CLI surfaces and prefer copy-pasting commands from `ata2/cli.py` or tested help output.
-
-### Metadata
-- Reproducible: yes
-- Related Files: C:\laragon\www\ATA2\docs\PRODUCTION_CANDIDATE_TASKLIST.md, C:\laragon\www\ATA2\README.md
-
-### Resolution
-- **Resolved**: 2026-04-09T01:05:00+07:00
-- **Commit/PR**: pending ATA2 doc cleanup commit
-- **Notes**: Updated the tasklist snapshot and README verification/command guidance to use `dry-run-demo` and `demo` correctly.
-
+- Context: While fixing `tmp\bounty-jlcsearch` issue #92, root project validation could not use the normal toolchain locally.
+- Failures:
+  - `bun` is unavailable on this Windows host, so Bun-native scripts/tests cannot run.
+  - `npm install --package-lock=false` failed on root due `kysely-bun-sqlite` peer conflict with `kysely@0.28.x`.
+  - Retrying with `--legacy-peer-deps` reached `better-sqlite3` native build and failed because Visual Studio C++ build tools are missing for Node 25.
+- Workaround: verify the Cloudflare proxy package independently with npm-installed deps: `npx tsc --noEmit` and `npx vitest run` in `cf-proxy`.
+- Follow-up: For Bun-first projects, prefer installing/using Bun or a Node version with available native prebuilds before attempting root npm validation.
 ---
-## [ERR-20260411-001] python-c-newline-escaping-in-powershell
+## [ERR-20260517-001] cron_edit_message_argument_windows
 
-**Logged**: 2026-04-11T13:05:00+07:00
+**Logged**: 2026-05-17T10:20:00+07:00
 **Priority**: low
-**Status**: resolved
-**Area**: diagnostics
+**Status**: workaround-found
+**Area**: cli/windows
 
 ### Summary
-A repo inspection command used `python -c` with literal `\n` escapes in the PowerShell exec environment, which Python parsed incorrectly and raised a `SyntaxError`.
-
-### Error
-`SyntaxError: unexpected character after line continuation character`
-
-### Context
-- Task: autonomous_trading_ai daily governance + maintenance cron
-- Environment: OpenClaw exec on Windows PowerShell
-- Command pattern: multi-line Python loop embedded via `python -c "...\n..."`
+Editing an OpenClaw cron job with a long/multiline --message from PowerShell caused commander parsing errors: "too many arguments for 'edit'". Direct Node spawn through the OpenClaw JS entrypoint worked after flattening the message to a single line.
 
 ### Suggested Fix
-For Windows PowerShell exec, keep `python -c` bodies on one logical line with semicolons/comprehensions, or use PowerShell-native file listing when possible.
+For long cron messages on Windows, write the message to tmp, then invoke node C:/Users/afusi/AppData/Roaming/npm/node_modules/openclaw/openclaw.mjs via a small Node script with an argv array. Avoid passing multiline text directly through PowerShell.
 
 ### Metadata
-- Reproducible: yes
-- Related Files: C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md
-- See Also: ERR-20260331-001
-
-### Resolution
-- **Resolved**: 2026-04-11T13:05:00+07:00
-- **Commit/PR**: n/a
-- **Notes**: Switched to PowerShell-native listing for repo inspection.
-
+- Tags: openclaw, cron, windows, powershell, cli
 ---
-## [ERR-20260409-002] ui-api-relative-import-top-level
+## [ERR-20260517-002] pdf_tool_document_extract_unavailable
 
-**Logged**: 2026-04-08T20:41:00Z
-**Priority**: medium
-**Status**: pending
-**Area**: backend-ui-api
-
-### Summary
-The autonomous_trading_ai UI frontend built successfully, but the UI API failed to start in a standalone launch because `ui_api/adapters.py` uses package-relative imports that go beyond the top-level package.
-
-### Error
-`ImportError: attempted relative import beyond top-level package`
-
-### Context
-- Task: UI v1 frontend build / verification follow-up
-- Environment: OpenClaw exec on Windows PowerShell
-- Failing file: `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui_api\adapters.py`
-- Current pattern: `from ..execution...`, `from ..strategies...`
-
-### Cause
-The `ui_api` package appears to be launched in a way where it is treated as a top-level package, so `..execution` and `..strategies` are invalid from that import context.
-
-### Suggested Fix
-Use imports that match the real runtime package layout, e.g. absolute package imports rooted at `autonomous_trading_ai`, or launch the app consistently as part of the full package so relative imports remain valid.
-
-### Metadata
-- Reproducible: yes
-- Related Files: `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui_api\adapters.py`, `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai\ui_api\app.py`
-- Tags: python, import, fastapi, ui-api
-
----
-## [ERR-20260413-001] exec-shell-assumptions-on-windows
-
-**Logged**: 2026-04-13T18:50:00+07:00
+**Logged**: 2026-05-17T17:10:00+07:00
 **Priority**: low
-**Status**: pending
-**Area**: diagnostics
+**Status**: workaround-found
+**Area**: tools
 
 ### Summary
-Two quick inspection attempts failed because I assumed Windows-style `dir` flags and bash heredoc syntax would work inside the current OpenClaw PowerShell exec environment.
+The `pdf` tool failed on an inbound CV PDF because document extraction is disabled/unavailable: enable the document-extract plugin to process application/pdf files.
 
-### Error
-- `/usr/bin/dir: cannot access '/s': No such file or directory`
-- `Missing file specification after redirection operator.` when using `python - <<'PY'`
+### Details
+Fallback worked using local `pdftotext.exe` available at `C:\laragon\bin\git\mingw64\bin\pdftotext.exe`, writing extracted text to `tmp/`.
 
-### Context
-- Task: daily autonomous_trading_ai governance and maintenance cron
-- Environment: Windows OpenClaw workspace with PowerShell shell semantics
-- Commands attempted:
-  - `C:\laragon\bin\git\usr\bin\dir.exe /s /b`
-  - `python - <<'PY' ... PY`
-
-### Cause
-- The available `dir.exe` behaved like a Unix coreutils variant, not Windows CMD `dir`.
-- PowerShell does not support bash heredoc redirection syntax.
-
-### Suggested Fix
-- Prefer `rg --files`, PowerShell-native commands, or temporary script files for multi-line Python.
-- Treat bundled Unix utilities on Windows as potentially non-CMD-compatible.
+### Suggested Action
+When PDF extraction is unavailable, use local `pdftotext` for text-based PDFs before concluding the document cannot be read.
 
 ### Metadata
-- Reproducible: yes
-- Related Files: `C:\Users\afusi\.openclaw\workspace\tmp\autonomous_daily_audit.py` (legacy, cleanup candidate)
-- Tags: windows, powershell, exec, tooling
+- Source: error
+- Tags: pdf, document-extract, pdftotext, telegram-attachment
 
----
-## [ERR-20260413-002] openclaw-doctor-reported-gateway-update-followups
-
-**Logged**: 2026-04-13T18:53:00+07:00
-**Priority**: medium
-**Status**: pending
-**Area**: openclaw-maintenance
-
-### Summary
-Heartbeat follow-up on the earlier gateway restart update error showed actionable maintenance items from `openclaw doctor --non-interactive` rather than a direct crash signature.
-
-### Error
-- Auth profile cooldown: `openai-codex:creative.upquality@gmail.com` in 4h cooldown
-- Bundled plugin runtime dependency missing: `@discordjs/opus@^0.10.0`
-- Found 1 orphan transcript file in `~\.openclaw\agents\main\sessions`
-- Doctor process itself ended with `SIGKILL` after printing diagnostics, so the final exit path may be incomplete
-
-### Context
-- Trigger: system notice `Gateway restart update error (npm)`
-- Command run: `openclaw doctor --non-interactive`
-- Environment: OpenClaw main cron/heartbeat session on Windows host
-
-### Cause
-- Likely not a single fatal gateway config error. The doctor surfaced maintenance issues and may have been terminated by the exec wrapper before graceful completion.
-- Missing bundled plugin dependency is the clearest concrete fix surfaced by doctor.
-
-### Suggested Fix
-- Consider running `openclaw doctor --fix` when Afu approves maintenance changes, or at minimum install the missing bundled dependency via the doctor fix path.
-- Review whether the auth-profile cooldown matters operationally or can be ignored temporarily.
-- Optionally archive orphan transcript files if desired.
-
-### Metadata
-- Reproducible: unknown
-- Related Files: `C:\Users\afusi\.openclaw\workspace\.learnings\ERRORS.md`
-- Tags: openclaw, doctor, gateway, maintenance
+## 2026-05-18 - web_search provider DNS failure
+- Context: researching trading indicators for Afu.
+- Tool: web_search
+- Error: getaddrinfo ENOTFOUND html.duckduckgo.com
+- Mitigation: continued using successful web_fetch sources and internal market-structure knowledge; do not block user-facing work on one search provider failure.
