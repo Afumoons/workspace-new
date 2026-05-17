@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-20T12:24:00.028Z",
+  "updatedAt": "2026-05-17T19:45:45.101Z",
   "entries": {
     "memory:memory/2026-03-27.md:1:24": {
       "key": "memory:memory/2026-03-27.md:1:24",
@@ -40,18 +40,20 @@
       "endLine": 25,
       "source": "memory",
       "snippet": "## 2026-04-01 14:25 (Asia/Jakarta) - Added size-based log rotation to `autonomous_trading_ai/logging_utils.py` using `RotatingFileHandler`. - `logs/system.log` now rotates at 5 MB per file. - Keeps 5 backup files to prevent unbounded growth. - Updated `trading-bridge/bridge.py` symbol allowlist to remove `BTCUSDm`. - Reason: current HFM broker setup does not provide a `BTCUSD`/`BTCUSDm` market, so missing BTC updates are expected from broker symbol availability, not a generic feed bug. - Validation: both edited Python files compiled successfully with `python -m compileall`. ## 2026-04-01 15:38 (Asia/Jakarta) - Rotation patch hit Windows file-lock issue: `PermissionError [WinError 32]`",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-05-17T19:40:42.026Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "30bab19484a0"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-05-18"
       ],
       "conceptTags": [
         "backup",
@@ -71,18 +73,20 @@
       "endLine": 11,
       "source": "memory",
       "snippet": "## 2026-03-26 19:55 (Asia/Jakarta) - autonomous_trading_ai docs updated to reframe system as specialist-strategy + routing-layer architecture, not universal strategy search. - Added docs/clio/06-M15_IMPROVEMENT_ROADMAP.md and aligned 01-OVERVIEW.md, 02-ARCHITECTURE.md, 03-DEVELOPMENT_PLAN.md, 04-IMPROVEMENT_OPPORTUNITIES.md. - Git commits created in autonomous_trading_ai: 9eda4ff (add M15 roadmap/alignment), 82d790a (reframe around specialist strategies). - Routing layer audit completed. - Key finding: current code already has regime/session-aware routing foundations, but remains score-driven and implicit rather than explicit policy-driven specialist routing. - Main gaps identified: missing",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "0c64f575ede6"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-24"
       ],
       "conceptTags": [
         "asia/jakarta",
@@ -164,18 +168,20 @@
       "endLine": 44,
       "source": "memory",
       "snippet": "- Afu wants Clio to remember `C:\\laragon\\www\\awesome-design-md` as a reusable design reference library for future website/web-app development, so Clio can consciously reference DESIGN.md-style inspirations when building frontend work. - Afu agreed with a Hermes-inspired but OpenClaw-safe operational approach: Clio should improve workspace continuity through `tmp/` artifacts instead of changing OpenClaw core. Initial artifacts created: - `tmp/repo-maps/awesome-design-md.md` - `tmp/repo-maps/hermes-agent.md` - `tmp/playbooks/autonomous_trading_ai.md` - `tmp/playbooks/hermes-agent.md` - `tmp/decision-records/workspace-operational-legibility.md` - `tmp/validations/workspace-operation",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-27T06:24:20.224Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "48849346711c"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-27"
       ],
       "conceptTags": [
         "awesome-design-md",
@@ -195,18 +201,22 @@
       "endLine": 17,
       "source": "memory",
       "snippet": "## 2026-04-02 (Asia/Jakarta) - Afu requested improvement streams be named explicitly because using only \"phase\" references had become ambiguous. - Created `autonomous_trading_ai/tmp/improvement-tracks.md` to separate the current work into named tracks: - Track A — Research Pipeline Improvement - Track B — Live Monitoring & Attribution Improvement - Track C — XAU Exit Hardening Improvement - Explicit unfinished items now tracked as: - Track A: A2b, A3, A4 still pending (A2a already done) - Track B: B2 partially done / needs runtime verification, B3 pending - Track C: ideation captured, not implemented yet - Going forward, references should use track + phase labels (e.g. `Track A /",
-      "recallCount": 1,
+      "recallCount": 3,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 3,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-28T02:48:47.003Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "be18d0bcf8e2",
+        "5b68da7f3a45"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-24",
+        "2026-04-28"
       ],
       "conceptTags": [
         "asia/jakarta",
@@ -257,18 +267,30 @@
       "endLine": 17,
       "source": "memory",
       "snippet": "## 2026-04-03 (Asia/Jakarta) - Afu requested explicit naming for improvement streams because plain \"Phase 1/2/3\" references had become ambiguous. - Created named improvement tracks in `autonomous_trading_ai/tmp/improvement-tracks.md`: - Track A — Research Pipeline Improvement - Track B — Live Monitoring & Attribution Improvement - Track C — XAU Exit Hardening Improvement - Naming rule going forward: always refer to work as track + phase/subphase (e.g. `Track A / A2a`, `Track B / B2`, `Track C / C1`) instead of plain phase numbers. - Afu prefers that when Clio creates/edits files in the workspace, Clio should commit those changes; if a task involves deleting files, Clio should tell Afu",
-      "recallCount": 1,
+      "recallCount": 10,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 10,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-05-17T11:21:53.616Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "48849346711c",
+        "e7626376bd94",
+        "032411721ce0",
+        "eaca658d406c",
+        "41e5633ee284",
+        "367fa79086c6",
+        "44ca7c074709",
+        "984cd9172753",
+        "0fdeef5e6406"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-27",
+        "2026-05-15",
+        "2026-05-17"
       ],
       "conceptTags": [
         "asia/jakarta",
@@ -288,18 +310,20 @@
       "endLine": 56,
       "source": "memory",
       "snippet": "## 2026-04-01 20:40 (Asia/Jakarta) - Fixed family-metadata pipeline for live strategy persistence. - Root cause: live manifest builder relied on `stats.strategy.family` / `playbook_type`, but persisted strategy payload was too thin and did not include `params`, so downstream family resolution often fell back to `unknown`. - Changes made: - `scheduler/main.py`: persist richer `eval_result[\"strategy\"]` including `params`, `stop_loss_pips`, and `take_profit_pips`. - `strategies/live_manifest.py`: stronger family fallback chain using `strategy`, `strategy.params`, and long/short family hints. - `strategies/pool.py`: family extraction helpers now also inspect nested `strategy.params` and lo",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "0c64f575ede6"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-24"
       ],
       "conceptTags": [
         "asia/jakarta",
@@ -319,18 +343,20 @@
       "endLine": 41,
       "source": "memory",
       "snippet": "- Safe-reset live execution state for a new real US-cent account. - Reset files: - `execution/live_state.json` - `execution/equity_history.json` - `execution/closed_trades_state.json` - `execution/ticket_strategy_map.json` - `execution/open_trades.json` - Preserved `execution/trades.log` (per Afu request: safe reset only). - Baseline used for the new account state: equity/account start = `5880.0` (US cent account context). ## 2026-04-01 16:05 (Asia/Jakarta) - Implemented Phase 1 account-switch / live-baseline guard in `autonomous_trading_ai/execution/live_monitor.py`. - New behavior: - stores MT5 account identity (`login`, `server`, `currency`, `company`) alongside equity histor",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 1,
+      "totalScore": 2,
       "maxScore": 1,
       "firstRecalledAt": "2026-04-20T12:24:00.028Z",
-      "lastRecalledAt": "2026-04-20T12:24:00.028Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
       "queryHashes": [
-        "cb02987e9983"
+        "cb02987e9983",
+        "0c64f575ede6"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-24"
       ],
       "conceptTags": [
         "safe-reset",
@@ -341,6 +367,1410 @@
         "execution/trades.log",
         "equity/account",
         "5880.0"
+      ]
+    },
+    "memory:memory/2026-04-04.md:1:23": {
+      "key": "memory:memory/2026-04-04.md:1:23",
+      "path": "memory/2026-04-04.md",
+      "startLine": 1,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "# 2026-04-04 - Clarified that current deep audit target repo is `autonomous_trading_ai` (not `autonomous_trading_ai2`). - Reframed profitability concerns: - New York session blocking is intentional if research evidence supports it. - XAU high min-trades is intentional for stricter profitability targeting; may still deserve future tuning audit, but not treated as a bug. - Static spread assumptions are acceptable for now. - Current priority selected by Afu: audit whether the active regime edge threshold is too tight. - Deferred backlog captured in `tmp/playbooks/autonomous_trading_ai-profitability-backlog.md`: 1. correlation/concentration control audit 2. explicit guard for explorat",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-22T07:07:45.613Z",
+      "lastRecalledAt": "2026-04-22T11:34:59.352Z",
+      "queryHashes": [
+        "4f235fcb0e79",
+        "0301dd6c9193"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "autonomous-trading-ai2",
+        "min-trades",
+        "correlation/concentration",
+        "clarified",
+        "current",
+        "deep",
+        "audit"
+      ]
+    },
+    "memory:memory/2026-04-04.md:42:61": {
+      "key": "memory:memory/2026-04-04.md:42:61",
+      "path": "memory/2026-04-04.md",
+      "startLine": 42,
+      "endLine": 61,
+      "source": "memory",
+      "snippet": "- Deferred backlog captured in `tmp/playbooks/autonomous_trading_ai-profitability-backlog.md`: 1. correlation/concentration control audit 2. explicit guard for exploratory fallback on negative edge 3. same-bar ambiguity instrumentation in backtests 4. proactive live decay detection design 5. Monte Carlo upgrade assessment - Result of active threshold audit on `autonomous_trading_ai`: current `active_regime_edge_threshold = 0.5` does not appear to be the live bottleneck in the present pool snapshot; active/exploratory records observed were already comfortably above the threshold. - Result of deep audit on correlation/concentration control: - exact clone dedup exists in `strategie",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-22T07:07:45.613Z",
+      "lastRecalledAt": "2026-05-17T19:40:42.026Z",
+      "queryHashes": [
+        "4f235fcb0e79",
+        "0301dd6c9193",
+        "a8e474efc3ff",
+        "30bab19484a0"
+      ],
+      "recallDays": [
+        "2026-04-22",
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "correlation/concentration",
+        "same-bar",
+        "autonomous-trading-ai",
+        "active-regime-edge-threshold",
+        "0.5",
+        "active/exploratory",
+        "deferred",
+        "backlog"
+      ]
+    },
+    "memory:memory/2026-04-04.md:31:48": {
+      "key": "memory:memory/2026-04-04.md:31:48",
+      "path": "memory/2026-04-04.md",
+      "startLine": 31,
+      "endLine": 48,
+      "source": "memory",
+      "snippet": "- added a focused backtest test in `tests/test_hardening_regime_and_generation.py` to verify ambiguity counting on a crafted candle. - Began follow-up audit of ambiguity metrics in current `pool_state.json` / `live_manifest.json` to see whether same-bar ambiguity appears materially in stored strategy stats or whether historical pool entries need regeneration before the new metric becomes informative. - New workflow preference from Afu: if local execution fails because a low-risk Python/module dependency is missing (example: `pytest`, `pyarrow`, `apscheduler`), Clio should install it directly and continue rather than asking for a second prompt. # 2026-04-04 - Clarified that current deep au",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-22T11:34:59.352Z",
+      "lastRecalledAt": "2026-04-22T11:34:59.352Z",
+      "queryHashes": [
+        "0301dd6c9193"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "pool-state.json",
+        "live-manifest.json",
+        "same-bar",
+        "low-risk",
+        "python/module",
+        "added",
+        "focused"
+      ]
+    },
+    "memory:memory/2026-04-22.md:19:24": {
+      "key": "memory:memory/2026-04-22.md:19:24",
+      "path": "memory/2026-04-22.md",
+      "startLine": 19,
+      "endLine": 24,
+      "source": "memory",
+      "snippet": "- Committed `1db99dd` (`Add session flags to strategy feature pipeline`): `research/features.py` now adds `session_asia`, `session_london`, and `session_new_york` columns so session-based strategy rules can evaluate in research/live. - Confirmed generated strategies actively depend on session columns (e.g. `session_london == 1`, `session_asia == 1`), so missing-session-columns bug was real, not theoretical. - Committed `4be81d7` (`Harden closed-deal strategy attribution`): ticket/strategy attribution path now registers multiple MT5 aliases (`ticket`, `deal_ticket`, `position_id`), refreshes recovered mappings during closed-deal attribution, and deduplicates repeated `unmatched_closed_deals`",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "73786f768cd3",
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-23",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "research/features.py",
+        "session-asia",
+        "session-london",
+        "session-new-york",
+        "session-based",
+        "research/live",
+        "e.g",
+        "missing-session-columns"
+      ]
+    },
+    "memory:memory/2026-04-22.md:50:55": {
+      "key": "memory:memory/2026-04-22.md:50:55",
+      "path": "memory/2026-04-22.md",
+      "startLine": 50,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "- Committed `1db99dd` (`Add session flags to strategy feature pipeline`): `research/features.py` now adds `session_asia`, `session_london`, and `session_new_york` columns so session-based strategy rules can evaluate in research/live. - Confirmed generated strategies actively depend on session columns (e.g. `session_london == 1`, `session_asia == 1`), so missing-session-columns bug was real, not theoretical. - Committed `4be81d7` (`Harden closed-deal strategy attribution`): ticket/strategy attribution path now registers multiple MT5 aliases (`ticket`, `deal_ticket`, `position_id`), refreshes recovered mappings during closed-deal attribution, and deduplicates repeated `unmatched_closed_deals`",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "73786f768cd3",
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-23",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "research/features.py",
+        "session-asia",
+        "session-london",
+        "session-new-york",
+        "session-based",
+        "research/live",
+        "e.g",
+        "missing-session-columns"
+      ]
+    },
+    "memory:memory/2026-04-22.md:24:27": {
+      "key": "memory:memory/2026-04-22.md:24:27",
+      "path": "memory/2026-04-22.md",
+      "startLine": 24,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "- Confirmed root cause in research dedup flow: `scheduler/main.py` previously seeded `known_generated_fps` from all archived `strategies/generated/*.json`, making pool resets ineffective because old archived fingerprints kept vetoing new candidates. Fix was to base structural dedup only on `pool._fp_map`, while still adding intra-run fingerprints after generation. - Confirmed semantic duplicate gate was also over-aggressive. `strategies/pool.py` `semantic_similarity()` was upgraded to compare `long_entry_rule`, `short_entry_rule`, and `exit_rule` separately, include numeric similarity across core params (`trend_min`, `trend_exit`, `rsi_exit`, `vol_min`, `vol_max`, `time_stop_bars`, `stop_los",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "scheduler/main.py",
+        "known-generated-fps",
+        "strategies/generated",
+        "fp-map",
+        "intra-run",
+        "over-aggressive",
+        "strategies/pool.py",
+        "semantic-similarity"
+      ]
+    },
+    "memory:memory/2026-04-22.md:55:58": {
+      "key": "memory:memory/2026-04-22.md:55:58",
+      "path": "memory/2026-04-22.md",
+      "startLine": 55,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "- Confirmed root cause in research dedup flow: `scheduler/main.py` previously seeded `known_generated_fps` from all archived `strategies/generated/*.json`, making pool resets ineffective because old archived fingerprints kept vetoing new candidates. Fix was to base structural dedup only on `pool._fp_map`, while still adding intra-run fingerprints after generation. - Confirmed semantic duplicate gate was also over-aggressive. `strategies/pool.py` `semantic_similarity()` was upgraded to compare `long_entry_rule`, `short_entry_rule`, and `exit_rule` separately, include numeric similarity across core params (`trend_min`, `trend_exit`, `rsi_exit`, `vol_min`, `vol_max`, `time_stop_bars`, `stop_los",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "scheduler/main.py",
+        "known-generated-fps",
+        "strategies/generated",
+        "fp-map",
+        "intra-run",
+        "over-aggressive",
+        "strategies/pool.py",
+        "semantic-similarity"
+      ]
+    },
+    "memory:memory/2026-03-31.md:1:19": {
+      "key": "memory:memory/2026-03-31.md:1:19",
+      "path": "memory/2026-03-31.md",
+      "startLine": 1,
+      "endLine": 19,
+      "source": "memory",
+      "snippet": "## 2026-03-31 — autonomous_trading_ai improvement notes - Afu asked Clio to preserve two separate recommendation sets for improving autonomous_trading_ai strategy pass-rate / execution quality, to resume later after token reset. - Context established: - `live_manifest.json` and `strategy_index.json` were being rebuilt successfully after scheduler rerun. - In the observed successful research cycle, `generated_at` changed but substantive contents mostly did not, because newly generated strategies were rejected (`low_trade_count` / `weak_perf`) and did not materially alter pool/live/index composition. ### Saved set A — Claude's recommendations (kept as Claude-origin suggestions) 1. Lower",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "pass-rate",
+        "live-manifest.json",
+        "strategy-index.json",
+        "generated-at",
+        "low-trade-count",
+        "weak-perf",
+        "pool/live/index"
+      ]
+    },
+    "memory:memory/2026-04-22.md:8:15": {
+      "key": "memory:memory/2026-04-22.md:8:15",
+      "path": "memory/2026-04-22.md",
+      "startLine": 8,
+      "endLine": 15,
+      "source": "memory",
+      "snippet": "- Committed `1db99dd` (`Add session flags to strategy feature pipeline`): `research/features.py` now adds `session_asia`, `session_london`, and `session_new_york` columns so session-based strategy rules can evaluate in research/live. - Confirmed generated strategies actively depend on session columns (e.g. `session_london == 1`, `session_asia == 1`), so missing-session-columns bug was real, not theoretical. - Committed `4be81d7` (`Harden closed-deal strategy attribution`): ticket/strategy attribution path now registers multiple MT5 aliases (`ticket`, `deal_ticket`, `position_id`), refreshes recovered mappings during closed-deal attribution, and deduplicates repeated `unmatched_closed_deals`",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "73786f768cd3",
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-23",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "research/features.py",
+        "session-asia",
+        "session-london",
+        "session-new-york",
+        "session-based",
+        "research/live",
+        "e.g",
+        "missing-session-columns"
+      ]
+    },
+    "memory:memory/2026-04-22.md:39:46": {
+      "key": "memory:memory/2026-04-22.md:39:46",
+      "path": "memory/2026-04-22.md",
+      "startLine": 39,
+      "endLine": 46,
+      "source": "memory",
+      "snippet": "- Committed `1db99dd` (`Add session flags to strategy feature pipeline`): `research/features.py` now adds `session_asia`, `session_london`, and `session_new_york` columns so session-based strategy rules can evaluate in research/live. - Confirmed generated strategies actively depend on session columns (e.g. `session_london == 1`, `session_asia == 1`), so missing-session-columns bug was real, not theoretical. - Committed `4be81d7` (`Harden closed-deal strategy attribution`): ticket/strategy attribution path now registers multiple MT5 aliases (`ticket`, `deal_ticket`, `position_id`), refreshes recovered mappings during closed-deal attribution, and deduplicates repeated `unmatched_closed_deals`",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "73786f768cd3",
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-23",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "research/features.py",
+        "session-asia",
+        "session-london",
+        "session-new-york",
+        "session-based",
+        "research/live",
+        "e.g",
+        "missing-session-columns"
+      ]
+    },
+    "memory:memory/2026-04-22.md:14:20": {
+      "key": "memory:memory/2026-04-22.md:14:20",
+      "path": "memory/2026-04-22.md",
+      "startLine": 14,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "- 09:00 WIB: Prepared morning market brief for Afu. Working snapshot from accessible public market pages: DXY ~98.33 and soft, US10Y ~4.295% stable/slightly lower, S&P 500 7,064.01 (-0.63%) after pulling back from fresh highs, BTC ~76.2k (+1.56%), gold June futures ~4,760.8 (+0.87%), WTI crude ~89.26 (-0.46%) after recent surge. Core view: mixed macro with softer dollar supportive for gold/BTC, but elevated oil/geopolitical risk keeps inflation/yield shock risk alive and caps clean risk-on follow-through. - Morning brief tooling issue: built-in `web_search` unavailable because Brave API key is not configured; used `web_fetch` fallbacks and logged to `.learnings/ERRORS.md`. - autonomous_tradi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "98.33",
+        "4.295",
+        "stable/slightly",
+        "064.01",
+        "0.63",
+        "76.2k",
+        "1.56",
+        "760.8"
+      ]
+    },
+    "memory:memory/2026-04-22.md:34:40": {
+      "key": "memory:memory/2026-04-22.md:34:40",
+      "path": "memory/2026-04-22.md",
+      "startLine": 34,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "- 09:00 WIB: Prepared morning market brief for Afu. Working snapshot from accessible public market pages: DXY ~98.33 and soft, US10Y ~4.295% stable/slightly lower, S&P 500 7,064.01 (-0.63%) after pulling back from fresh highs, BTC ~76.2k (+1.56%), gold June futures ~4,760.8 (+0.87%), WTI crude ~89.26 (-0.46%) after recent surge. Core view: mixed macro with softer dollar supportive for gold/BTC, but elevated oil/geopolitical risk keeps inflation/yield shock risk alive and caps clean risk-on follow-through. - Morning brief tooling issue: built-in `web_search` unavailable because Brave API key is not configured; used `web_fetch` fallbacks and logged to `.learnings/ERRORS.md`. - autonomous_tradi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "98.33",
+        "4.295",
+        "stable/slightly",
+        "064.01",
+        "0.63",
+        "76.2k",
+        "1.56",
+        "760.8"
+      ]
+    },
+    "memory:memory/2026-04-22.md:45:51": {
+      "key": "memory:memory/2026-04-22.md:45:51",
+      "path": "memory/2026-04-22.md",
+      "startLine": 45,
+      "endLine": 51,
+      "source": "memory",
+      "snippet": "- 09:00 WIB: Prepared morning market brief for Afu. Working snapshot from accessible public market pages: DXY ~98.33 and soft, US10Y ~4.295% stable/slightly lower, S&P 500 7,064.01 (-0.63%) after pulling back from fresh highs, BTC ~76.2k (+1.56%), gold June futures ~4,760.8 (+0.87%), WTI crude ~89.26 (-0.46%) after recent surge. Core view: mixed macro with softer dollar supportive for gold/BTC, but elevated oil/geopolitical risk keeps inflation/yield shock risk alive and caps clean risk-on follow-through. - Morning brief tooling issue: built-in `web_search` unavailable because Brave API key is not configured; used `web_fetch` fallbacks and logged to `.learnings/ERRORS.md`. - autonomous_tradi",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-23T04:19:56.898Z",
+      "lastRecalledAt": "2026-04-23T04:19:56.898Z",
+      "queryHashes": [
+        "73786f768cd3"
+      ],
+      "recallDays": [
+        "2026-04-23"
+      ],
+      "conceptTags": [
+        "98.33",
+        "4.295",
+        "stable/slightly",
+        "064.01",
+        "0.63",
+        "76.2k",
+        "1.56",
+        "760.8"
+      ]
+    },
+    "memory:memory/2026-04-03.md:13:26": {
+      "key": "memory:memory/2026-04-03.md:13:26",
+      "path": "memory/2026-04-03.md",
+      "startLine": 13,
+      "endLine": 26,
+      "source": "memory",
+      "snippet": "- A4: selective gate relaxation implemented selectively (`EXEC_MIN_TRADES` lowered selectively, specialist/exploratory thresholds added, `history_bars_default` raised to 4000, DD/WF Sharpe not broadly loosened) - Decision rule agreed for `pool_state` after Track A: - do not reset immediately; - observe 3–5 research cycles first; - KEEP if pool remains informative and adapts; - PARTIAL RESET if stale/noisy candidates dominate but useful active/exploratory core remains; - FULL RESET only if old pool strongly pollutes evolution and partial cleanup is insufficient. - Track B was implemented in practical terms: - B1: account-switch guard done - B2: strategy live stats reliability",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-24T04:45:28.301Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "exec-min-trades",
+        "specialist/exploratory",
+        "history-bars-default",
+        "dd/wf",
+        "pool-state",
+        "stale/noisy",
+        "active/exploratory",
+        "account-switch"
+      ]
+    },
+    "memory:memory/2026-04-03.md:24:32": {
+      "key": "memory:memory/2026-04-03.md:24:32",
+      "path": "memory/2026-04-03.md",
+      "startLine": 24,
+      "endLine": 32,
+      "source": "memory",
+      "snippet": "- `strategy_live_stats.json` had stayed empty not because file creation failed, but because closed-deal attribution lineage was mismatching MT5 identifiers vs stored ticket map. This was mitigated by augmenting attribution from `execution/trades.log` and adding `scripts/reconcile_strategy_live_stats.py`. - After reconciliation, `strategy_live_stats.json` was no longer empty and contained baseline strategy keys; note that this baseline may still show zero PnL/trade counts until future closed-deal attribution updates accumulate real stats. - Track C was implemented in practical terms: - C1: stronger exit-governance penalties for exit-rule-heavy / weak exit signatures - C2: better XAU exit",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-24T04:45:28.301Z",
+      "lastRecalledAt": "2026-04-24T04:45:28.301Z",
+      "queryHashes": [
+        "0c64f575ede6"
+      ],
+      "recallDays": [
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "strategy-live-stats.json",
+        "closed-deal",
+        "execution/trades.log",
+        "pnl/trade",
+        "exit-governance",
+        "exit-rule-heavy",
+        "had",
+        "stayed"
+      ]
+    },
+    "memory:memory/2026-04-22.md:65:68": {
+      "key": "memory:memory/2026-04-22.md:65:68",
+      "path": "memory/2026-04-22.md",
+      "startLine": 65,
+      "endLine": 68,
+      "source": "memory",
+      "snippet": "- After BTC success, user redirected the audit to XAU and XAG absence from `pool_state`. Verified diagnosis: XAU/XAG were not primarily blocked by persistence or the same final BTC gate. They mostly failed much earlier at `cheap_prescreen`, with XAU showing slight progress (`xau_session_continuation` reached `cp_pass: 1` but then `bt_fail: 1`), while XAG remained dominated by weak prescreen results and many candidates with either `trades=0` or strongly negative raw performance. - Important XAG finding preserved: recent XAG samples indicated the problem is likely generator/ruleset quality, not just governance strictness. Examples mentioned during audit included strategies with returns around",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-24T07:11:38.207Z",
+      "lastRecalledAt": "2026-04-24T07:11:38.207Z",
+      "queryHashes": [
+        "be18d0bcf8e2"
+      ],
+      "recallDays": [
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "pool-state",
+        "xau/xag",
+        "cheap-prescreen",
+        "xau-session-continuation",
+        "cp-pass",
+        "bt-fail",
+        "generator/ruleset",
+        "btc"
+      ]
+    },
+    "memory:memory/2026-04-24.md:40:45": {
+      "key": "memory:memory/2026-04-24.md:40:45",
+      "path": "memory/2026-04-24.md",
+      "startLine": 40,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "- First reconstruction run succeeded in writing the journal and reconstructing 99 trade rows across 53 live-stat strategy buckets, but entry/exit regime-session context remained empty because symbol names in logs looked like `XAUUSD`/`BTCUSD` while available feature parquet files used variants like `XAUUSDm`/`BTCUSDm`; next fix is symbol canonicalization/fallback mapping. - XAU research work today: initial generator patch successfully changed family distribution so bullish families appeared in research population with `xau_impulse_pullback: 2` and `xau_session_continuation: 2`, confirming generator integration. - Directed XAU research still failed after that first patch with `18 cheap_prescr",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-24T07:11:38.207Z",
+      "lastRecalledAt": "2026-04-28T02:48:47.003Z",
+      "queryHashes": [
+        "be18d0bcf8e2",
+        "5b68da7f3a45"
+      ],
+      "recallDays": [
+        "2026-04-24",
+        "2026-04-28"
+      ],
+      "conceptTags": [
+        "live-stat",
+        "entry/exit",
+        "regime-session",
+        "canonicalization/fallback",
+        "xau-impulse-pullback",
+        "xau-session-continuation",
+        "cheap-prescr",
+        "first"
+      ]
+    },
+    "memory:memory/2026-04-24.md:44:49": {
+      "key": "memory:memory/2026-04-24.md:44:49",
+      "path": "memory/2026-04-24.md",
+      "startLine": 44,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "- Durable design rule for bullish XAU templates: use real-feature-supported filters like `ma_short > ma_long`, `close > ma_short` or `close > ma_long`, moderate `trend_strength`, optional RSI/session filters; avoid over-constraining combinations like mandatory `fib_zone_382 == 1` plus narrow session and volatility gates. - Bullish XAU template/parameter loosening was applied in `strategies/generator.py`, syntax check via `python -m py_compile autonomous_trading_ai\\strategies\\generator.py` passed, and rerun research was started. - Git checkpoint committed successfully before further iteration: `0946ed5 Improve XAU research generation diagnostics`. - Added new specialist family `xau_trending_u",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-24T07:11:38.207Z",
+      "lastRecalledAt": "2026-04-24T07:11:38.207Z",
+      "queryHashes": [
+        "be18d0bcf8e2"
+      ],
+      "recallDays": [
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "real-feature-supported",
+        "ma-short",
+        "ma-long",
+        "trend-strength",
+        "rsi/session",
+        "over-constraining",
+        "fib-zone-382",
+        "template/parameter"
+      ]
+    },
+    "memory:memory/2026-04-04.md:87:103": {
+      "key": "memory:memory/2026-04-04.md:87:103",
+      "path": "memory/2026-04-04.md",
+      "startLine": 87,
+      "endLine": 103,
+      "source": "memory",
+      "snippet": "- concentration-control-related test suite later validated green (`20 passed`) after installing missing local dependencies - Additional low-risk local dependencies installed during this session to continue without extra approval prompts, following Afu's preference: - `apscheduler` - `chromadb` - Important interpretation from config review/screenshot shared by Afu: - `max_portfolio_drawdown_pct = 30.0` is intentional, not a bug to \"fix\" back to 25 - `daily_limits_enabled = False` and high `max_open_positions` confirm repo risk posture is intentionally aggressive - implication: upstream controls matter more than account-level hard stops, so priority of safeguards is confirmed as se",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-27T06:24:20.224Z",
+      "lastRecalledAt": "2026-04-27T06:24:20.224Z",
+      "queryHashes": [
+        "48849346711c"
+      ],
+      "recallDays": [
+        "2026-04-27"
+      ],
+      "conceptTags": [
+        "concentration-control-related",
+        "low-risk",
+        "review/screenshot",
+        "max-portfolio-drawdown-pct",
+        "30.0",
+        "daily-limits-enabled",
+        "max-open-positions",
+        "account-level"
+      ]
+    },
+    "memory:memory/2026-04-27.md:40:49": {
+      "key": "memory:memory/2026-04-27.md:40:49",
+      "path": "memory/2026-04-27.md",
+      "startLine": 40,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "- Added and iterated two XAU specialist families: xau_trending_up_specialist and xau_ranging_specialist. - Confirmed progression on XAU specialist debugging: issue moved from no-trade coverage failure to negative edge / evaluation-quality failure. - Generator and evolution changes now force inclusion of both XAU specialist families in XAU research batches instead of relying only on weighted random selection. - Challenger/governance routing was expanded so both XAU specialist families are included in challenger families and bootstrap/evaluation paths. - Family weights for XAU specialists were increased materially to improve batch representation during research. - Cheap prescreen relief was ad",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T02:48:47.003Z",
+      "lastRecalledAt": "2026-04-28T02:48:47.003Z",
+      "queryHashes": [
+        "5b68da7f3a45"
+      ],
+      "recallDays": [
+        "2026-04-28"
+      ],
+      "conceptTags": [
+        "xau-trending-up-specialist",
+        "xau-ranging-specialist",
+        "no-trade",
+        "evaluation-quality",
+        "challenger/governance",
+        "bootstrap/evaluation",
+        "added",
+        "iterated"
+      ]
+    },
+    "memory:memory/2026-04-27.md:35:42": {
+      "key": "memory:memory/2026-04-27.md:35:42",
+      "path": "memory/2026-04-27.md",
+      "startLine": 35,
+      "endLine": 42,
+      "source": "memory",
+      "snippet": "- Live drift warnings remain the main issue: active strategies core15_BTCUSDm_M15_e511, core15_BTCUSDm_M15_f4f5, core15_BTCUSDm_M15_df0a, and core15_XAUUSDm_M15_627c all show negative recent live averages, with repeated live_decay_warning entries in pool_audit_trail.json. - Worst observable live-vs-research mismatches included core15_BTCUSDm_M15_e511 (-1148.90 over 4 live trades despite strong research score), plus several disabled/missing historical buckets that still carry negative live stats. - Recent scheduler/log evidence looked cleaner on Apr 27, but rotated logs still contain Apr 24 MT5 availability/account_info failures and trade-context registration ValueError events; worth monitori",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T02:48:47.003Z",
+      "lastRecalledAt": "2026-05-15T17:00:13.746Z",
+      "queryHashes": [
+        "5b68da7f3a45",
+        "c8bd53af0684",
+        "795f7b2fd749"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-09",
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "core15-btcusdm-m15-e511",
+        "core15-btcusdm-m15-f4f5",
+        "core15-btcusdm-m15-df0a",
+        "core15-xauusdm-m15-627c",
+        "live-decay-warning",
+        "pool-audit-trail.json",
+        "live-vs-research",
+        "1148.90"
+      ]
+    },
+    "memory:memory/2026-04-27.md:47:55": {
+      "key": "memory:memory/2026-04-27.md:47:55",
+      "path": "memory/2026-04-27.md",
+      "startLine": 47,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "- Direct sampling test confirmed generator can now produce both specialist families at meaningful frequency: xau_trending_up_specialist and xau_ranging_specialist both appear in large random_strategy samples for XAU M15. - Evolution path had been filtering/biasing away ranging specialists despite generator availability; this was identified as a structural cause of earlier absence from artifacts. - Trending specialist templates were reworked away from broad breakout-like behavior toward more selective pullback-continuation logic. - Ranging specialist direction shifted toward rsi_range-like DNA after evidence showed generic range templates were too sterile and often produced zero trades. - Con",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T02:48:47.003Z",
+      "lastRecalledAt": "2026-04-28T02:48:47.003Z",
+      "queryHashes": [
+        "5b68da7f3a45"
+      ],
+      "recallDays": [
+        "2026-04-28"
+      ],
+      "conceptTags": [
+        "xau-trending-up-specialist",
+        "xau-ranging-specialist",
+        "random-strategy",
+        "filtering/biasing",
+        "breakout-like",
+        "pullback-continuation",
+        "rsi-range-like",
+        "direct"
+      ]
+    },
+    "memory:memory/2026-05-09.md:13:21": {
+      "key": "memory:memory/2026-05-09.md:13:21",
+      "path": "memory/2026-05-09.md",
+      "startLine": 13,
+      "endLine": 21,
+      "source": "memory",
+      "snippet": "- Committed clean slice in ERP repo as `13d868e` (`feat: capture operator validation findings`). - Continued ERP Sandal Factory MVP 1 with operator validation triage hardening: added role/severity/status filters, open/in-review/resolved status transitions, live status counts, docs/tasklist handoff updates, and coverage for filtering/status updates. - Verification: `php artisan test tests\\Feature\\OperatorValidationPageTest.php` passed (5 tests, 36 assertions); `php artisan migrate --force; php artisan test` passed with nothing to migrate and full suite green (89 tests, 738 assertions). - Committed clean slice in ERP repo as `91300e4` (`feat: add operator validation triage lanes`). - Continued",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T08:22:41.169Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "15f6050fb88b",
+        "8d03632f586a",
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-09",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "role/severity/status",
+        "open/in-review/resolved",
+        "docs/tasklist",
+        "filtering/status",
+        "operatorvalidationpagetest.php",
+        "committed",
+        "clean",
+        "slice"
+      ]
+    },
+    "memory:memory/2026-05-09.md:20:27": {
+      "key": "memory:memory/2026-05-09.md:20:27",
+      "path": "memory/2026-05-09.md",
+      "startLine": 20,
+      "endLine": 27,
+      "source": "memory",
+      "snippet": "- Committed clean slice in ERP repo as `a6ad43f` (`feat: harden validation walkthrough lanes`). - Continued ERP Sandal Factory MVP 1 with an operator validation role-health matrix in the findings workspace: seeded roles now show Needs walkthrough, Blocked, Watch, or Clear based on unresolved Critical/High vs Medium/Low findings. - Updated ERP tasklist, README, PRD overview, operator validation guide, handoff, and DEV_NOTES to make the role-health matrix the sign-off gate for choosing the next operator-driven hardening slice. - Verification: `vendor\\bin\\pint --dirty` passed/fixed formatting; `php artisan test tests\\Feature\\OperatorValidationPageTest.php` passed (8 tests, 62 assertions); `php",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T08:22:41.169Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "15f6050fb88b",
+        "8d03632f586a",
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-09",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "role-health",
+        "critical/high",
+        "medium/low",
+        "dev-notes",
+        "sign-off",
+        "operator-driven",
+        "passed/fixed",
+        "operatorvalidationpagetest.php"
+      ]
+    },
+    "memory:memory/2026-05-09.md:26:33": {
+      "key": "memory:memory/2026-05-09.md:26:33",
+      "path": "memory/2026-05-09.md",
+      "startLine": 26,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "- Updated ERP tasklist, README, PRD overview, handoff, and DEV_NOTES for the role-scoped findings slice. - Verification: `vendor\\bin\\pint --dirty` passed; `php artisan test tests\\Feature\\OperatorValidationPageTest.php` passed (10 tests, 72 assertions); `php artisan migrate --force; php artisan test` passed with nothing to migrate and full suite green (94 tests, 774 assertions). - Committed clean slice in ERP repo as `ae6f4d9` (`feat: scope validation findings by role`). - Continued ERP Sandal Factory MVP 1 with operator validation resolution audit notes: added migration/model/request/controller/view support for status changer, status timestamp, and required resolution notes when findings mov",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T08:22:41.169Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "15f6050fb88b",
+        "8d03632f586a",
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-09",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "dev-notes",
+        "role-scoped",
+        "operatorvalidationpagetest.php",
+        "updated",
+        "erp",
+        "tasklist",
+        "readme",
+        "prd"
+      ]
+    },
+    "memory:memory/2026-05-09.md:7:14": {
+      "key": "memory:memory/2026-05-09.md:7:14",
+      "path": "memory/2026-05-09.md",
+      "startLine": 7,
+      "endLine": 14,
+      "source": "memory",
+      "snippet": "- ATA maintenance: no write maintenance performed because system appears stale/stopped and `strategies/pool_state.json` already has pre-existing uncommitted modifications. Only temporary audit scripts were created under repo `tmp\\` and removed. - Continued ERP Sandal Factory MVP 1 cron work in `C:\\laragon\\www\\erp-sandal-factory`. - Added persistent in-app operator validation findings capture: `operator_validation_findings` migration/model/request, POST route/controller store action, Blade capture form, live severity counts, recent evidence backlog, and tests. - Updated ERP tasklist, README, handoff, and DEV_NOTES to mark the slice complete and set the next lane toward seeded role walkthroug",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T08:22:41.169Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "15f6050fb88b",
+        "8d03632f586a",
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-09",
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "stale/stopped",
+        "strategies/pool-state.json",
+        "pre-existing",
+        "erp-sandal-factory",
+        "in-app",
+        "operator-validation-findings",
+        "migration/model/request",
+        "route/controller"
+      ]
+    },
+    "memory:memory/2026-05-09.md:36:41": {
+      "key": "memory:memory/2026-05-09.md:36:41",
+      "path": "memory/2026-05-09.md",
+      "startLine": 36,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "- Committed clean slice in ERP repo as `6d8d849` (`Add guided validation finding capture links`). - Continued ERP Sandal Factory MVP 1 with filtered CSV export for operator validation findings: owner/admin can export cross-role filtered evidence, while restricted roles export only their own lane. Updated tasklist, README, PRD overview, handoff, and DEV_NOTES. - Verification: vendor\\bin\\pint --dirty passed/fixed formatting; php artisan test tests\\Feature\\OperatorValidationPageTest.php passed (15 tests, 105 assertions); php artisan migrate --force reported nothing to migrate; full php artisan test passed (99 tests, 807 assertions). - Committed clean slice in ERP repo as 278b6ff ( eat: export",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-09T08:22:41.169Z",
+      "lastRecalledAt": "2026-05-09T08:22:41.169Z",
+      "queryHashes": [
+        "15f6050fb88b"
+      ],
+      "recallDays": [
+        "2026-05-09"
+      ],
+      "conceptTags": [
+        "owner/admin",
+        "cross-role",
+        "dev-notes",
+        "passed/fixed",
+        "operatorvalidationpagetest.php",
+        "committed",
+        "clean",
+        "slice"
+      ]
+    },
+    "memory:memory/2026-05-09.md:1:9": {
+      "key": "memory:memory/2026-05-09.md:1:9",
+      "path": "memory/2026-05-09.md",
+      "startLine": 1,
+      "endLine": 9,
+      "source": "memory",
+      "snippet": "# 2026-05-09 - Ran daily autonomous_trading_ai governance audit. Requested path `C:\\Users\\afusi\\.openclaw\\workspace\\autonomous_trading_ai` was missing; actual repo found at `C:\\laragon\\www\\autonomous_trading_ai`. - ATA status: WARNING. Repo-visible runtime/state/logs last updated around 2026-05-07 06:20 UTC (~49h stale at audit time), with no current `system.log` ERROR/Traceback lines and no open trades visible. Older rotated log still has Apr 29 MT5 symbol/account_info failures. - ATA pool summary: 117 strategies = 30 active, 7 exploratory, 24 candidate, 56 disabled; active mix 17 BTCUSDm / 13 XAUUSDm; manifest has 29 entries (16 BTC / 13 XAU), index 117, no manifest/index missing-in-pool",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-10T14:00:04.195Z",
+      "lastRecalledAt": "2026-05-17T19:40:42.026Z",
+      "queryHashes": [
+        "2fc4d40fdf22",
+        "a8e474efc3ff",
+        "30bab19484a0"
+      ],
+      "recallDays": [
+        "2026-05-10",
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "repo-visible",
+        "runtime/state/logs",
+        "system.log",
+        "error/traceback",
+        "symbol/account-info",
+        "manifest/index",
+        "missing-in-pool"
+      ]
+    },
+    "memory:memory/2026-04-21.md:9:14": {
+      "key": "memory:memory/2026-04-21.md:9:14",
+      "path": "memory/2026-04-21.md",
+      "startLine": 9,
+      "endLine": 14,
+      "source": "memory",
+      "snippet": "- Diagnosed OpenClaw built-in memory warning `chunks_vec not updated (sqlite-vec unavailable)` as separate from workspace Chroma vector memory; likely issue is internal sqlite-vec availability, not Chroma server health. - Deep audit on `autonomous_trading_ai` found likely causes for backtest-live divergence: optimistic backtest execution model, large live attribution leakage (`manual_unmatched_*`, `ticket_map_miss`), regime drift, and aggressive live sizing relative to fragile edge. - Confirmed and patched a major live trading parity bug: `exit_rule` was evaluated in backtests but not on open live positions. Added live exit-rule evaluation/position close path using closed-bar features, and c",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-10T14:00:04.195Z",
+      "lastRecalledAt": "2026-05-17T19:33:29.656Z",
+      "queryHashes": [
+        "2fc4d40fdf22",
+        "795f7b2fd749",
+        "a8e474efc3ff"
+      ],
+      "recallDays": [
+        "2026-05-10",
+        "2026-05-16",
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "built-in",
+        "chunks-vec",
+        "sqlite-vec",
+        "autonomous-trading-ai",
+        "backtest-live",
+        "manual-unmatched",
+        "ticket-map-miss",
+        "exit-rule"
+      ]
+    },
+    "memory:memory/2026-04-04.md:73:91": {
+      "key": "memory:memory/2026-04-04.md:73:91",
+      "path": "memory/2026-04-04.md",
+      "startLine": 73,
+      "endLine": 91,
+      "source": "memory",
+      "snippet": "- Recommended implementation approach: diagnostics + soft degrade first (warning/degrade), not immediate hard auto-disable. - Natural implementation path: create `execution/live_decay.py`, compute live-only decay signals from `strategy_live_stats`, log audit events, and integrate from scheduler after live stats update. # 2026-04-04 - Implemented `autonomous_trading_ai` live hardening upgrades after earlier audit backlog: - proactive live decay detection v1 via `execution/live_decay.py`, integrated into `scheduler/main.py`, with focused tests in `tests/test_live_decay.py` - concentration control v1 in `strategies/live_manifest.py` (light caps with diversification-first selection when",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-10T14:00:04.195Z",
+      "lastRecalledAt": "2026-05-10T14:00:04.195Z",
+      "queryHashes": [
+        "2fc4d40fdf22"
+      ],
+      "recallDays": [
+        "2026-05-10"
+      ],
+      "conceptTags": [
+        "warning/degrade",
+        "auto-disable",
+        "execution/live-decay.py",
+        "live-only",
+        "strategy-live-stats",
+        "autonomous-trading-ai",
+        "scheduler/main.py",
+        "tests/test-live-decay.py"
+      ]
+    },
+    "memory:memory/2026-04-24.md:36:41": {
+      "key": "memory:memory/2026-04-24.md:36:41",
+      "path": "memory/2026-04-24.md",
+      "startLine": 36,
+      "endLine": 41,
+      "source": "memory",
+      "snippet": "- autonomous_trading_ai: created `scripts/repair_legacy_pool_metadata.py` to backfill missing `strategy_explain.meta` fields in `strategies/pool_state.json`; correct invocation is `python -m autonomous_trading_ai.scripts.repair_legacy_pool_metadata` because direct script execution caused `ModuleNotFoundError` for package imports. - Running the metadata repair refreshed pool artifacts safely: `Pool loaded/saved: 117 strategies`, `live_manifest.json entries=32`, `strategy_index.json entries=117`, and `Repaired 88 legacy records`. - Afu explicitly asked to persist both the repair script and refreshed `strategies/pool_state.json` to git. - Created `scripts/reconstruct_trade_regime_session_journa",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-10T14:00:04.195Z",
+      "lastRecalledAt": "2026-05-10T14:00:04.195Z",
+      "queryHashes": [
+        "2fc4d40fdf22"
+      ],
+      "recallDays": [
+        "2026-05-10"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "strategy-explain.meta",
+        "strategies/pool-state.json",
+        "loaded/saved",
+        "live-manifest.json",
+        "strategy-index.json",
+        "created",
+        "scripts"
+      ]
+    },
+    "memory:memory/2026-05-09.md:36:46": {
+      "key": "memory:memory/2026-05-09.md:36:46",
+      "path": "memory/2026-05-09.md",
+      "startLine": 36,
+      "endLine": 46,
+      "source": "memory",
+      "snippet": "- Committed clean slice in ERP repo as `6d8d849` (`Add guided validation finding capture links`). - Continued ERP Sandal Factory MVP 1 with filtered CSV export for operator validation findings: owner/admin can export cross-role filtered evidence, while restricted roles export only their own lane. Updated tasklist, README, PRD overview, handoff, and DEV_NOTES. - Verification: vendor\\bin\\pint --dirty passed/fixed formatting; php artisan test tests\\Feature\\OperatorValidationPageTest.php passed (15 tests, 105 assertions); php artisan migrate --force reported nothing to migrate; full php artisan test passed (99 tests, 807 assertions). - Committed clean slice in ERP repo as 278b6ff ( eat: export",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T23:52:36.037Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "8d03632f586a",
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "owner/admin",
+        "cross-role",
+        "dev-notes",
+        "passed/fixed",
+        "operatorvalidationpagetest.php",
+        "committed",
+        "clean",
+        "slice"
+      ]
+    },
+    "memory:memory/2026-05-09.md:44:52": {
+      "key": "memory:memory/2026-05-09.md:44:52",
+      "path": "memory/2026-05-09.md",
+      "startLine": 44,
+      "endLine": 52,
+      "source": "memory",
+      "snippet": "- Verification: vendor\\bin\\pint --dirty passed/fixed formatting; php artisan test tests\\Feature\\OperatorValidationPageTest.php passed (17 tests, 117 assertions); php artisan migrate --force reported nothing to migrate; full php artisan test passed (101 tests, 819 assertions). - Committed clean slice in ERP repo as cacb596 (feat: print validation findings review pack). - Continued ERP Sandal Factory MVP 1 with a print-ready seeded role walkthrough checklist pack from the in-app Validation page. The pack scopes demo accounts and validation lanes per role, includes route shortcuts, feedback priorities, expected evidence outputs, and paper retest-note lines; also restored route lookup through",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T23:56:29.981Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "passed/fixed",
+        "operatorvalidationpagetest.php",
+        "print-ready",
+        "in-app",
+        "retest-note",
+        "verification",
+        "vendor",
+        "bin"
+      ]
+    },
+    "memory:memory/2026-05-08.md:1:10": {
+      "key": "memory:memory/2026-05-08.md:1:10",
+      "path": "memory/2026-05-08.md",
+      "startLine": 1,
+      "endLine": 10,
+      "source": "memory",
+      "snippet": "# 2026-05-08 - Continued ERP Sandal Factory MVP 1 cron work in `C:\\laragon\\www\\erp-sandal-factory`. - Found original MVP 1 setup priorities already completed in repo; chose next highest-leverage slice instead of duplicating finished work. - Added follow-up database migration `2026_05_08_082500_add_operational_indexes_for_dashboard_and_reports.php` to harden dashboard/reporting and operational document query paths (purchasing, goods receipts, supplier returns, inventory transactions, stock moves, production, QC). - Updated ERP docs to mark the index-hardening slice complete and shifted recommended next lane toward operator validation and role-specific dashboard refinement. - Verification suc",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T23:56:29.981Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "erp-sandal-factory",
+        "highest-leverage",
+        "follow-up",
+        "dashboard/reporting",
+        "index-hardening",
+        "role-specific",
+        "continued",
+        "erp"
+      ]
+    },
+    "memory:memory/2026-05-09.md:31:38": {
+      "key": "memory:memory/2026-05-09.md:31:38",
+      "path": "memory/2026-05-09.md",
+      "startLine": 31,
+      "endLine": 38,
+      "source": "memory",
+      "snippet": "- Verification: `vendor\\bin\\pint --dirty` passed/fixed formatting; `php artisan migrate --force` applied `2026_05_09_024000_add_resolution_audit_to_operator_validation_findings`; `php artisan test tests\\Feature\\OperatorValidationPageTest.php` passed (11 tests, 81 assertions); full `php artisan test` passed (95 tests, 783 assertions). - Committed clean slice in ERP repo as `1e4cd3b` (`feat: audit validation finding resolution`). - Continued ERP Sandal Factory MVP 1 with guided role-lane capture links on the operator validation readiness page: every lane now links into the findings workspace with role/category/severity/open status preselected. - Added query-context defaults to the findings cap",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-13T23:56:29.981Z",
+      "lastRecalledAt": "2026-05-13T23:56:29.981Z",
+      "queryHashes": [
+        "b4a3682922ad"
+      ],
+      "recallDays": [
+        "2026-05-14"
+      ],
+      "conceptTags": [
+        "passed/fixed",
+        "operatorvalidationpagetest.php",
+        "role-lane",
+        "role/category/severity/open",
+        "query-context",
+        "verification",
+        "vendor",
+        "bin"
+      ]
+    },
+    "memory:memory/2026-05-07.md:1:7": {
+      "key": "memory:memory/2026-05-07.md:1:7",
+      "path": "memory/2026-05-07.md",
+      "startLine": 1,
+      "endLine": 7,
+      "source": "memory",
+      "snippet": "# 2026-05-07 - Prepared cron morning market brief for Afu at 13:32 WIB. - Market context used: softer DXY around 98, US10Y near 4.35%-4.36%, gold around $4,700, BTC around $81k, ES near flat after record-high cash close, oil rebounding after prior drop as markets assess US-Iran peace-deal prospects. - Key watchouts noted: US initial jobless claims, productivity/unit labor costs, Fed speakers (Hammack, Williams), ongoing Middle East headline risk, Friday NFP ahead. - Ran daily autonomous_trading_ai governance pass at ~13:36-13:45 WIB. Observed system healthy overall with no scheduler stall, live_state + manifest/index consistent, 29 live manifest entries and 117 pool records. Main warnings:",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T17:00:13.746Z",
+      "lastRecalledAt": "2026-05-15T17:00:13.746Z",
+      "queryHashes": [
+        "795f7b2fd749"
+      ],
+      "recallDays": [
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "4.35",
+        "4.36",
+        "record-high",
+        "us-iran",
+        "peace-deal",
+        "productivity/unit",
+        "autonomous-trading-ai",
+        "36-13"
+      ]
+    },
+    "memory:memory/2026-04-24.md:30:34": {
+      "key": "memory:memory/2026-04-24.md:30:34",
+      "path": "memory/2026-04-24.md",
+      "startLine": 30,
+      "endLine": 34,
+      "source": "memory",
+      "snippet": "- Family-level live attribution on current-pool members with non-zero trades: `rsi_range` about `-2506.19` over 40 trades, `ma_trend` about `-1418.05` over 152 trades, `pullback_trend` +3.64 over 1 trade. - `execution/strategy_live_stats.json` still contains significant attribution residue: 53 tracked buckets, but 39 strategy IDs no longer exist in current pool; `execution/unmatched_closed_deals.json` is now empty, so current issue is stale historical buckets rather than active unmatched backlog. - Logs show system activity continuing this morning (research-memory queries and fresh file writes), so not stalled, but there was a runtime error at `2026-04-24 00:54:07` where `job_live_monitor` h",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-15T17:00:13.746Z",
+      "lastRecalledAt": "2026-05-15T17:00:13.746Z",
+      "queryHashes": [
+        "795f7b2fd749"
+      ],
+      "recallDays": [
+        "2026-05-16"
+      ],
+      "conceptTags": [
+        "family-level",
+        "current-pool",
+        "non-zero",
+        "rsi-range",
+        "2506.19",
+        "ma-trend",
+        "1418.05",
+        "pullback-trend"
+      ]
+    },
+    "memory:memory/2026-05-15.md:1:8": {
+      "key": "memory:memory/2026-05-15.md:1:8",
+      "path": "memory/2026-05-15.md",
+      "startLine": 1,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "# 2026-05-15 - Ran daily governance/maintenance audit for `autonomous_trading_ai` at actual path `C:\\laragon\\www\\autonomous_trading_ai` after requested workspace path was missing. - Finding: repo-visible trading scheduler/data state appears stalled: last `logs/system.log`, pool/manifest/index, data raw/features, live_state/open_trades/equity were from 2026-05-07 (~8 days old). `strategy_live_stats.json` last updated 2026-05-11 (~4 days old). - Health: no ERROR/CRITICAL/Traceback found in `logs/system.log`; manifest/index/pool consistency looked intact (pool 117, manifest 29/29, index 117/117, no missing payloads). - Pool summary: active 30, exploratory 7, candidate 24, disabled 56. Active s",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T09:55:17.770Z",
+      "lastRecalledAt": "2026-05-17T09:55:17.770Z",
+      "queryHashes": [
+        "4a7a61c117f9"
+      ],
+      "recallDays": [
+        "2026-05-17"
+      ],
+      "conceptTags": [
+        "governance/maintenance",
+        "autonomous-trading-ai",
+        "repo-visible",
+        "scheduler/data",
+        "logs/system.log",
+        "pool/manifest/index",
+        "raw/features",
+        "live-state/open-trades/equity"
+      ]
+    },
+    "memory:memory/2026-05-05.md:1:8": {
+      "key": "memory:memory/2026-05-05.md:1:8",
+      "path": "memory/2026-05-05.md",
+      "startLine": 1,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "# 2026-05-05 - 13:25 WIB cron: ran daily governance + maintenance audit for `autonomous_trading_ai`. - Findings: scheduler appears alive and runtime artifacts (`live_manifest.json`, `strategy_index.json`, feature parquet files) are currently healthy/fresh. - Main issues observed in repo-visible evidence: repeated `close_retcode:10018` on XAU exit attempts earlier today; intermittent `trade_context_journal.json` atomic rename `PermissionError [WinError 5]`; repeated parquet corruption/read failures for XAU features around 2026-05-04/05 that later self-healed after rewrite. - Pool snapshot at audit time: 117 strategies total, status mix `active=30`, `exploratory=7`, `candidate=24`, `disabled=",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T09:55:17.770Z",
+      "lastRecalledAt": "2026-05-17T09:55:17.770Z",
+      "queryHashes": [
+        "4a7a61c117f9"
+      ],
+      "recallDays": [
+        "2026-05-17"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "live-manifest.json",
+        "strategy-index.json",
+        "healthy/fresh",
+        "repo-visible",
+        "close-retcode",
+        "trade-context-journal.json",
+        "corruption/read"
+      ]
+    },
+    "memory:memory/2026-04-23.md:1:11": {
+      "key": "memory:memory/2026-04-23.md:1:11",
+      "path": "memory/2026-04-23.md",
+      "startLine": 1,
+      "endLine": 11,
+      "source": "memory",
+      "snippet": "# 2026-04-23 - Daily governance audit run for `autonomous_trading_ai` completed in read-only mode. - Repo was already dirty before audit: `backtests/engine.py`, `scheduler/main.py`, `strategies/generator.py`, `strategies/pool.py`, `strategies/pool_state.json`. - Pool snapshot at audit time: 9 strategies total, all in `pullback_trend`; status mix `candidate=3`, `exploratory=6`. - Live manifest showed 6 entries while strategy index and pool snapshot showed 9, suggesting working-set narrowing rather than full corruption, but live/research attribution remains partially drifted. - Visible live stats only matched one pool member with non-zero trades (`core15_BTCUSDm_M15_7818`, 1 trade, +3.64); ma",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T09:55:17.770Z",
+      "lastRecalledAt": "2026-05-17T09:55:17.770Z",
+      "queryHashes": [
+        "4a7a61c117f9"
+      ],
+      "recallDays": [
+        "2026-05-17"
+      ],
+      "conceptTags": [
+        "autonomous-trading-ai",
+        "read-only",
+        "backtests/engine.py",
+        "scheduler/main.py",
+        "strategies/generator.py",
+        "strategies/pool.py",
+        "strategies/pool-state.json",
+        "pullback-trend"
+      ]
+    },
+    "memory:memory/2026-05-17.md:12:18": {
+      "key": "memory:memory/2026-05-17.md:12:18",
+      "path": "memory/2026-05-17.md",
+      "startLine": 12,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "- Drift remains concentrated in stale BTC rsi_range active strategies: core15_BTCUSDm_M15_e511 (-1148.90/4 trades), f4f5 (-300.59/11), df0a (-114.96/13), despite strong research returns. Attribution is stale/limited. - Maintenance: no state-mutating maintenance performed because scheduler/runtime staleness makes rebuild/prune/archive risky. Wrote audit helper/output under repo tmp only. Repo still has pre-existing uncommitted M strategies/pool_state.json. - Afu shared his ATS CV PDF. High-level CV profile: Senior Full Stack Engineer in Surabaya; core stack Laravel/PHP, JavaScript, Nuxt/Vue, React, Flutter, REST APIs, SQL/MySQL/PostgreSQL; experience includes Olympic Furniture Group ERP/int",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T17:08:54.262Z",
+      "lastRecalledAt": "2026-05-17T19:45:45.101Z",
+      "queryHashes": [
+        "b3cd5f102dc8",
+        "c2858fa96b15"
+      ],
+      "recallDays": [
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "rsi-range",
+        "core15-btcusdm-m15-e511",
+        "1148.90/4",
+        "300.59/11",
+        "114.96/13",
+        "stale/limited",
+        "state-mutating",
+        "scheduler/runtime"
+      ]
+    },
+    "memory:memory/2026-03-20.md:1:1": {
+      "key": "memory:memory/2026-03-20.md:1:1",
+      "path": "memory/2026-03-20.md",
+      "startLine": 1,
+      "endLine": 1,
+      "source": "memory",
+      "snippet": "- Autononomous trading project: we set up webhook + notifier plumbing for WhatsApp alerts (`autonomous_trading_ai` → FastAPI `webhook_server.py`), but decided to skip the final hop via OpenClaw WhatsApp for now because gateway HTTP wiring is complex. Afu is okay pausing WhatsApp notification module for now.",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T17:08:54.262Z",
+      "lastRecalledAt": "2026-05-17T17:08:54.262Z",
+      "queryHashes": [
+        "b3cd5f102dc8"
+      ],
+      "recallDays": [
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "gateway",
+        "autonomous-trading-ai",
+        "webhook-server.py",
+        "autononomous",
+        "trading",
+        "project",
+        "set",
+        "webhook"
+      ]
+    },
+    "memory:memory/2026-05-11.md:1:6": {
+      "key": "memory:memory/2026-05-11.md:1:6",
+      "path": "memory/2026-05-11.md",
+      "startLine": 1,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "# 2026-05-11 - Morning Market Brief 09 WIB cron prepared in Indonesian using available market-data sources after web_search DNS failures. Data used: Stooq snapshots for XAUUSD, BTCUSD, SPX, DXY futures, WTI futures; CoinGecko BTC; ForexFactory calendar. Noted live US10Y feed limitation and used 10Y futures / calendar context instead of overclaiming. - Daily autonomous_trading_ai governance audit used actual repo path C:\\laragon\\www\\autonomous_trading_ai because workspace path was absent. Status WARNING: repo-visible runtime/live state stalled since 2026-05-07, pool has 117 strategies (30 active, 7 exploratory, 24 candidate, 56 disabled), manifest/index JSON valid, logs bounded by rotation",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T19:33:29.656Z",
+      "lastRecalledAt": "2026-05-17T19:33:29.656Z",
+      "queryHashes": [
+        "a8e474efc3ff"
+      ],
+      "recallDays": [
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "market-data",
+        "web-search",
+        "autonomous-trading-ai",
+        "repo-visible",
+        "runtime/live",
+        "manifest/index",
+        "morning",
+        "market"
+      ]
+    },
+    "memory:memory/2026-05-18.md:1:8": {
+      "key": "memory:memory/2026-05-18.md:1:8",
+      "path": "memory/2026-05-18.md",
+      "startLine": 1,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "# 2026-05-18 - Built new Hyperliquid adapter project at C:\\laragon\\www\\hyperliquid_adapter. Initial scaffold includes Python package/CLI, stdlib read-only /info client, guarded SDK exchange wrapper for limit orders/cancels, risk gates, .env.example, README, safety docs, and unittest tests. Smoke checks passed: 5 unit tests OK, CLI help OK, testnet mids for BTC/ETH/SOL fetched. Git initialized and committed 6372cda Initial Hyperliquid adapter scaffold. Project memory written to memory/projects/hyperliquid_adapter.md. - Continued Hyperliquid adapter: created venv at C:\\laragon\\www\\hyperliquid_adapter\\.venv, installed hyperliquid-python-sdk==0.23.0 via editable package install, added CLI do",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-17T19:40:42.026Z",
+      "lastRecalledAt": "2026-05-17T19:40:42.026Z",
+      "queryHashes": [
+        "30bab19484a0"
+      ],
+      "recallDays": [
+        "2026-05-18"
+      ],
+      "conceptTags": [
+        "hyperliquid-adapter",
+        "package/cli",
+        "read-only",
+        "orders/cancels",
+        "env.example",
+        "btc/eth/sol",
+        "hyperliquid-python-sdk",
+        "0.23.0"
       ]
     }
   }
