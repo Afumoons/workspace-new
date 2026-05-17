@@ -20,13 +20,18 @@
 ## Key Projects (Current State)
 
 ### autonomous_trading_ai
-- Path: `C:\Users\afusi\.openclaw\workspace\autonomous_trading_ai`
+- Path: `C:\laragon\www\autonomous_trading_ai`
 - Architecture: specialist-strategy + routing-layer; NOT universal strategy search
 - All three improvement tracks completed (A/B/C)
 - Current state: wait-and-see after BTC MC hardening + XAG viability repair v3
 - ui-front operator UI: Phase 1–3 complete, build green, awaiting final QA
 - Broker: HFM (Exness for forex); active symbols: XAUUSDm, XAGUSDm (exploratory), BTCUSDm
 - Risk posture: intentionally aggressive (`max_portfolio_drawdown_pct = 30.0`, `daily_limits_enabled = False`)
+
+### ERP Sandal Factory
+- Path: `C:\laragon\www\erp-sandal-factory`
+- Current UI: navigation layout changed from top nav to sidebar (Afu-side update, 2026-05-10)
+- Dashboard note: Afu fixed query error in `DashboardController::lowStockMaterialCount()` (2026-05-10)
 
 ### ATA2 (autonomous_trading_ai v2)
 - Path: `C:\laragon\www\ATA2`
